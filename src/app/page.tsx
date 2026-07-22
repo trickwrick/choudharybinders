@@ -2,7 +2,6 @@ import AboutSection from "@/components/AboutSection";
 import CategorySection from "@/components/CategorySection";
 import CenterBannerSection from "@/components/CenterBannerSection";
 import ClientsSection from "@/components/ClientsSection";
-import CTABannerSection from "@/components/CTABannerSection";
 import ProductsSection from "@/components/ProductsSection";
 import FAQSection from "@/components/FAQSection";
 import Footer from "@/components/Footer";
@@ -35,7 +34,6 @@ export default function Home() {
         <VideosSection />
         <TestimonialsSection />
         <FAQSection />
-        <CTABannerSection />
         <ContactSection />
       </main>
       <Footer />
