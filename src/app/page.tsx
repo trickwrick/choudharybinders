@@ -13,7 +13,6 @@ import FloatingActions from "@/components/FloatingActions";
 import ProcessSection from "@/components/ProcessSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import VideosSection from "@/components/VideosSection";
-import WeHelpSection from "@/components/WeHelpSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
 
 export default function Home() {
@@ -27,7 +26,6 @@ export default function Home() {
         <ProductsSection />
         <WhyChooseUsSection />
         <CenterBannerSection />
-        <WeHelpSection />
         <ProcessSection />
         <AboutSection />
         <GallerySection />

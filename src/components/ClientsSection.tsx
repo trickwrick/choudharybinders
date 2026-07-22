@@ -42,9 +42,7 @@ export default function ClientsSection() {
           viewport={{ once: true }}
           className="mx-auto max-w-2xl text-center"
         >
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-text/45 sm:text-sm">
-            Our Clients
-          </p>
+          
           <h2 className="mt-3 text-xl font-bold leading-snug text-text sm:text-2xl lg:text-[1.75rem]">
             Trusted by businesses across Jaipur &amp; India
           </h2>

@@ -14,23 +14,81 @@ function CarouselRow({
   items,
   size,
   onSelect,
+  autoDirection,
+  paused = false,
 }: {
   items: GalleryItem[];
   size: "sm" | "lg";
   onSelect: (index: number) => void;
+  autoDirection?: "left" | "right";
+  paused?: boolean;
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const hoverPausedRef = useRef(false);
   const isLarge = size === "lg";
+  const loopItems = [...items, ...items];
+
+  const scrollStep = useCallback(
+    (direction: -1 | 1) => {
+      const track = trackRef.current;
+      if (!track) return;
+
+      const firstChild = track.firstElementChild as HTMLElement | null;
+      const gap = isLarge ? 16 : 12;
+      const step = firstChild
+        ? firstChild.offsetWidth + gap
+        : track.clientWidth * 0.35;
+
+      track.scrollBy({ left: direction * step, behavior: "smooth" });
+
+      window.setTimeout(() => {
+        const el = trackRef.current;
+        if (!el) return;
+        const half = el.scrollWidth / 2;
+        if (direction === 1 && el.scrollLeft >= half - 4) {
+          el.scrollLeft -= half;
+        } else if (direction === -1 && el.scrollLeft <= 4) {
+          el.scrollLeft += half;
+        }
+      }, 450);
+    },
+    [isLarge],
+  );
 
   const scroll = (direction: -1 | 1) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const amount = isLarge ? track.clientWidth * 0.75 : track.clientWidth * 0.6;
-    track.scrollBy({ left: direction * amount, behavior: "smooth" });
+    scrollStep(direction);
   };
 
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track || !autoDirection) return;
+    if (autoDirection === "left") {
+      track.scrollLeft = track.scrollWidth / 2;
+    }
+  }, [autoDirection, items.length]);
+
+  useEffect(() => {
+    if (!autoDirection || paused) return;
+
+    const direction = autoDirection === "left" ? -1 : 1;
+    const id = window.setInterval(() => {
+      if (hoverPausedRef.current) return;
+      scrollStep(direction);
+    }, 2000);
+
+    return () => window.clearInterval(id);
+  }, [autoDirection, paused, scrollStep]);
+
   return (
-    <div className="relative flex items-center gap-2 sm:gap-3">
+    <div
+      className="relative flex items-center gap-2 sm:gap-3"
+      onMouseEnter={() => {
+        hoverPausedRef.current = true;
+      }}
+      onMouseLeave={() => {
+        hoverPausedRef.current = false;
+      }}
+    >
       <button
         type="button"
         onClick={() => scroll(-1)}
@@ -44,14 +102,14 @@ function CarouselRow({
         ref={trackRef}
         className="flex flex-1 snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:gap-4 [&::-webkit-scrollbar]:hidden"
       >
-        {items.map((item) => {
+        {loopItems.map((item, index) => {
           const globalIndex = galleryImages.findIndex(
             (img) => img.src === item.src,
           );
 
           return (
             <button
-              key={`${size}-${item.src}`}
+              key={`${size}-${item.src}-${index}`}
               type="button"
               onClick={() => onSelect(globalIndex)}
               className={`group relative shrink-0 snap-start overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
@@ -157,11 +215,15 @@ export default function GallerySection() {
           <CarouselRow
             items={topRowItems}
             size="sm"
+            autoDirection="left"
+            paused={lightboxIndex !== null}
             onSelect={setLightboxIndex}
           />
           <CarouselRow
             items={bottomRowItems}
             size="lg"
+            autoDirection="right"
+            paused={lightboxIndex !== null}
             onSelect={setLightboxIndex}
           />
         </motion.div>
