@@ -275,12 +275,21 @@ body {
   animation: marquee 28s linear infinite;
 }
 
+.animate-marquee-clients {
+  animation: marquee 50s linear infinite;
+}
+
+.animate-marquee-clients:hover {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  .animate-marquee {
+  .animate-marquee,
+  .animate-marquee-clients {
     animation: none;
   }
 

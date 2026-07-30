@@ -1,0 +1,17 @@
+export const businessInfo = {
+  name: "Choudhary Binders & Printers",
+  tagline: "Manufacturer",
+  location: "Jaipur, Rajasthan",
+  countryCode: "IND",
+  rating: 4.7,
+  ratingCount: 199,
+  yearsInBusiness: 48,
+  responseTime: "31 mins",
+  enquiries: "123k",
+  phone: "+91-7821013457",
+  phoneDisplay: "07821013457",
+  phoneTel: "tel:+917821013457",
+  whatsapp: "https://wa.me/917821013457",
+  email: "choudharybinders@gmail.com",
+  logo: "/logo-main.png",
+} as const;

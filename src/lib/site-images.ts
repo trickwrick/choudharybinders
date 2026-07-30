@@ -20,12 +20,13 @@ export const heroSlides = [
 ] as const;
 
 export const categoryImages = {
-  indoor: "/categories/indoor-branding.jpg",
-  flex: "/categories/flex-printing.jpg",
-  outdoor: "/categories/outdoor-branding.jpg",
-  promotional: "/categories/promotional-desk.jpg",
-  led: "/categories/led-sign-boards.jpg",
   offset: "/categories/offset-printing.jpg",
+  led: "/categories/led-sign-boards.jpg",
+  digital: "/services/advertising-printing.jpg",
+  flex: "/categories/flex-printing.jpg",
+  mobileVan: "/services/hoarding-advertising.jpg",
+  acp: "/services/fabrication-cladding.jpg",
+  outdoor: "/services/outdoor-advertising.jpg",
 } as const;
 
 export const serviceImages = [

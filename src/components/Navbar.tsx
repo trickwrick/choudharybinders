@@ -9,23 +9,28 @@ import Logo from "./Logo";
 import TopBar from "./TopBar";
 
 const primaryLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Category", href: "#category" },
-  { label: "Products", href: "#products" },
-  { label: "Services", href: "#services" },
-  { label: "About Us", href: "#about" },
-  { label: "Contact Us", href: "#contact" },
+  { label: "Home", href: "/#home" },
+  { label: "Category", href: "/#category" },
+  { label: "Services", href: "/#services" },
+  { label: "About Us", href: "/#about" },
+  { label: "Contact Us", href: "/#contact" },
 ];
 
 const moreLinks = [
-  { label: "Why Us", href: "#why-us" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Videos", href: "#videos" },
-  { label: "Testimonials", href: "#testimonials" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Why Us", href: "/#why-us" },
+  { label: "Gallery", href: "/#gallery" },
+  { label: "Videos", href: "/#videos" },
+  { label: "Testimonials", href: "/#testimonials" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 const allLinks = [...primaryLinks, ...moreLinks];
+
+function getSectionId(href: string): string | null {
+  if (href.startsWith("/#")) return href.slice(2);
+  if (href.startsWith("#")) return href.slice(1);
+  return null;
+}
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,7 +47,9 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const sectionIds = allLinks.map((link) => link.href.slice(1));
+    const sectionIds = allLinks
+      .map((link) => getSectionId(link.href))
+      .filter(Boolean) as string[];
     const elements = sectionIds
       .map((id) => document.getElementById(id))
       .filter(Boolean) as HTMLElement[];
@@ -90,8 +97,11 @@ export default function Navbar() {
   }, []);
 
   const isLinkActive = useCallback(
-    (href: string) => activeSection === href,
-    [activeSection]
+    (href: string) => {
+      const sectionId = getSectionId(href);
+      return sectionId ? activeSection === `#${sectionId}` : false;
+    },
+    [activeSection],
   );
 
   const isMoreActive = moreLinks.some((link) => isLinkActive(link.href));

@@ -1,5 +1,4 @@
 import AboutSection from "@/components/AboutSection";
-import CategorySection from "@/components/CategorySection";
 import CenterBannerSection from "@/components/CenterBannerSection";
 import ClientsSection from "@/components/ClientsSection";
 import ProductsSection from "@/components/ProductsSection";
@@ -22,7 +21,6 @@ export default function Home() {
       <main>
         <Hero />
         <ClientsSection />
-        <CategorySection />
         <ProductsSection />
         <WhyChooseUsSection />
         <CenterBannerSection />

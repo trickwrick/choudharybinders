@@ -1,99 +1,17 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  ArrowRight,
-  Building2,
-  ChevronLeft,
-  ChevronRight,
-  Lamp,
-  Megaphone,
-  Printer,
-  Sparkles,
-  Sun,
-  type LucideIcon,
-} from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { fadeUp } from "@/lib/animations";
-import { categoryImages } from "@/lib/site-images";
+import { categories, type CategoryId } from "@/lib/categories";
 import Button from "./Button";
 import Container from "./Container";
 import SectionHeading from "./SectionHeading";
 
-type CategoryId =
-  | "indoor"
-  | "flex"
-  | "outdoor"
-  | "promotional"
-  | "led"
-  | "offset";
-
 type CategoryFilter = "all" | CategoryId;
-
-const categories: {
-  id: CategoryId;
-  title: string;
-  description: string;
-  image: string;
-  icon: LucideIcon;
-  tag: string;
-}[] = [
-  {
-    id: "indoor",
-    title: "Indoor Branding",
-    tag: "Retail",
-    icon: Building2,
-    image: categoryImages.indoor,
-    description:
-      "Shop interiors, wall graphics & in-store display branding for retail spaces.",
-  },
-  {
-    id: "flex",
-    title: "Flex Printing Service",
-    tag: "Large Format",
-    icon: Printer,
-    image: categoryImages.flex,
-    description:
-      "High-quality flex banners, hoardings & large-format prints for campaigns.",
-  },
-  {
-    id: "outdoor",
-    title: "Outdoor Branding",
-    tag: "Outdoor",
-    icon: Sun,
-    image: categoryImages.outdoor,
-    description:
-      "Billboards, building signage & outdoor advertising solutions across Jaipur.",
-  },
-  {
-    id: "promotional",
-    title: "Promotional Desk",
-    tag: "Events",
-    icon: Megaphone,
-    image: categoryImages.promotional,
-    description:
-      "Promotional stands, counters & event display setups for exhibitions.",
-  },
-  {
-    id: "led",
-    title: "LED Sign Boards",
-    tag: "Illuminated",
-    icon: Lamp,
-    image: categoryImages.led,
-    description:
-      "LED boards, glow signs & illuminated shop front branding that stands out.",
-  },
-  {
-    id: "offset",
-    title: "Offset Printing",
-    tag: "Bulk Print",
-    icon: Sparkles,
-    image: categoryImages.offset,
-    description:
-      "Bulk printing for brochures, catalogues, publications & marketing collateral.",
-  },
-];
 
 const filters: { id: CategoryFilter; label: string }[] = [
   { id: "all", label: "All Categories" },
@@ -134,13 +52,13 @@ function CategoryCard({
         <p className="mt-2 flex-1 text-sm leading-relaxed text-text/65">
           {item.description}
         </p>
-        <a
-          href="#contact"
+        <Link
+          href={`/category/${item.id}`}
           className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary transition-colors hover:text-primary/80"
         >
-          Enquire Now
+          View Products
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-        </a>
+        </Link>
       </div>
     </article>
   );
