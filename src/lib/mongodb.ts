@@ -2,14 +2,6 @@ import dns from "node:dns";
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
-const uri = process.env.MONGODB_URI;
-
-if (!uri) {
-  throw new Error('Missing environment variable: "MONGODB_URI"');
-}
-
-const dbName = process.env.MONGODB_DB_NAME ?? "choudharybinders";
-
 type MongoModule = typeof import("mongodb");
 type MongoClient = import("mongodb").MongoClient;
 type Db = import("mongodb").Db;
@@ -21,13 +13,25 @@ declare global {
 
 let cachedClientPromise: Promise<MongoClient> | undefined;
 
+function getMongoUri() {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    throw new Error('Missing environment variable: "MONGODB_URI"');
+  }
+  return uri;
+}
+
+function getDbName() {
+  return process.env.MONGODB_DB_NAME ?? "choudharybinders";
+}
+
 async function loadMongoModule(): Promise<MongoModule> {
   return import("mongodb");
 }
 
 async function createClientPromise(): Promise<MongoClient> {
   const { MongoClient } = await loadMongoModule();
-  const client = new MongoClient(uri!);
+  const client = new MongoClient(getMongoUri());
   await client.connect();
   return client;
 }
@@ -57,9 +61,9 @@ export async function connectToMongoDB(): Promise<MongoClient> {
   return getClientPromise();
 }
 
-export async function getDatabase(name = dbName): Promise<Db> {
+export async function getDatabase(name?: string): Promise<Db> {
   const client = await connectToMongoDB();
-  return client.db(name);
+  return client.db(name ?? getDbName());
 }
 
 export async function disconnectFromMongoDB(): Promise<void> {
