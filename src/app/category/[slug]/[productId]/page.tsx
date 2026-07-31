@@ -9,22 +9,17 @@ import {
   toCategorySummary,
   type CategoryId,
 } from "@/lib/categories";
-import { getProductsByCategory } from "@/lib/category-products";
 import {
-  getAllProductParams,
-  getProductDetail,
-} from "@/lib/product-details";
+  getProductDetailForPage,
+  getProductsForCategory,
+} from "@/lib/db/products";
+import { seedDatabaseIfEmpty } from "@/lib/db/seed";
+
+export const dynamic = "force-dynamic";
 
 type PageProps = {
   params: Promise<{ slug: string; productId: string }>;
 };
-
-export function generateStaticParams() {
-  return getAllProductParams().map(({ slug, productId }) => ({
-    slug,
-    productId,
-  }));
-}
 
 export async function generateMetadata({
   params,
@@ -36,7 +31,11 @@ export async function generateMetadata({
     return { title: "Product Not Found" };
   }
 
-  const product = getProductDetail(category.id as CategoryId, productId, category.title);
+  const product = await getProductDetailForPage(
+    category.id as CategoryId,
+    productId,
+    category.title,
+  );
 
   if (!product) {
     return { title: "Product Not Found" };
@@ -56,7 +55,9 @@ export default async function ProductDetailRoute({ params }: PageProps) {
     notFound();
   }
 
-  const product = getProductDetail(
+  await seedDatabaseIfEmpty();
+
+  const product = await getProductDetailForPage(
     category.id as CategoryId,
     productId,
     category.title,
@@ -66,7 +67,7 @@ export default async function ProductDetailRoute({ params }: PageProps) {
     notFound();
   }
 
-  const relatedProducts = getProductsByCategory(category.id as CategoryId).filter(
+  const relatedProducts = (await getProductsForCategory(category.id as CategoryId)).filter(
     (item) => item.id !== productId,
   );
 

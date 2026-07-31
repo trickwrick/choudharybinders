@@ -5,7 +5,10 @@ import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { categories, getCategoryById, toCategorySummary, type CategoryId } from "@/lib/categories";
-import { getProductsByCategory } from "@/lib/category-products";
+import { getProductsForCategory } from "@/lib/db/products";
+import { seedDatabaseIfEmpty } from "@/lib/db/seed";
+
+export const dynamic = "force-dynamic";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -39,7 +42,8 @@ export default async function CategoryProductsRoute({ params }: PageProps) {
     notFound();
   }
 
-  const products = getProductsByCategory(category.id as CategoryId);
+  await seedDatabaseIfEmpty();
+  const products = await getProductsForCategory(category.id as CategoryId);
 
   return (
     <>

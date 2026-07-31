@@ -7,19 +7,26 @@ import Footer from "@/components/Footer";
 import GallerySection from "@/components/GallerySection";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
-import ContactSection from "@/components/ContactSection";
+import ContactSectionWrapper from "@/components/ContactSectionWrapper";
 import FloatingActions from "@/components/FloatingActions";
 import ProcessSection from "@/components/ProcessSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import VideosSection from "@/components/VideosSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
+import { getHeroSlidesFromDb } from "@/lib/db/hero-slides";
+import { seedDatabaseIfEmpty } from "@/lib/db/seed";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  await seedDatabaseIfEmpty();
+  const slides = await getHeroSlidesFromDb();
+
   return (
     <>
       <Navbar />
       <main>
-        <Hero />
+        <Hero slides={slides} />
         <ClientsSection />
         <ProductsSection />
         <WhyChooseUsSection />
@@ -30,7 +37,7 @@ export default function Home() {
         <VideosSection />
         <TestimonialsSection />
         <FAQSection />
-        <ContactSection />
+        <ContactSectionWrapper />
       </main>
       <Footer />
       <FloatingActions />

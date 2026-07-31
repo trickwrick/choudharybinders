@@ -4,9 +4,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import { heroSlides } from "@/lib/site-images";
+import { heroSlides as fallbackSlides } from "@/lib/site-images";
+import type { HeroSlide } from "@/lib/types/cms";
 
-export default function Hero() {
+export default function Hero({ slides }: { slides?: HeroSlide[] }) {
+  const heroSlides = slides && slides.length > 0 ? slides : [...fallbackSlides];
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
 
@@ -18,12 +20,12 @@ export default function Hero() {
   const next = useCallback(() => {
     setDirection(1);
     setCurrent((c) => (c + 1) % heroSlides.length);
-  }, []);
+  }, [heroSlides.length]);
 
   const prev = useCallback(() => {
     setDirection(-1);
     setCurrent((c) => (c === 0 ? heroSlides.length - 1 : c - 1));
-  }, []);
+  }, [heroSlides.length]);
 
   useEffect(() => {
     const timer = setInterval(next, 5000);

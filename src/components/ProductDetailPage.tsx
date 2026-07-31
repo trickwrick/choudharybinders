@@ -98,6 +98,17 @@ export default function ProductDetailPage({
     return Array.from(options);
   }, [product.unit]);
 
+  const quoteHref = useMemo(() => {
+    const params = new URLSearchParams({
+      product: product.title,
+      productId: product.id,
+      category: categorySlug,
+      qty: String(quantity),
+      unit,
+    });
+    return `/#contact?${params.toString()}`;
+  }, [categorySlug, product.id, product.title, quantity, unit]);
+
   const priceLabel =
     product.price != null
       ? formatProductPrice(product.price, product.unit)
@@ -218,7 +229,7 @@ export default function ProductDetailPage({
                     </option>
                   ))}
                 </select>
-                <Button href="/#contact" size="sm" className="min-w-[120px]">
+                <Button href={quoteHref} size="sm" className="min-w-[120px]">
                   Get Quote
                 </Button>
               </div>
@@ -333,7 +344,7 @@ export default function ProductDetailPage({
                     <Phone className="h-4 w-4" />
                     {businessInfo.phoneDisplay}
                   </a>
-                  <Button href="/#contact" className="w-full justify-center">
+                  <Button href={quoteHref} className="w-full justify-center">
                     Get Best Price
                   </Button>
                   <a
