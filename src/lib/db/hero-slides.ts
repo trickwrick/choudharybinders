@@ -35,6 +35,12 @@ export async function listAllHeroSlides(): Promise<HeroSlideDoc[]> {
   return collection.find({}).sort({ order: 1 }).toArray();
 }
 
+export async function getHeroSlideById(id: string) {
+  const collection = await getCollection();
+  const { ObjectId } = await import("mongodb");
+  return collection.findOne({ _id: new ObjectId(id) });
+}
+
 export async function createHeroSlide(
   data: Omit<HeroSlideDoc, "_id" | "createdAt" | "updatedAt">,
 ) {

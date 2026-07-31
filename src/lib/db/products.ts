@@ -67,6 +67,12 @@ export async function listAllProducts(categoryId?: CategoryId) {
   return collection.find(filter).sort({ categoryId: 1, order: 1 }).toArray();
 }
 
+export async function getProductByMongoId(id: string) {
+  const collection = await getCollection();
+  const { ObjectId } = await import("mongodb");
+  return collection.findOne({ _id: new ObjectId(id) });
+}
+
 export async function createProduct(
   data: Omit<ProductDoc, "_id" | "createdAt" | "updatedAt">,
 ) {

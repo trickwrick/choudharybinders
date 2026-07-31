@@ -215,7 +215,7 @@ function FilterPanel({
           Share your size, quantity, and design — we&apos;ll quote within 24 hours.
         </p>
         <Link
-          href="/#contact"
+          href="/contact"
           className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline"
         >
           Request a Quote
@@ -458,7 +458,7 @@ export default function CategoryProductsPage({
                     >
                       Clear Filters
                     </button>
-                    <Button href="/#contact" size="sm">
+                    <Button href="/contact" size="sm">
                       Request a Quote
                     </Button>
                   </div>
@@ -477,7 +477,7 @@ export default function CategoryProductsPage({
               We manufacture custom sizes, materials, and finishes for bulk orders across Jaipur.
             </p>
           </div>
-          <Button href="/#contact" size="lg" className="shrink-0">
+          <Button href="/contact" size="lg" className="shrink-0">
             Get Custom Quote
             <ArrowRight className="h-4 w-4" />
           </Button>

@@ -50,7 +50,11 @@ const highlights = [
   },
 ];
 
-export default function AboutSection() {
+export default function AboutSection({
+  contactHref = "#contact",
+}: {
+  contactHref?: string;
+}) {
   return (
     <section id="about" className="bg-white py-12 sm:py-16 lg:py-20">
       <Container>
@@ -199,7 +203,7 @@ export default function AboutSection() {
               viewport={{ once: true }}
               className="mt-8 flex flex-wrap gap-3 sm:mt-10"
             >
-              <Button href="#contact" size="lg">
+              <Button href={contactHref} size="lg">
                 Get a Free Quote
                 <ArrowRight className="h-4 w-4" />
               </Button>

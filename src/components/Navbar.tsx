@@ -3,17 +3,19 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, ChevronDown, X, Menu } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import Button from "./Button";
 import Container from "./Container";
 import Logo from "./Logo";
+import QuoteModal from "./QuoteModal";
 import TopBar from "./TopBar";
 
 const primaryLinks = [
   { label: "Home", href: "/#home" },
   { label: "Category", href: "/#category" },
   { label: "Services", href: "/#services" },
-  { label: "About Us", href: "/#about" },
-  { label: "Contact Us", href: "/#contact" },
+  { label: "About Us", href: "/about" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 const moreLinks = [
@@ -35,8 +37,10 @@ function getSectionId(href: string): string | null {
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("#home");
+  const pathname = usePathname();
   const moreRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
@@ -96,12 +100,25 @@ export default function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const openQuoteModal = useCallback(() => {
+    setIsMobileOpen(false);
+    setIsQuoteOpen(true);
+  }, []);
+
   const isLinkActive = useCallback(
     (href: string) => {
+      if (href === "/about") return pathname === "/about";
+      if (href === "/contact") return pathname === "/contact";
+      if (href === "/#home" || href === "/") {
+        return pathname === "/" && activeSection === "#home";
+      }
+
       const sectionId = getSectionId(href);
-      return sectionId ? activeSection === `#${sectionId}` : false;
+      return sectionId
+        ? pathname === "/" && activeSection === `#${sectionId}`
+        : false;
     },
-    [activeSection],
+    [activeSection, pathname],
   );
 
   const isMoreActive = moreLinks.some((link) => isLinkActive(link.href));
@@ -223,10 +240,11 @@ export default function Navbar() {
 
             <div className="hidden shrink-0 items-center gap-3 lg:flex">
               <Button
-                href="#contact"
+                type="button"
                 variant="accent"
                 size="sm"
                 className="btn-shiny-quote rounded-full px-5 shadow-md"
+                onClick={openQuoteModal}
               >
                 Get Quote
                 <ArrowRight className="h-4 w-4" />
@@ -334,9 +352,10 @@ export default function Navbar() {
 
               <div className="border-t border-border p-4">
                 <Button
-                  href="#contact"
+                  type="button"
                   variant="accent"
                   className="w-full rounded-full"
+                  onClick={openQuoteModal}
                 >
                   Get Quote
                   <ArrowRight className="h-4 w-4" />
@@ -346,6 +365,8 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
+
+      <QuoteModal open={isQuoteOpen} onClose={() => setIsQuoteOpen(false)} />
     </>
   );
 }

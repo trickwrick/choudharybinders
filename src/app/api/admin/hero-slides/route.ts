@@ -4,18 +4,32 @@ import { adminGuard } from "@/lib/api-utils";
 import {
   createHeroSlide,
   deleteHeroSlide,
+  getHeroSlideById,
   listAllHeroSlides,
   updateHeroSlide,
 } from "@/lib/db/hero-slides";
 
 export const runtime = "nodejs";
 
-export async function GET() {
+export async function GET(request: Request) {
   const denied = await adminGuard();
   if (denied) return denied;
 
   try {
     dns.setServers(["8.8.8.8", "8.8.4.4"]);
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+
+    if (id) {
+      const slide = await getHeroSlideById(id);
+      if (!slide) {
+        return NextResponse.json({ error: "Slide not found" }, { status: 404 });
+      }
+      return NextResponse.json({
+        slide: { ...slide, _id: slide._id?.toString() },
+      });
+    }
+
     const slides = await listAllHeroSlides();
     return NextResponse.json({
       slides: slides.map((slide) => ({

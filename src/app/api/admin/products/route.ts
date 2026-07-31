@@ -5,6 +5,7 @@ import { adminGuard } from "@/lib/api-utils";
 import {
   createProduct,
   deleteProduct,
+  getProductByMongoId,
   listAllProducts,
   updateProduct,
 } from "@/lib/db/products";
@@ -18,7 +19,19 @@ export async function GET(request: Request) {
   try {
     dns.setServers(["8.8.8.8", "8.8.4.4"]);
     const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
     const categoryId = searchParams.get("categoryId") as CategoryId | null;
+
+    if (id) {
+      const product = await getProductByMongoId(id);
+      if (!product) {
+        return NextResponse.json({ error: "Product not found" }, { status: 404 });
+      }
+      return NextResponse.json({
+        product: { ...product, _id: product._id?.toString() },
+      });
+    }
+
     const products = await listAllProducts(categoryId ?? undefined);
     return NextResponse.json({
       products: products.map((product) => ({

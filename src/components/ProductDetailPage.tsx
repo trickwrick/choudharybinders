@@ -106,7 +106,7 @@ export default function ProductDetailPage({
       qty: String(quantity),
       unit,
     });
-    return `/#contact?${params.toString()}`;
+    return `/contact?${params.toString()}`;
   }, [categorySlug, product.id, product.title, quantity, unit]);
 
   const priceLabel =

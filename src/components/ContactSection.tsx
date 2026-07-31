@@ -63,7 +63,7 @@ const contactBlocks = [
   },
 ];
 
-export default function ContactSection() {
+export default function ContactSection({ inModal = false }: { inModal?: boolean }) {
   const searchParams = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -125,9 +125,12 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="bg-white py-12 sm:py-16">
+    <section
+      id={inModal ? undefined : "contact"}
+      className={inModal ? "bg-white py-4 sm:py-6" : "bg-white py-12 sm:py-16"}
+    >
       <Container>
-        <SectionHeading spaced>Contact Us</SectionHeading>
+        {!inModal ? <SectionHeading spaced>Contact Us</SectionHeading> : null}
 
         {productTitle ? (
           <div className="mx-auto mb-8 max-w-2xl rounded-2xl border border-primary/15 bg-section-mint px-5 py-4 text-center">

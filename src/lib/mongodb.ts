@@ -31,8 +31,25 @@ async function loadMongoModule(): Promise<MongoModule> {
 
 async function createClientPromise(): Promise<MongoClient> {
   const { MongoClient } = await loadMongoModule();
-  const client = new MongoClient(getMongoUri());
-  await client.connect();
+  const client = new MongoClient(getMongoUri(), {
+    serverSelectionTimeoutMS: 10_000,
+  });
+
+  try {
+    await client.connect();
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : "MongoDB connection failed";
+
+    if (message.includes("unable to verify the first certificate")) {
+      throw new Error(
+        `${message} Run "npm run dev" (uses Node --use-system-ca) or start Node with NODE_OPTIONS=--use-system-ca.`,
+      );
+    }
+
+    throw error;
+  }
+
   return client;
 }
 
