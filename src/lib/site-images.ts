@@ -23,10 +23,10 @@ export const categoryImages = {
   offset: "/categories/offset-printing.jpg",
   led: "/categories/led-sign-boards.jpg",
   digital: "/services/advertising-printing.jpg",
-  flex: "/categories/flex-printing.jpg",
+  flex: "/categories/flex-printing-standee.jpg",
   mobileVan: "/services/hoarding-advertising.jpg",
   acp: "/services/fabrication-cladding.jpg",
-  outdoor: "/services/outdoor-advertising.jpg",
+  outdoor: "/categories/outdoor-advertising.jpg",
 } as const;
 
 export const serviceImages = [
