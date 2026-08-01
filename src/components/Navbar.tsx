@@ -20,7 +20,7 @@ const primaryLinks = [
 
 const moreLinks = [
   { label: "Why Us", href: "/#why-us" },
-  { label: "Gallery", href: "/#gallery" },
+  { label: "Gallery", href: "/gallery" },
   { label: "Videos", href: "/#videos" },
   { label: "Testimonials", href: "/#testimonials" },
   { label: "FAQ", href: "/#faq" },
@@ -109,6 +109,7 @@ export default function Navbar() {
     (href: string) => {
       if (href === "/about") return pathname === "/about";
       if (href === "/contact") return pathname === "/contact";
+      if (href === "/gallery") return pathname === "/gallery";
       if (href === "/#home" || href === "/") {
         return pathname === "/" && activeSection === "#home";
       }

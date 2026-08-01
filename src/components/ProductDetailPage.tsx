@@ -9,7 +9,6 @@ import {
   ChevronRight,
   Clock,
   MessageCircle,
-  Phone,
   Share2,
   Star,
 } from "lucide-react";
@@ -22,6 +21,9 @@ import {
 import { businessInfo } from "@/lib/site-business";
 import Button from "./Button";
 import Container from "./Container";
+import ProductQuoteModal, {
+  type ProductQuoteInfo,
+} from "./ProductQuoteModal";
 
 function RelatedProductCard({
   product,
@@ -92,22 +94,33 @@ export default function ProductDetailPage({
   const [activeImage, setActiveImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [unit, setUnit] = useState(product.unit ?? "Sq.ft");
+  const [quoteOpen, setQuoteOpen] = useState(false);
 
   const unitOptions = useMemo(() => {
     const options = new Set([product.unit ?? "Sq.ft", "Sq.ft", "Ft", "Piece", "Set"]);
     return Array.from(options);
   }, [product.unit]);
 
-  const quoteHref = useMemo(() => {
-    const params = new URLSearchParams({
-      product: product.title,
+  const quoteProduct = useMemo<ProductQuoteInfo>(
+    () => ({
       productId: product.id,
-      category: categorySlug,
-      qty: String(quantity),
+      productTitle: product.title,
+      categoryId: categorySlug,
+      image: product.image,
+      quantity,
       unit,
-    });
-    return `/contact?${params.toString()}`;
-  }, [categorySlug, product.id, product.title, quantity, unit]);
+      minQty: product.minQty,
+    }),
+    [
+      categorySlug,
+      product.id,
+      product.image,
+      product.minQty,
+      product.title,
+      quantity,
+      unit,
+    ],
+  );
 
   const priceLabel =
     product.price != null
@@ -115,6 +128,7 @@ export default function ProductDetailPage({
       : "Price on request";
 
   return (
+    <>
     <section className="bg-[#f3f4f6] py-6 sm:py-8 lg:py-10">
       <Container>
         <nav aria-label="Breadcrumb" className="mb-4 text-xs text-text/55 sm:text-sm">
@@ -151,7 +165,7 @@ export default function ProductDetailPage({
         </nav>
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)_300px] xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_320px]">
-          <div className="rounded-xl border border-border/70 bg-white p-3 shadow-sm sm:p-4">
+          <div className="self-start rounded-xl border border-border/70 bg-white p-3 shadow-sm sm:p-4 lg:sticky lg:top-28">
             <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-light-bg">
               <Image
                 src={product.images[activeImage] ?? product.image}
@@ -162,7 +176,7 @@ export default function ProductDetailPage({
                 priority
               />
             </div>
-            <div className="mt-3 flex gap-2 overflow-x-auto pb-1">
+            <div className="mt-3 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {product.images.map((image, index) => (
                 <button
                   key={`${image}-${index}`}
@@ -229,7 +243,12 @@ export default function ProductDetailPage({
                     </option>
                   ))}
                 </select>
-                <Button href={quoteHref} size="sm" className="min-w-[120px]">
+                <Button
+                  type="button"
+                  size="sm"
+                  className="min-w-[120px]"
+                  onClick={() => setQuoteOpen(true)}
+                >
                   Get Quote
                 </Button>
               </div>
@@ -337,14 +356,11 @@ export default function ProductDetailPage({
                 </div>
 
                 <div className="mt-4 space-y-2.5">
-                  <a
-                    href={businessInfo.phoneTel}
-                    className="flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 text-sm font-bold text-white transition-colors hover:bg-primary-dark"
+                  <Button
+                    type="button"
+                    className="w-full justify-center"
+                    onClick={() => setQuoteOpen(true)}
                   >
-                    <Phone className="h-4 w-4" />
-                    {businessInfo.phoneDisplay}
-                  </a>
-                  <Button href={quoteHref} className="w-full justify-center">
                     Get Best Price
                   </Button>
                   <a
@@ -396,5 +412,12 @@ export default function ProductDetailPage({
         ) : null}
       </Container>
     </section>
+
+    <ProductQuoteModal
+      open={quoteOpen}
+      onClose={() => setQuoteOpen(false)}
+      product={quoteProduct}
+    />
+    </>
   );
 }

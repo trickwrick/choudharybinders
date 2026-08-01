@@ -1,8 +1,9 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { fadeUp } from "@/lib/animations";
 import { galleryImages } from "@/lib/site-images";
@@ -194,15 +195,27 @@ export default function GallerySection() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mx-auto mb-10 max-w-2xl text-center sm:mb-12"
+          className="relative mb-10 sm:mb-12"
         >
-          <h2 className="text-2xl font-bold text-[#0a2463] sm:text-3xl lg:text-4xl">
-            Gallery
-          </h2>
-          <p className="mt-3 text-sm leading-relaxed text-text/55 sm:text-base">
-            Our recent printing, branding, signage &amp; outdoor advertising work
-            across Jaipur
-          </p>
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-2xl font-bold text-[#0a2463] sm:text-3xl lg:text-4xl">
+              Gallery
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-text/55 sm:text-base">
+              Our recent printing, branding, signage &amp; outdoor advertising work
+              across Jaipur
+            </p>
+          </div>
+
+          <div className="mt-4 flex justify-center sm:absolute sm:right-0 sm:top-1/2 sm:mt-0 sm:-translate-y-1/2">
+            <Link
+              href="/gallery"
+              className="inline-flex items-center gap-2 rounded-full border border-primary/25 bg-white px-4 py-2 text-sm font-semibold text-primary shadow-sm transition-all hover:border-primary hover:bg-primary hover:text-white"
+            >
+              View More
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </motion.div>
 
         <motion.div

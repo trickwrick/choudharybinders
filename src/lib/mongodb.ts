@@ -1,4 +1,5 @@
 import dns from "node:dns";
+import { resolveSrv, resolveTxt } from "node:dns/promises";
 
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
 
@@ -25,13 +26,72 @@ function getDbName() {
   return process.env.MONGODB_DB_NAME ?? "choudharybinders";
 }
 
+function ensureGoogleDns() {
+  dns.setServers(["8.8.8.8", "8.8.4.4"]);
+}
+
+/**
+ * Convert mongodb+srv:// to mongodb:// by resolving SRV/TXT ourselves.
+ * Avoids Windows/Next.js "querySrv ECONNREFUSED" when the driver uses a broken local DNS.
+ */
+async function toDirectMongoUri(uri: string): Promise<string> {
+  if (!uri.startsWith("mongodb+srv://")) {
+    return uri;
+  }
+
+  ensureGoogleDns();
+
+  const withoutProtocol = uri.slice("mongodb+srv://".length);
+  const atIndex = withoutProtocol.lastIndexOf("@");
+  if (atIndex < 0) {
+    throw new Error("Invalid MONGODB_URI: missing credentials");
+  }
+
+  const credentials = withoutProtocol.slice(0, atIndex);
+  const hostAndRest = withoutProtocol.slice(atIndex + 1);
+  const slashIndex = hostAndRest.indexOf("/");
+  const host =
+    slashIndex >= 0 ? hostAndRest.slice(0, slashIndex) : hostAndRest.split("?")[0];
+  const pathAndQuery = slashIndex >= 0 ? hostAndRest.slice(slashIndex) : "/";
+  const [pathPart, existingQuery = ""] = pathAndQuery.split("?");
+
+  const [srvRecords, txtRecords] = await Promise.all([
+    resolveSrv(`_mongodb._tcp.${host}`),
+    resolveTxt(host).catch(() => [] as string[][]),
+  ]);
+
+  if (!srvRecords.length) {
+    throw new Error(`No SRV records found for ${host}`);
+  }
+
+  const hosts = srvRecords
+    .map((record) => `${record.name}:${record.port}`)
+    .join(",");
+
+  const params = new URLSearchParams(existingQuery);
+  for (const entry of txtRecords.flat()) {
+    for (const pair of entry.split("&")) {
+      const [key, value] = pair.split("=");
+      if (key && value && !params.has(key)) {
+        params.set(key, value);
+      }
+    }
+  }
+  params.set("tls", "true");
+
+  return `mongodb://${credentials}@${hosts}${pathPart || "/"}?${params.toString()}`;
+}
+
 async function loadMongoModule(): Promise<MongoModule> {
   return import("mongodb");
 }
 
 async function createClientPromise(): Promise<MongoClient> {
+  ensureGoogleDns();
+
   const { MongoClient } = await loadMongoModule();
-  const client = new MongoClient(getMongoUri(), {
+  const uri = await toDirectMongoUri(getMongoUri());
+  const client = new MongoClient(uri, {
     serverSelectionTimeoutMS: 10_000,
   });
 

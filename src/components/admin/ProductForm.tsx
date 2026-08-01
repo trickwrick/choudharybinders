@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ArrowLeft } from "lucide-react";
-import ImageUploadField from "@/components/admin/ImageUploadField";
+import ProductImagesField from "@/components/admin/ProductImagesField";
 import { categories, type CategoryId } from "@/lib/categories";
 import type { ProductDoc } from "@/lib/types/cms";
 
@@ -23,6 +23,18 @@ const emptyProduct: Partial<ProductDoc> = {
   order: 0,
 };
 
+function normalizeProductImages(product: Partial<ProductDoc>): Partial<ProductDoc> {
+  const main = product.image ?? "";
+  const gallery = [
+    ...new Set([main, ...(product.images ?? [])].filter(Boolean)),
+  ];
+  return {
+    ...product,
+    image: main || gallery[0] || "",
+    images: gallery.length ? gallery : main ? [main] : [],
+  };
+}
+
 export default function ProductForm({
   initialProduct,
   defaultCategory = "offset",
@@ -33,19 +45,25 @@ export default function ProductForm({
   const router = useRouter();
   const isEdit = Boolean(initialProduct?._id);
   const [product, setProduct] = useState<Partial<ProductDoc>>(
-    initialProduct ?? { ...emptyProduct, categoryId: defaultCategory },
+    normalizeProductImages(
+      initialProduct ?? { ...emptyProduct, categoryId: defaultCategory },
+    ),
   );
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
 
   const handleSave = async () => {
     if (!product.id || !product.title || !product.image || !product.categoryId) {
-      setError("Product slug, title, category, and image are required.");
+      setError("Product slug, title, category, and main image are required.");
       return;
     }
 
     setSaving(true);
     setError("");
+
+    const images = [
+      ...new Set([product.image, ...(product.images ?? [])].filter(Boolean)),
+    ];
 
     const method = isEdit ? "PUT" : "POST";
     const response = await fetch("/api/admin/products", {
@@ -53,7 +71,8 @@ export default function ProductForm({
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...product,
-        images: product.images?.length ? product.images : [product.image],
+        image: product.image,
+        images,
       }),
     });
 
@@ -93,9 +112,16 @@ export default function ProductForm({
       <div className="rounded-2xl border border-border/70 bg-white p-5 shadow-sm sm:p-6">
         <div className="grid gap-4 xl:grid-cols-[minmax(0,1fr)_320px]">
           <div className="space-y-4">
-            <ImageUploadField
-              value={product.image ?? ""}
-              onChange={(url) => setProduct({ ...product, image: url })}
+            <ProductImagesField
+              mainImage={product.image ?? ""}
+              images={product.images ?? []}
+              onChange={({ mainImage, images }) =>
+                setProduct({
+                  ...product,
+                  image: mainImage,
+                  images,
+                })
+              }
             />
 
             <label className="block">
