@@ -2,6 +2,11 @@ import type { Variants } from "framer-motion";
 
 export const easeSmooth = [0.22, 1, 0.36, 1] as const;
 
+export const viewportDefault = {
+  once: true,
+  margin: "-60px" as const,
+};
+
 export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 28 },
   visible: {
@@ -32,16 +37,17 @@ export const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.1, delayChildren: 0.12 },
   },
 };
 
 export const staggerItem: Variants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 28, filter: "blur(4px)" },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: easeSmooth },
+    filter: "blur(0px)",
+    transition: { duration: 0.55, ease: easeSmooth },
   },
 };
 
@@ -61,4 +67,20 @@ export const slideFromRight: Variants = {
     x: 0,
     transition: { duration: 0.6, ease: easeSmooth },
   },
+};
+
+export const cardHover3d = {
+  rest: { rotateX: 0, rotateY: 0, y: 0, scale: 1 },
+  hover: {
+    rotateX: 2,
+    rotateY: -3,
+    y: -6,
+    scale: 1.01,
+    transition: { duration: 0.45, ease: easeSmooth },
+  },
+};
+
+export const imageZoomHover = {
+  rest: { scale: 1 },
+  hover: { scale: 1.06, transition: { duration: 0.55, ease: easeSmooth } },
 };

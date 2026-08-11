@@ -35,7 +35,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         <div className="border-b border-white/10 px-6 py-5">
           <Link href="/admin" className="flex items-center gap-3">
             <Image
-              src="/logo-main.png"
+              src="/logo-brand.png"
               alt="Choudhary Binders"
               width={120}
               height={46}

@@ -5,7 +5,8 @@ import { ArrowRight, ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { fadeUp } from "@/lib/animations";
+import Reveal from "./motion/Reveal";
+import SectionDivider from "./motion/SectionDivider";
 import { galleryImages } from "@/lib/site-images";
 import Container from "./Container";
 
@@ -113,7 +114,7 @@ function CarouselRow({
               key={`${size}-${item.src}-${index}`}
               type="button"
               onClick={() => onSelect(globalIndex)}
-              className={`group relative shrink-0 snap-start overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
+              className={`group relative shrink-0 snap-start overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-400 hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
                 isLarge
                   ? "h-[11rem] w-[17.5rem] sm:h-[14rem] sm:w-[22rem] lg:h-[15rem] lg:w-[24rem]"
                   : "h-[5.5rem] w-[8.5rem] sm:h-[6.5rem] sm:w-[10rem] lg:h-[7rem] lg:w-[11rem]"
@@ -128,8 +129,13 @@ function CarouselRow({
                     ? "(max-width: 640px) 280px, 384px"
                     : "(max-width: 640px) 136px, 176px"
                 }
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
+                className="object-cover transition-transform duration-600 group-hover:scale-110"
               />
+              <div className="portfolio-card-overlay absolute inset-0 flex items-end p-3 opacity-0 transition-opacity duration-400 group-hover:opacity-100 sm:p-4">
+                <p className="translate-y-2 text-xs font-semibold text-white transition-transform duration-400 group-hover:translate-y-0 sm:text-sm">
+                  {item.label}
+                </p>
+              </div>
             </button>
           );
         })}
@@ -188,15 +194,12 @@ export default function GallerySection() {
   const bottomRowItems = galleryImages.slice(0, 5);
 
   return (
-    <section id="gallery" className="bg-[#f8f9fb] py-12 sm:py-16 lg:py-20">
-      <Container>
-        <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="relative mb-10 sm:mb-12"
-        >
+    <>
+      <SectionDivider variant="white" />
+      <section id="gallery" className="relative bg-[#f8f9fb] py-12 sm:py-16 lg:py-20">
+        <div className="print-grain pointer-events-none absolute inset-0 opacity-15" />
+        <Container className="relative">
+        <Reveal className="relative mb-10 sm:mb-12">
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-2xl font-bold text-[#0a2463] sm:text-3xl lg:text-4xl">
               Gallery
@@ -216,15 +219,9 @@ export default function GallerySection() {
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="space-y-6 sm:space-y-8"
-        >
+        <Reveal delay={0.15} className="space-y-6 sm:space-y-8">
           <CarouselRow
             items={topRowItems}
             size="sm"
@@ -239,7 +236,7 @@ export default function GallerySection() {
             paused={lightboxIndex !== null}
             onSelect={setLightboxIndex}
           />
-        </motion.div>
+        </Reveal>
       </Container>
 
       <AnimatePresence>
@@ -320,5 +317,6 @@ export default function GallerySection() {
         )}
       </AnimatePresence>
     </section>
+    </>
   );
 }

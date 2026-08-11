@@ -39,7 +39,7 @@ export default function AdminLoginForm() {
       <div className="w-full max-w-md overflow-hidden rounded-3xl border border-white/10 bg-white shadow-2xl">
         <div className="bg-gradient-to-r from-primary to-[#0ADB0A] px-8 py-8 text-center text-white">
           <Image
-            src="/logo-main.png"
+            src="/logo-brand.png"
             alt="Choudhary Binders"
             width={180}
             height={70}

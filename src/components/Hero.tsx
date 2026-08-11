@@ -1,149 +1,221 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { heroSlides as fallbackSlides } from "@/lib/site-images";
 import type { HeroSlide } from "@/lib/types/cms";
 
+const AUTO_MS = 6000;
+
+const heroFeatures = [
+  "Your Go-To Partner for Innovative Printing",
+  "Mix and Match Colors, Sizes & Designs",
+  "Fast, Reliable Delivery Across India",
+  "Customizable Branding Solutions",
+  "Expert Team with Years of Experience",
+  "High-Resolution Print Output",
+];
+
+const stats = [
+  { value: "45+", label: "Years of Experience" },
+  { value: "1000+", label: "Projects Completed" },
+  { value: "500+", label: "Happy Clients" },
+  { value: "7", label: "Print Categories" },
+];
+
 export default function Hero({ slides }: { slides?: HeroSlide[] }) {
   const heroSlides = slides && slides.length > 0 ? slides : [...fallbackSlides];
   const [current, setCurrent] = useState(0);
-  const [direction, setDirection] = useState(0);
+  const [progress, setProgress] = useState(0);
 
-  const goTo = useCallback((index: number) => {
-    setDirection(index > current ? 1 : -1);
-    setCurrent(index);
-  }, [current]);
+  const slideCount = heroSlides.length;
 
   const next = useCallback(() => {
-    setDirection(1);
-    setCurrent((c) => (c + 1) % heroSlides.length);
-  }, [heroSlides.length]);
+    setCurrent((c) => (c + 1) % slideCount);
+    setProgress(0);
+  }, [slideCount]);
 
   const prev = useCallback(() => {
-    setDirection(-1);
-    setCurrent((c) => (c === 0 ? heroSlides.length - 1 : c - 1));
-  }, [heroSlides.length]);
+    setCurrent((c) => (c === 0 ? slideCount - 1 : c - 1));
+    setProgress(0);
+  }, [slideCount]);
 
+  const goTo = useCallback((index: number) => {
+    setCurrent(index);
+    setProgress(0);
+  }, []);
+
+  /* Auto-advance — zoom continues even when cursor is on hero */
   useEffect(() => {
-    const timer = setInterval(next, 5000);
-    return () => clearInterval(timer);
-  }, [next]);
+    if (slideCount <= 1) return;
 
-  const slideVariants = {
-    enter: (dir: number) => ({ x: dir >= 0 ? "100%" : "-100%", opacity: 0 }),
-    center: { x: 0, opacity: 1 },
-    exit: (dir: number) => ({ x: dir >= 0 ? "-100%" : "100%", opacity: 0 }),
-  };
+    const advanceTimer = window.setInterval(() => {
+      setCurrent((c) => (c + 1) % slideCount);
+      setProgress(0);
+    }, AUTO_MS);
+
+    return () => window.clearInterval(advanceTimer);
+  }, [slideCount]);
+
+  /* Progress bar sync */
+  useEffect(() => {
+    const start = Date.now();
+    const tick = window.setInterval(() => {
+      const elapsed = Date.now() - start;
+      setProgress(Math.min(100, (elapsed / AUTO_MS) * 100));
+    }, 50);
+
+    return () => window.clearInterval(tick);
+  }, [current]);
+
+  const slide = heroSlides[current];
+  const zoomIn = current % 2 === 0;
 
   return (
-    <section id="home" className="relative pt-[7.25rem]">
-      <div className="relative h-[380px] overflow-hidden sm:h-[420px] lg:h-[480px]">
-        <AnimatePresence custom={direction} initial={false} mode="popLayout">
+    <section id="home" className="relative">
+      <div className="relative min-h-[100svh] overflow-hidden">
+        {/* Auto zoom + crossfade background — Print Express style */}
+        <AnimatePresence mode="sync" initial={false}>
           <motion.div
             key={current}
-            custom={direction}
-            variants={slideVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.4, ease: "easeInOut" }}
             className="absolute inset-0"
           >
-            <Image
-              src={heroSlides[current].src}
-              alt={heroSlides[current].alt}
-              fill
-              priority={current === 0}
-              sizes="100vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/30 to-black/10" />
+            <div className="absolute inset-0 overflow-hidden">
+              <motion.div
+                className="absolute inset-0 h-full w-full"
+                initial={{ scale: zoomIn ? 1 : 1.2 }}
+                animate={{ scale: zoomIn ? 1.2 : 1 }}
+                transition={{
+                  duration: AUTO_MS / 1000,
+                  ease: "linear",
+                }}
+              >
+                <Image
+                  src={slide.src}
+                  alt={slide.alt}
+                  fill
+                  priority={current === 0}
+                  sizes="100vw"
+                  className="object-cover"
+                />
+              </motion.div>
+            </div>
           </motion.div>
         </AnimatePresence>
 
-        <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-4 sm:px-6 lg:px-8">
-          <div className="max-w-xl">
-            <motion.p
-              key={`tag-${current}`}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-brand-lime sm:text-sm"
-            >
-              Since 1980
-            </motion.p>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/35 via-black/40 to-black/75" />
 
-            <motion.h1
-              key={`title-${current}`}
-              initial={{ opacity: 0, y: 20 }}
+        {/* Center headline — content sits below transparent navbar */}
+        <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-5xl flex-col items-center justify-center px-4 pb-44 pt-[8rem] text-center sm:px-6 lg:pb-48">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={current}
+              initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.15, duration: 0.5 }}
-              className="text-2xl font-bold leading-tight text-white sm:text-3xl lg:text-5xl"
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+              className="max-w-4xl"
             >
-              {heroSlides[current].title}
-            </motion.h1>
+              <h1 className="text-3xl font-extrabold leading-[1.15] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">
+                Your Trusted Printing
+                <br />
+                &amp; Branding Partner
+              </h1>
+              <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base">
+                {slide.subtitle}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
-            <motion.p
-              key={`sub-${current}`}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.25 }}
-              className="mt-3 text-sm text-white/85 sm:text-base lg:text-lg"
-            >
-              {heroSlides[current].subtitle}
-            </motion.p>
+        {/* Feature bullets */}
+        <div className="absolute inset-x-0 bottom-0 z-10 px-4 pb-8 sm:px-6 sm:pb-10 lg:px-8">
+          <ul className="mx-auto grid max-w-6xl grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-3.5">
+            {heroFeatures.map((feature) => (
+              <li
+                key={feature}
+                className="flex items-center gap-2.5 text-left text-sm font-medium text-white/90 sm:text-[15px]"
+              >
+                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent">
+                  <Check className="h-3 w-3 stroke-[3] text-white" />
+                </span>
+                {feature}
+              </li>
+            ))}
+          </ul>
 
-            <motion.a
-              href="#contact"
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35 }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.97 }}
-              className="btn-brand-cta mt-6 sm:text-base"
-            >
-              Enquire Now
-              <ArrowRight className="h-5 w-5" />
-            </motion.a>
+          <div className="mx-auto mt-6 flex max-w-6xl items-center justify-between">
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={prev}
+                aria-label="Previous slide"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                onClick={next}
+                aria-label="Next slide"
+                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {heroSlides.map((item, index) => (
+                <button
+                  key={`dot-${item.src}`}
+                  type="button"
+                  aria-label={`Go to slide ${index + 1}`}
+                  onClick={() => goTo(index)}
+                  className="relative h-1 overflow-hidden rounded-full bg-white/30 transition-all"
+                  style={{ width: index === current ? 40 : 10 }}
+                >
+                  {index === current ? (
+                    <span
+                      className="absolute inset-y-0 left-0 rounded-full bg-accent transition-[width] duration-100 linear"
+                      style={{ width: `${progress}%` }}
+                    />
+                  ) : null}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        <button
-          type="button"
-          onClick={prev}
-          aria-label="Previous slide"
-          className="absolute left-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/35 sm:left-5 sm:h-11 sm:w-11"
-        >
-          <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
-        </button>
+        <div className="brand-tricolor-bar absolute inset-x-0 bottom-0 z-20 h-1" />
+      </div>
 
-        <button
-          type="button"
-          onClick={next}
-          aria-label="Next slide"
-          className="absolute right-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-sm transition-colors hover:bg-white/35 sm:right-5 sm:h-11 sm:w-11"
-        >
-          <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
-        </button>
-
-        <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-          {heroSlides.map((slide, i) => (
-            <button
-              key={slide.src}
-              type="button"
-              aria-label={`Go to slide ${i + 1}`}
-              onClick={() => goTo(i)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === current ? "w-8 bg-brand-gold" : "w-2 bg-white/50 hover:bg-accent"
-              }`}
-            />
+      {/* Stats strip */}
+      <div className="border-b border-border/70 bg-white">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-border/60 sm:grid-cols-4">
+          {stats.map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.06, duration: 0.45 }}
+              className="bg-white px-4 py-5 text-center sm:py-6"
+            >
+              <p className="text-2xl font-extrabold tracking-tight text-primary sm:text-3xl">
+                {stat.value}
+              </p>
+              <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-text/50 sm:text-[13px]">
+                {stat.label}
+              </p>
+            </motion.div>
           ))}
         </div>
-
-        <div className="brand-tricolor-bar absolute inset-x-0 bottom-0 z-20 h-1" />
       </div>
     </section>
   );

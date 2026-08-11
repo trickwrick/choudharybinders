@@ -19,6 +19,12 @@ import {
 import { sectionImages } from "@/lib/site-images";
 import Button from "./Button";
 import Container from "./Container";
+import CountUp from "./motion/CountUp";
+import ImageReveal from "./motion/ImageReveal";
+import MagneticWrap from "./motion/MagneticWrap";
+import Reveal from "./motion/Reveal";
+import SectionDivider from "./motion/SectionDivider";
+import TextReveal from "./motion/TextReveal";
 import SectionHeading from "./SectionHeading";
 import SectionImage from "./SectionImage";
 
@@ -56,8 +62,11 @@ export default function AboutSection({
   contactHref?: string;
 }) {
   return (
-    <section id="about" className="bg-white py-12 sm:py-16 lg:py-20">
-      <Container>
+    <>
+      <SectionDivider variant="white" />
+      <section id="about" className="relative bg-white py-12 sm:py-16 lg:py-20">
+        <div className="print-grain pointer-events-none absolute inset-0 opacity-20" />
+        <Container className="relative">
         <SectionHeading spaced className="!mb-4 sm:!mb-5">
           About Us
         </SectionHeading>
@@ -81,23 +90,23 @@ export default function AboutSection({
             className="relative space-y-4 md:sticky md:top-24"
           >
             <div className="brand-tricolor-bar absolute -left-3 top-6 hidden h-24 w-1 rounded-full md:block" />
-            <div className="relative overflow-hidden rounded-2xl border border-border/80 shadow-xl">
-              <div className="group">
+            <ImageReveal direction="left" className="relative overflow-hidden rounded-2xl border border-border/80 shadow-xl">
+              <div className="group relative">
                 <SectionImage
                   src={sectionImages.about}
                   alt="Choudhary Binders & Printers — printing and signage work in Jaipur"
                   aspect="4/3"
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  imageClassName="!p-0"
+                  imageClassName="!p-0 transition-transform duration-700 group-hover:scale-[1.03]"
                 />
+                <div className="absolute right-3 top-3 flex items-center gap-2 rounded-full bg-brand-lime px-3 py-1.5 shadow-md sm:right-4 sm:top-4 sm:px-4 sm:py-2">
+                  <Sparkles className="h-4 w-4 text-text" />
+                  <span className="text-xs font-bold text-text sm:text-sm">
+                    Since 1980
+                  </span>
+                </div>
               </div>
-              <div className="absolute right-3 top-3 flex items-center gap-2 rounded-full bg-brand-lime px-3 py-1.5 shadow-md sm:right-4 sm:top-4 sm:px-4 sm:py-2">
-                <Sparkles className="h-4 w-4 text-text" />
-                <span className="text-xs font-bold text-text sm:text-sm">
-                  Since 1980
-                </span>
-              </div>
-            </div>
+            </ImageReveal>
 
             <div className="flex items-center gap-4 rounded-xl border border-border bg-light-bg px-5 py-4">
               <p className="text-3xl font-bold text-primary">1980</p>
@@ -125,7 +134,9 @@ export default function AboutSection({
 
             <h3 className="mt-5 text-2xl font-bold leading-snug text-text sm:text-3xl lg:text-[2rem]">
               Your Complete Printing &amp;{" "}
-              <span className="brand-gradient-text">Branding Partner</span>
+              <span className="brand-gradient-text">
+                <TextReveal delay={0.1}>Branding Partner</TextReveal>
+              </span>
             </h3>
 
             <div className="mt-5 space-y-4 text-sm leading-relaxed text-text/70 sm:text-base">
@@ -164,7 +175,7 @@ export default function AboutSection({
                   className="rounded-xl border border-border/80 bg-light-bg px-4 py-4 text-center transition-colors hover:border-primary/25 hover:bg-white sm:px-5 sm:py-5"
                 >
                   <p className="text-xl font-bold text-primary sm:text-2xl">
-                    {stat.value}
+                    <CountUp value={stat.value} />
                   </p>
                   <p className="mt-1 text-xs font-medium text-text/60 sm:text-sm">
                     {stat.label}
@@ -203,10 +214,12 @@ export default function AboutSection({
               viewport={{ once: true }}
               className="mt-8 flex flex-wrap gap-3 sm:mt-10"
             >
-              <Button href={contactHref} size="lg">
-                Get a Free Quote
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+              <MagneticWrap strength={0.18}>
+                <Button href={contactHref} size="lg">
+                  Get a Free Quote
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </MagneticWrap>
               <Button href="tel:+917821013457" variant="outline" size="lg">
                 Call +91-7821013457
               </Button>
@@ -215,5 +228,6 @@ export default function AboutSection({
         </div>
       </Container>
     </section>
+    </>
   );
 }

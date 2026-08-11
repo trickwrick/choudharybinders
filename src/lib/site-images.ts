@@ -1,21 +1,21 @@
 export const heroSlides = [
   {
-    src: "/hero/slide-1.jpg",
-    alt: "Over 50 Years in Advertising World - Choudhary Binders & Printers",
-    title: "Over 50 Years in Advertising World!",
-    subtitle: "Choudhary Binders & Printers — Premium printing & branding solutions",
+    src: "/hero/billboard-advertising.jpg",
+    alt: "Outdoor billboard and hoarding advertising at night",
+    title: "Outdoor Branding & Hoardings",
+    subtitle: "Billboards, flex banners & large-format outdoor advertising across Jaipur",
   },
   {
-    src: "/hero/slide-2.jpg",
-    alt: "Outdoor branding and flex printing services",
-    title: "Outdoor Branding & Flex Printing",
-    subtitle: "Billboards, hoardings, banners & signage across Jaipur",
+    src: "/hero/large-format-printing.jpg",
+    alt: "Professional large format printing and design studio",
+    title: "Premium Printing Solutions",
+    subtitle: "Offset, digital & flex printing with high-resolution output",
   },
   {
-    src: "/hero/slide-3.jpg",
-    alt: "Indoor branding and advertising services",
-    title: "Indoor Branding & Advertising",
-    subtitle: "Shop branding, LED boards, offset printing & more",
+    src: "/hero/neon-signboard.jpg",
+    alt: "Illuminated neon sign board and shop branding",
+    title: "LED & Sign Board Branding",
+    subtitle: "Custom sign boards, LED displays & storefront branding",
   },
 ] as const;
 

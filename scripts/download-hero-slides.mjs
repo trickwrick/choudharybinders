@@ -1,27 +1,24 @@
 import fs from "fs";
 import path from "path";
-import { execSync } from "child_process";
 import sharp from "sharp";
 
-const root = path.join(process.cwd(), "public", "hero");
-fs.mkdirSync(root, { recursive: true });
+const heroDir = path.join(process.cwd(), "public", "hero");
+fs.mkdirSync(heroDir, { recursive: true });
 
+/** Own business assets — hoarding, large-format print, LED sign board (dark/night) */
 const slides = [
-  ["slide-1.jpg", "https://image1.jdomni.in/banner/16062021/55/75/8C/7377A5C0BC89149FD75AB1702F_1623846683359.png"],
-  ["slide-2.jpg", "https://image3.jdomni.in/banner/16062021/0A/12/4A/930E0267D361595D6EC1262640_1623848016077.png"],
-  ["slide-3.jpg", "https://image3.jdomni.in/banner/21062021/F9/6F/E8/918AED6A06D9ECD3B6BB94B54F_1624266109845.jpg"],
+  ["billboard-advertising.jpg", "public/services/hoarding-advertising.jpg"],
+  ["large-format-printing.jpg", "public/services/advertising-printing.jpg"],
+  ["neon-signboard.jpg", "public/gallery/08-led-board.jpg"],
 ];
 
-for (const [name, url] of slides) {
-  const dest = path.join(root, name);
-  const tmp = `${dest}.tmp`;
-  try {
-    execSync(`curl.exe -k -L "${url}" -o "${tmp}" --max-time 45`, { stdio: "pipe" });
-    await sharp(tmp).resize(1920, 720, { fit: "cover" }).jpeg({ quality: 90 }).toFile(dest);
-    fs.unlinkSync(tmp);
-    console.log("OK", name);
-  } catch (err) {
-    console.error("ERR", name, err.message);
-    if (fs.existsSync(tmp)) fs.unlinkSync(tmp);
-  }
+for (const [name, source] of slides) {
+  const src = path.join(process.cwd(), source);
+  const dest = path.join(heroDir, name);
+  await sharp(src)
+    .resize(1920, 1080, { fit: "cover", position: "centre" })
+    .modulate({ brightness: 0.82, saturation: 1.05 })
+    .jpeg({ quality: 88, mozjpeg: true })
+    .toFile(dest);
+  console.log("OK", name, "from", source);
 }

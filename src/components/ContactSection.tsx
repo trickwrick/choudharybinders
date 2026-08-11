@@ -6,6 +6,10 @@ import { useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useState } from "react";
 import { fadeUp, slideFromLeft, slideFromRight, staggerContainer } from "@/lib/animations";
 import Container from "./Container";
+import MagneticWrap from "./motion/MagneticWrap";
+import Reveal from "./motion/Reveal";
+import SectionDivider from "./motion/SectionDivider";
+import TextReveal from "./motion/TextReveal";
 import SectionHeading from "./SectionHeading";
 
 const contactBlocks = [
@@ -125,12 +129,38 @@ export default function ContactSection({ inModal = false }: { inModal?: boolean 
   };
 
   return (
-    <section
-      id={inModal ? undefined : "contact"}
-      className={inModal ? "bg-white py-4 sm:py-6" : "bg-white py-12 sm:py-16"}
-    >
-      <Container>
-        {!inModal ? <SectionHeading spaced>Contact Us</SectionHeading> : null}
+    <>
+      {!inModal ? <SectionDivider variant="warm" /> : null}
+      <section
+        id={inModal ? undefined : "contact"}
+        className={inModal ? "bg-white py-4 sm:py-6" : "relative bg-white py-12 sm:py-16"}
+      >
+        {!inModal ? (
+          <div className="print-grain pointer-events-none absolute inset-0 opacity-15" />
+        ) : null}
+        <Container className="relative">
+        {!inModal ? (
+          <>
+            <Reveal className="mx-auto mb-10 max-w-3xl text-center sm:mb-14">
+              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary/70">
+                Ready to Print?
+              </p>
+              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-[2.75rem]">
+                <TextReveal delay={0.1}>Let&apos;s Bring Your Ideas</TextReveal>
+                <br />
+                <span className="brand-gradient-text">
+                  <TextReveal delay={0.2}>to Print.</TextReveal>
+                </span>
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-sm text-text/60 sm:text-base">
+                Share your requirement — our team will guide you from design to delivery.
+              </p>
+            </Reveal>
+            <SectionHeading spaced className="!mb-8 hidden">
+              Contact Us
+            </SectionHeading>
+          </>
+        ) : null}
 
         {productTitle ? (
           <div className="mx-auto mb-8 max-w-2xl rounded-2xl border border-primary/15 bg-section-mint px-5 py-4 text-center">
@@ -202,19 +232,22 @@ export default function ContactSection({ inModal = false }: { inModal?: boolean 
               <p className="rounded-md bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>
             ) : null}
             <motion.div variants={fadeUp}>
-              <motion.button
-                type="submit"
-                disabled={loading || submitted}
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                className="btn-brand-cta uppercase tracking-wide disabled:opacity-70"
-              >
-                {submitted ? "Message Sent!" : loading ? "Sending..." : "Submit"}
-              </motion.button>
+              <MagneticWrap strength={0.16}>
+                <motion.button
+                  type="submit"
+                  disabled={loading || submitted}
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="btn-brand-cta uppercase tracking-wide disabled:opacity-70"
+                >
+                  {submitted ? "Message Sent!" : loading ? "Sending..." : "Submit"}
+                </motion.button>
+              </MagneticWrap>
             </motion.div>
           </motion.form>
         </div>
       </Container>
     </section>
+    </>
   );
 }

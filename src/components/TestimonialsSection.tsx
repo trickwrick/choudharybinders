@@ -276,6 +276,27 @@ export default function TestimonialsSection() {
             isAnimating={isAnimating}
             setIsAnimating={setIsAnimating}
           />
+
+          <div className="mx-auto mt-6 flex max-w-xs items-center gap-2">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                type="button"
+                aria-label={`Go to testimonial ${index + 1}`}
+                onClick={() => goTo(index)}
+                className="relative h-1 flex-1 overflow-hidden rounded-full bg-border/80"
+              >
+                <motion.span
+                  animate={{
+                    width: index === current ? "100%" : "0%",
+                    opacity: index === current ? 1 : 0.4,
+                  }}
+                  transition={{ duration: index === current ? 0.85 : 0.3 }}
+                  className="absolute inset-y-0 left-0 rounded-full bg-primary"
+                />
+              </button>
+            ))}
+          </div>
         </div>
 
         <motion.div

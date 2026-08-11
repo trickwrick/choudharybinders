@@ -124,6 +124,9 @@ export default function Navbar() {
 
   const isMoreActive = moreLinks.some((link) => isLinkActive(link.href));
 
+  const isHome = pathname === "/";
+  const isHeroOverlay = isHome && !isScrolled;
+
   const linkClass = (href: string, mobile = false) => {
     const active = isLinkActive(href);
     if (mobile) {
@@ -133,6 +136,15 @@ export default function Navbar() {
           : "text-text/75 hover:bg-accent/10 hover:text-accent"
       }`;
     }
+
+    if (isHeroOverlay) {
+      return `relative rounded-lg px-2.5 py-2 text-[13px] font-medium transition-all duration-200 xl:px-3 xl:text-sm ${
+        active
+          ? "text-white font-semibold underline decoration-white/80 decoration-2 underline-offset-[6px]"
+          : "text-white/90 hover:text-white"
+      }`;
+    }
+
     return `relative rounded-lg px-2.5 py-2 text-[13px] font-medium transition-all duration-200 xl:px-3 xl:text-sm ${
       active
         ? "bg-primary/15 text-primary font-semibold"
@@ -151,7 +163,7 @@ export default function Navbar() {
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className="overflow-hidden"
         >
-          <TopBar />
+          <TopBar overlay={isHeroOverlay} />
         </motion.div>
 
         <motion.header
@@ -165,20 +177,24 @@ export default function Navbar() {
           }}
           transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
           className={`relative transition-colors duration-500 ${
-            isScrolled
-              ? "border-b border-border/80 bg-white/95 backdrop-blur-lg"
-              : "border-b border-border/50 bg-white/90 backdrop-blur-md"
+            isHeroOverlay
+              ? "border-none bg-transparent shadow-none"
+              : isScrolled
+                ? "border-b border-border/80 bg-white/95 backdrop-blur-lg"
+                : "border-b border-border/50 bg-white/90 backdrop-blur-md"
           }`}
         >
-          <div className="brand-tricolor-bar absolute inset-x-0 bottom-0 h-[2px]" />
+          {!isHeroOverlay ? (
+            <div className="brand-tricolor-bar absolute inset-x-0 bottom-0 h-[2px]" />
+          ) : null}
 
           <Container
             as="nav"
             className={`flex items-center justify-between gap-4 transition-all duration-300 ${
-              isScrolled ? "h-[4.25rem]" : "h-20"
+              isScrolled ? "h-[5rem]" : "h-[5.5rem]"
             }`}
           >
-            <Logo size="md" className="shrink-0" />
+            <Logo size="md" className="shrink-0" onDark={isHeroOverlay} />
 
             <ul className="hidden flex-1 items-center justify-center gap-0.5 lg:flex xl:gap-1">
               {primaryLinks.map((link) => (
@@ -197,8 +213,12 @@ export default function Navbar() {
                   aria-haspopup="true"
                   className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-2 text-[13px] font-medium transition-all duration-200 xl:px-3 xl:text-sm ${
                     isMoreActive || isMoreOpen
-                      ? "bg-primary/15 text-primary font-semibold"
-                      : "text-text/70 hover:bg-accent/10 hover:text-accent"
+                      ? isHeroOverlay
+                        ? "text-white font-semibold underline decoration-white/80 decoration-2 underline-offset-[6px]"
+                        : "bg-primary/15 text-primary font-semibold"
+                      : isHeroOverlay
+                        ? "text-white/90 hover:text-white"
+                        : "text-text/70 hover:bg-accent/10 hover:text-accent"
                   }`}
                 >
                   More
@@ -258,7 +278,9 @@ export default function Navbar() {
               className={`relative z-50 flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-300 lg:hidden ${
                 isMobileOpen
                   ? "border-primary bg-primary text-white"
-                  : "border-border bg-white text-text shadow-sm hover:border-primary/40 hover:text-primary"
+                  : isHeroOverlay
+                    ? "border-white/40 bg-transparent text-white hover:border-white/60"
+                    : "border-border bg-white text-text shadow-sm hover:border-primary/40 hover:text-primary"
               }`}
               aria-label={isMobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMobileOpen}

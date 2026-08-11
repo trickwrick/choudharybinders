@@ -112,6 +112,22 @@ body {
   opacity: 0.9;
 }
 
+.topbar-overlay-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.topbar-overlay-item svg {
+  color: #ffffff;
+  flex-shrink: 0;
+}
+
+.topbar-overlay-item:hover {
+  color: #ffffff;
+}
+
 .section-heading-tricolor {
   background: linear-gradient(
     90deg,
@@ -283,14 +299,135 @@ body {
   animation-play-state: paused;
 }
 
+@keyframes hero-kenburns-in {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.18);
+  }
+}
+
+@keyframes hero-kenburns-out {
+  0% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.hero-kenburns-in {
+  animation: hero-kenburns-in 7s ease-out forwards;
+  will-change: transform;
+}
+
+.hero-kenburns-out {
+  animation: hero-kenburns-out 7s ease-out forwards;
+  will-change: transform;
+}
+
+@keyframes hero-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.hero-float {
+  animation: hero-float 4.5s ease-in-out infinite;
+}
+
+.hero-float-delayed {
+  animation: hero-float 5.2s ease-in-out 0.6s infinite;
+}
+
+.press-card {
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease;
+}
+
+.press-card:hover {
+  transform: translateY(-8px);
+  border-color: color-mix(in srgb, var(--primary) 35%, transparent);
+  box-shadow: 0 24px 48px -20px rgba(15, 23, 42, 0.22);
+}
+
+.perspective-card {
+  transform-style: preserve-3d;
+  perspective: 900px;
+}
+
+.print-grain {
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+.print-crop-marks {
+  background-image:
+    linear-gradient(var(--primary) 0 0) 0 0 / 12px 1px no-repeat,
+    linear-gradient(var(--primary) 0 0) 0 0 / 1px 12px no-repeat,
+    linear-gradient(var(--primary) 0 0) 100% 0 / 12px 1px no-repeat,
+    linear-gradient(var(--primary) 0 0) 100% 0 / 1px 12px no-repeat,
+    linear-gradient(var(--primary) 0 0) 0 100% / 12px 1px no-repeat,
+    linear-gradient(var(--primary) 0 0) 0 100% / 1px 12px no-repeat,
+    linear-gradient(var(--primary) 0 0) 100% 100% / 12px 1px no-repeat,
+    linear-gradient(var(--primary) 0 0) 100% 100% / 1px 12px no-repeat;
+  opacity: 0.12;
+}
+
+.portfolio-card-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(15, 23, 42, 0.82) 0%,
+    rgba(15, 23, 42, 0.35) 45%,
+    transparent 100%
+  );
+}
+
+@keyframes whatsapp-blink {
+  0%,
+  100% {
+    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35), 0 0 0 0 rgba(37, 211, 102, 0.45);
+  }
+  50% {
+    box-shadow: 0 4px 18px rgba(37, 211, 102, 0.5), 0 0 0 10px rgba(37, 211, 102, 0);
+  }
+}
+
+.whatsapp-blink {
+  animation: whatsapp-blink 2.2s ease-in-out infinite;
+}
+
+.whatsapp-blink:hover {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
   .animate-marquee,
-  .animate-marquee-clients {
+  .animate-marquee-clients,
+  .hero-kenburns-in,
+  .hero-kenburns-out,
+  .hero-float,
+  .hero-float-delayed {
     animation: none;
+  }
+
+  .whatsapp-blink {
+    animation: none;
+  }
+
+  .perspective-card:hover {
+    transform: none !important;
   }
 
   *,
