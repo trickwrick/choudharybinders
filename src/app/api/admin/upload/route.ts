@@ -4,6 +4,7 @@ import { join } from "node:path";
 import { NextResponse } from "next/server";
 import { put } from "@vercel/blob";
 import { adminGuard } from "@/lib/api-utils";
+import { saveMediaFile } from "@/lib/db/media";
 
 export const runtime = "nodejs";
 
@@ -12,6 +13,13 @@ const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp", "image/g
 
 function sanitizeFilename(name: string) {
   return name.replace(/[^a-zA-Z0-9.-]/g, "-").toLowerCase();
+}
+
+function uploadErrorMessage(error: unknown) {
+  if (error instanceof Error && error.message) {
+    return error.message;
+  }
+  return "Upload failed";
 }
 
 export async function POST(request: Request) {
@@ -43,13 +51,26 @@ export async function POST(request: Request) {
     const buffer = Buffer.from(await file.arrayBuffer());
     const filename = `${Date.now()}-${sanitizeFilename(file.name || "image.jpg")}`;
     const path = `${folder}/${filename}`;
+    const isVercel = process.env.VERCEL === "1";
 
     if (process.env.BLOB_READ_WRITE_TOKEN) {
-      const blob = await put(path, buffer, {
-        access: "public",
-        contentType: file.type,
-      });
-      return NextResponse.json({ url: blob.url });
+      try {
+        const blob = await put(path, buffer, {
+          access: "public",
+          contentType: file.type,
+        });
+        return NextResponse.json({ url: blob.url });
+      } catch (error) {
+        return NextResponse.json(
+          { error: `Blob upload failed: ${uploadErrorMessage(error)}` },
+          { status: 500 },
+        );
+      }
+    }
+
+    if (isVercel) {
+      const mediaId = await saveMediaFile(buffer, path, file.type);
+      return NextResponse.json({ url: `/api/media/${mediaId}` });
     }
 
     const uploadDir = join(process.cwd(), "public", "uploads", folder);
@@ -57,7 +78,10 @@ export async function POST(request: Request) {
     await writeFile(join(uploadDir, filename), buffer);
 
     return NextResponse.json({ url: `/uploads/${folder}/${filename}` });
-  } catch {
-    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json(
+      { error: uploadErrorMessage(error) },
+      { status: 500 },
+    );
   }
 }
