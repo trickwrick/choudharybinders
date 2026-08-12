@@ -7,9 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { cardHover3d } from "@/lib/animations";
 import { categories } from "@/lib/categories";
-import Button from "./Button";
 import Container from "./Container";
-import MagneticWrap from "./motion/MagneticWrap";
 import Reveal from "./motion/Reveal";
 import SectionDivider from "./motion/SectionDivider";
 import { StaggerItem, StaggerReveal } from "./motion/StaggerReveal";
@@ -98,25 +96,6 @@ export default function ProductsSection() {
               );
             })}
           </StaggerReveal>
-
-          <Reveal delay={0.15} className="mt-8 sm:mt-10">
-            <div className="flex flex-col items-center justify-between gap-4 rounded-2xl border border-primary/15 bg-white px-6 py-6 sm:flex-row sm:px-8 sm:py-7">
-              <div className="text-center sm:text-left">
-                <p className="text-lg font-bold text-text sm:text-xl">
-                  Looking for a custom product?
-                </p>
-                <p className="mt-1 text-sm text-text/60">
-                  Tell us what you need — we&apos;ll manufacture &amp; deliver it for you.
-                </p>
-              </div>
-              <MagneticWrap strength={0.18}>
-                <Button href="#contact" size="lg" className="shrink-0">
-                  Request a Quote
-                  <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                </Button>
-              </MagneticWrap>
-            </div>
-          </Reveal>
         </Container>
       </section>
     </>

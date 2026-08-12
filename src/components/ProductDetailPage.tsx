@@ -142,7 +142,7 @@ export default function ProductDetailPage({
               <ChevronRight className="h-3.5 w-3.5" />
             </li>
             <li>
-              <Link href="/#category" className="hover:text-primary">
+              <Link href="/category" className="hover:text-primary">
                 Category
               </Link>
             </li>

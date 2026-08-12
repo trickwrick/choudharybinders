@@ -300,7 +300,7 @@ export default function CategoryProductsPage({
                 <ChevronRight className="h-3.5 w-3.5" />
               </li>
               <li>
-                <Link href="/#category" className="transition-colors hover:text-white">
+                <Link href="/category" className="transition-colors hover:text-white">
                   Category
                 </Link>
               </li>

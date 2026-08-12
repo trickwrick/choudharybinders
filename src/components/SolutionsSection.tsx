@@ -17,7 +17,6 @@ import {
   contentImages,
   printingSolutions,
 } from "@/lib/site-content";
-import Button from "./Button";
 import Container from "./Container";
 import Reveal from "./motion/Reveal";
 import { StaggerItem, StaggerReveal } from "./motion/StaggerReveal";
@@ -208,19 +207,13 @@ export default function SolutionsSection() {
             />
 
             <Reveal delay={0.14}>
-              <div className="flex flex-col gap-3 rounded-xl border border-border/70 bg-section-warm/80 p-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex items-center gap-2.5">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent/10 text-accent">
-                    <Handshake className="h-4 w-4" />
-                  </div>
-                  <p className="text-xs font-semibold text-text sm:text-sm">
-                    {companyContent.completeSolutionsBadge}
-                  </p>
+              <div className="flex items-center gap-2.5 rounded-xl border border-border/70 bg-section-warm/80 p-4">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+                  <Handshake className="h-4 w-4" />
                 </div>
-                <Button href="#contact" size="sm" className="shrink-0">
-                  Get a Free Quote
-                  <ArrowRight className="h-3.5 w-3.5" />
-                </Button>
+                <p className="text-xs font-semibold text-text sm:text-sm">
+                  {companyContent.completeSolutionsBadge}
+                </p>
               </div>
             </Reveal>
           </div>

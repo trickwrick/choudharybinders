@@ -12,7 +12,7 @@ import TopBar from "./TopBar";
 
 const primaryLinks = [
   { label: "Home", href: "/#home" },
-  { label: "Category", href: "/#category" },
+  { label: "Category", href: "/category" },
   { label: "Services", href: "/#services" },
   { label: "About Us", href: "/about" },
   { label: "Contact Us", href: "/contact" },
@@ -110,6 +110,9 @@ export default function Navbar() {
       if (href === "/about") return pathname === "/about";
       if (href === "/contact") return pathname === "/contact";
       if (href === "/gallery") return pathname === "/gallery";
+      if (href === "/category") {
+        return pathname === "/category" || pathname.startsWith("/category/");
+      }
       if (href === "/#home" || href === "/") {
         return pathname === "/" && activeSection === "#home";
       }

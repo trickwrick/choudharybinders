@@ -11,7 +11,7 @@ import Logo from "./Logo";
 
 const quickLinks = [
   { label: "Home", href: "/#home" },
-  { label: "Category", href: "/#category" },
+  { label: "Category", href: "/category" },
   { label: "Services", href: "/#services" },
   { label: "About Us", href: "/about" },
   { label: "Gallery", href: "/gallery" },

@@ -3,12 +3,11 @@
 import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, MapPin, Sparkles } from "lucide-react";
+import { MapPin, Sparkles, Target, Telescope } from "lucide-react";
 import { fadeUp, slideFromLeft, slideFromRight } from "@/lib/animations";
 import { companyContent, contentImages } from "@/lib/site-content";
 import Button from "./Button";
 import Container from "./Container";
-import MagneticWrap from "./motion/MagneticWrap";
 import SectionDivider from "./motion/SectionDivider";
 import SectionHeading from "./SectionHeading";
 
@@ -39,7 +38,68 @@ function AboutImage() {
   );
 }
 
-function CompactAbout({ contactHref }: { contactHref: string }) {
+function VisionMissionCards({ layout = "grid" }: { layout?: "grid" | "stack" }) {
+  const cards = [
+    {
+      title: "Vision",
+      text: companyContent.vision,
+      icon: Telescope,
+      border: "border-primary/20",
+      bg: "bg-gradient-to-br from-primary/10 via-primary/5 to-white",
+      titleColor: "text-primary",
+      iconBg: "bg-primary/15 text-primary",
+    },
+    {
+      title: "Mission",
+      text: companyContent.mission,
+      icon: Target,
+      border: "border-accent/20",
+      bg: "bg-gradient-to-br from-accent/10 via-accent/5 to-white",
+      titleColor: "text-accent",
+      iconBg: "bg-accent/15 text-accent",
+    },
+  ] as const;
+
+  return (
+    <div
+      className={
+        layout === "grid"
+          ? "mt-5 grid gap-4 sm:grid-cols-2 sm:gap-5"
+          : "mt-6 space-y-4 sm:space-y-5"
+      }
+    >
+      {cards.map((card) => {
+        const Icon = card.icon;
+        return (
+          <div
+            key={card.title}
+            className={`rounded-2xl border ${card.border} ${card.bg} p-5 shadow-sm sm:p-6`}
+          >
+            <div className="flex items-start gap-3">
+              <div
+                className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl ${card.iconBg}`}
+              >
+                <Icon className="h-5 w-5" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p
+                  className={`text-sm font-bold uppercase tracking-wide sm:text-base ${card.titleColor}`}
+                >
+                  {card.title}
+                </p>
+                <p className="mt-2.5 text-sm leading-relaxed text-text/75 sm:text-base sm:leading-relaxed">
+                  {card.text}
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function CompactAbout() {
   return (
     <section id="about" className="relative bg-white py-8 sm:py-10">
       <Container>
@@ -66,34 +126,16 @@ function CompactAbout({ contactHref }: { contactHref: string }) {
             whileInView="visible"
             viewport={{ once: true, margin: "-40px" }}
           >
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-primary">
-              <MapPin className="h-3 w-3" />
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-primary">
+              <MapPin className="h-3.5 w-3.5" />
               Vidhyadhar Nagar, Jaipur
             </span>
 
-            <p className="mt-3 text-sm leading-relaxed text-text/70 sm:text-[15px]">
+            <p className="mt-4 text-sm leading-relaxed text-text/70 sm:text-base">
               {companyContent.about}
             </p>
 
-            <div className="mt-4 grid gap-2.5 sm:grid-cols-2">
-              <div className="rounded-xl border border-primary/15 bg-primary/5 p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wide text-primary">Vision</p>
-                <p className="mt-1.5 text-xs leading-relaxed text-text/70">{companyContent.vision}</p>
-              </div>
-              <div className="rounded-xl border border-accent/15 bg-accent/5 p-3">
-                <p className="text-[10px] font-bold uppercase tracking-wide text-accent">Mission</p>
-                <p className="mt-1.5 text-xs leading-relaxed text-text/70">{companyContent.mission}</p>
-              </div>
-            </div>
-
-            <div className="mt-5">
-              <MagneticWrap strength={0.18}>
-                <Button href={contactHref} size="md">
-                  Get a Free Quote
-                  <ArrowRight className="h-4 w-4" />
-                </Button>
-              </MagneticWrap>
-            </div>
+            <VisionMissionCards layout="grid" />
           </motion.div>
         </div>
       </Container>
@@ -101,7 +143,7 @@ function CompactAbout({ contactHref }: { contactHref: string }) {
   );
 }
 
-function FullAbout({ contactHref }: { contactHref: string }) {
+function FullAbout() {
   return (
     <>
       <SectionDivider variant="white" />
@@ -147,15 +189,9 @@ function FullAbout({ contactHref }: { contactHref: string }) {
                 <span className="brand-gradient-text">Binding Solutions</span>
               </h3>
 
-              <div className="mt-5 space-y-4 text-sm leading-relaxed text-text/70 sm:text-base">
-                <div className="rounded-xl border border-primary/15 bg-primary/5 p-4">
-                  <p className="text-xs font-bold uppercase tracking-wide text-primary">Vision</p>
-                  <p className="mt-2">{companyContent.vision}</p>
-                </div>
-                <div className="rounded-xl border border-accent/15 bg-accent/5 p-4">
-                  <p className="text-xs font-bold uppercase tracking-wide text-accent">Our Mission</p>
-                  <p className="mt-2">{companyContent.mission}</p>
-                </div>
+              <VisionMissionCards layout="stack" />
+
+              <div className="mt-6 space-y-4 text-sm leading-relaxed text-text/70 sm:text-base">
                 <p>{companyContent.about}</p>
                 <p>{companyContent.intro}</p>
               </div>
@@ -165,14 +201,8 @@ function FullAbout({ contactHref }: { contactHref: string }) {
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
-                className="mt-8 flex flex-wrap gap-3 sm:mt-10"
+                className="mt-8 sm:mt-10"
               >
-                <MagneticWrap strength={0.18}>
-                  <Button href={contactHref} size="lg">
-                    Get a Free Quote
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </MagneticWrap>
                 <Button href="tel:+917821013457" variant="outline" size="lg">
                   Call +91-7821013457
                 </Button>
@@ -186,14 +216,14 @@ function FullAbout({ contactHref }: { contactHref: string }) {
 }
 
 export default function AboutSection({
-  contactHref = "#contact",
+  contactHref: _contactHref = "#contact",
   compact = false,
 }: {
   contactHref?: string;
   compact?: boolean;
 }) {
   if (compact) {
-    return <CompactAbout contactHref={contactHref} />;
+    return <CompactAbout />;
   }
-  return <FullAbout contactHref={contactHref} />;
+  return <FullAbout />;
 }
