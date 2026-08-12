@@ -16,7 +16,7 @@ const ABOUT_IMAGE = contentImages.visionMissionAbout;
 const ABOUT_IMAGE_FALLBACK = "/gallery/01-printing-solution.jpg";
 
 function AboutImage() {
-  const [src, setSrc] = useState(ABOUT_IMAGE);
+  const [src, setSrc] = useState<string>(ABOUT_IMAGE);
 
   return (
     <div className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-border/80 bg-[#f4f4f4] shadow-lg">
