@@ -26,28 +26,28 @@ export default function ClientsSection() {
       </Container>
 
       <Reveal delay={0.08} className="relative mt-8 sm:mt-10">
-        <div className="relative mx-auto w-full max-w-[1064px] overflow-hidden px-4 sm:px-0">
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-white to-transparent sm:w-12" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-white to-transparent sm:w-12" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent sm:w-24" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white to-transparent sm:w-24" />
 
-          <div className="flex w-max animate-marquee-clients items-center gap-8 py-2 sm:gap-10">
-            {marqueeItems.map((client, index) => (
-              <div
-                key={`${client.src}-${index}`}
-                className="flex h-20 w-28 shrink-0 items-center justify-center sm:h-[5.25rem] sm:w-36"
-                title={client.name}
-              >
+        <div className="flex w-max animate-marquee-clients items-center gap-10 px-6 sm:gap-14 sm:px-8">
+          {marqueeItems.map((client, index) => (
+            <div
+              key={`${client.src}-${index}`}
+              className="group flex shrink-0 flex-col items-center"
+              title={client.name}
+            >
+              <div className="relative flex h-28 w-28 items-center justify-center rounded-2xl border border-border/70 bg-white p-4 shadow-[0_4px_20px_rgba(0,0,0,0.06)] transition-all duration-300 ease-out group-hover:-translate-y-1.5 group-hover:border-primary/35 group-hover:shadow-[0_14px_36px_rgba(17,192,17,0.18)] sm:h-32 sm:w-32 sm:p-5">
+                <span className="pointer-events-none absolute inset-0 rounded-2xl bg-primary/0 transition-colors duration-300 group-hover:bg-primary/[0.04]" />
                 <Image
                   src={client.src}
                   alt={client.name}
-                  width={144}
-                  height={84}
-                  className="max-h-16 max-w-full object-contain object-center sm:max-h-[4.5rem]"
-                  style={{ width: "auto", height: "auto" }}
+                  width={112}
+                  height={112}
+                  className="relative z-[1] h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </Reveal>
     </section>
