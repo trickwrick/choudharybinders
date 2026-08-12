@@ -2,11 +2,14 @@ export const categoryCoverImages = {
   offset: "/categories/offset-printing.jpg",
   flex: "/categories/flex-printing.jpg",
   digital: "/categories/digital-printing.jpg",
-  signage: "/categories/led-sign-boards.jpg",
-  binding: "/content/printing-binding.png",
+  signage: "/categories/indoor-branding.jpg",
+  binding: "/gallery/01-printing-solution.jpg",
   "customized-gifts": "/categories/promotional-desk.jpg",
   "mobile-van": "/categories/mobile-van-advertising.jpg",
   unipole: "/categories/outdoor-advertising.jpg",
+  "outdoor-advertisement": "/categories/outdoor-branding.jpg",
+  "led-sign-board": "/gallery/08-led-board.jpg",
+  "corporate-gifting": "/gallery/09-corporate-branding.jpg",
 } as const;
 
 export type CatalogCategoryId = keyof typeof categoryCoverImages;
@@ -131,6 +134,30 @@ export const productImagesById: Record<string, string> = {
   "eco-solvent-high-resolution-printing": img.flexPrint,
   "political-event-campaign-branding": img.billboard,
   "real-estate-corporate-promotions": img.outdoorBrand,
+
+  // Outdoor Advertisement
+  "billboard-advertising": img.billboard,
+  "hoarding-print": img.flexBoard,
+  "unipole-board": img.unipoleCover,
+  "shop-signage-board": img.storefront,
+  "pole-kiosk-board": img.outdoorBanner,
+  "highway-branding": img.outdoorAdv,
+
+  // LED Sign Board
+  "acrylic-led-board": img.ledGallery,
+  "glow-sign-board": img.ledBoard,
+  "led-name-board": img.neon,
+  "led-lollipop-sign": img.ledGallery,
+  "backlit-sign-board": img.ledBoard,
+  "shop-front-led-board": img.hotelSign,
+
+  // Corporate Gifting
+  "corporate-gift-hampers": img.promoCanopy,
+  "branded-corporate-gifts": img.corporate,
+  "executive-gift-set": img.promoDesk,
+  "client-appreciation-gifts": img.corporate,
+  "brand-promo-merchandise": img.promoCanopy,
+  "team-celebration-gifts": img.promoDesk,
 };
 
 export function getProductImage(productId: string, categoryId: CatalogCategoryId): string {

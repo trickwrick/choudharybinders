@@ -49,9 +49,21 @@ export const galleryImages = [
 ] as const;
 
 export const videoThumbnails = [
-  { title: "Standee Advertising Boards", duration: "2:45", src: "/videos/printing-overview.jpg" },
-  { title: "Advertising & Branding", duration: "1:58", src: "/videos/flex-banner.jpg" },
-  { title: "LED Sign Board Installation", duration: "3:12", src: "/videos/led-installation.jpg" },
+  {
+    title: "Standee Advertising Boards",
+    duration: "2:45",
+    src: "/products/01-banner-stand.jpg",
+  },
+  {
+    title: "Advertising & Branding",
+    duration: "1:58",
+    src: "/gallery/02-shop-branding.jpg",
+  },
+  {
+    title: "LED Sign Board Installation",
+    duration: "3:12",
+    src: "/gallery/08-led-board.jpg",
+  },
 ] as const;
 
 export const productImages = [
@@ -64,7 +76,7 @@ export const productImages = [
 ] as const;
 
 export const sectionImages = {
-  centerBanner: "/center-banner.jpg",
+  centerBanner: "/gallery/01-printing-solution.jpg",
   about: "/about.jpg",
   testimonialBrochure: "/testimonials/brochure.jpg",
 } as const;

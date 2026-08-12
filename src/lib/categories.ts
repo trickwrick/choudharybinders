@@ -1,4 +1,4 @@
-import { BookOpen, Gift, Lamp, LayoutGrid, MonitorDot, Sparkles, Sun, Truck, type LucideIcon } from "lucide-react";
+import { BookOpen, Gift, Lamp, LayoutGrid, Lightbulb, MonitorDot, Sparkles, Sun, Truck, type LucideIcon } from "lucide-react";
 import { categoryCoverImages } from "@/lib/catalog-images";
 import { bindingSolutions } from "@/lib/site-content";
 
@@ -10,7 +10,10 @@ export type CategoryId =
   | "binding"
   | "customized-gifts"
   | "mobile-van"
-  | "unipole";
+  | "unipole"
+  | "outdoor-advertisement"
+  | "led-sign-board"
+  | "corporate-gifting";
 
 export type Category = {
   id: CategoryId;
@@ -92,6 +95,33 @@ export const categories: Category[] = [
     image: categoryCoverImages.unipole,
     description:
       "Elevate your brand above the crowd with highway and commercial unipole branding.",
+  },
+  {
+    id: "outdoor-advertisement",
+    title: "Outdoor Advertisement",
+    tag: "Outdoor",
+    icon: Sun,
+    image: categoryCoverImages["outdoor-advertisement"],
+    description:
+      "Billboards, hoardings, pole kiosks & outdoor branding for high-visibility campaigns.",
+  },
+  {
+    id: "led-sign-board",
+    title: "LED Sign Board",
+    tag: "Illuminated",
+    icon: Lightbulb,
+    image: categoryCoverImages["led-sign-board"],
+    description:
+      "Bright LED boards, glow signs & illuminated shop fronts for day and night visibility.",
+  },
+  {
+    id: "corporate-gifting",
+    title: "Corporate Gifting",
+    tag: "Gifting",
+    icon: Gift,
+    image: categoryCoverImages["corporate-gifting"],
+    description:
+      "Premium corporate gifts, promotional merchandise & branded hampers for clients and teams.",
   },
 ];
 

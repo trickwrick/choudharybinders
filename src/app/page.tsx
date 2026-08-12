@@ -34,7 +34,7 @@ export default async function Home() {
         <WhyChooseUsSection />
         <CenterBannerSection />
         <ProcessSection />
-        <AboutSection />
+        <AboutSection compact />
         <GallerySection />
         <VideosSection />
         <TestimonialsSection />

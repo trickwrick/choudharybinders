@@ -4,16 +4,35 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useState } from "react";
 import { cardHover3d } from "@/lib/animations";
 import { categories } from "@/lib/categories";
 import Button from "./Button";
 import Container from "./Container";
-import ImageReveal from "./motion/ImageReveal";
 import MagneticWrap from "./motion/MagneticWrap";
 import Reveal from "./motion/Reveal";
 import SectionDivider from "./motion/SectionDivider";
 import { StaggerItem, StaggerReveal } from "./motion/StaggerReveal";
 import SectionHeading from "./SectionHeading";
+
+const IMAGE_FALLBACK = "/categories/flex-printing.jpg";
+
+function CategoryCardImage({ src, alt }: { src: string; alt: string }) {
+  const [imgSrc, setImgSrc] = useState(src);
+
+  return (
+    <Image
+      src={imgSrc}
+      alt={alt}
+      fill
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+      className="object-cover transition-transform duration-600 ease-out group-hover:scale-[1.06]"
+      onError={() => {
+        if (imgSrc !== IMAGE_FALLBACK) setImgSrc(IMAGE_FALLBACK);
+      }}
+    />
+  );
+}
 
 export default function ProductsSection() {
   return (
@@ -37,7 +56,7 @@ export default function ProductsSection() {
             stagger={0.08}
             delayChildren={0.05}
           >
-            {categories.map((category, index) => {
+            {categories.map((category) => {
               const Icon = category.icon;
 
               return (
@@ -52,22 +71,14 @@ export default function ProductsSection() {
                       href={`/category/${category.id}`}
                       className="press-card group flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm"
                     >
-                      <ImageReveal delay={index * 0.05} className="relative aspect-[4/3]">
-                        <div className="relative aspect-[4/3] overflow-hidden">
-                          <Image
-                            src={category.image}
-                            alt={category.title}
-                            fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            className="object-cover transition-transform duration-600 ease-out group-hover:scale-[1.06]"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-                          <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary shadow-sm sm:text-xs">
-                            <Icon className="h-3 w-3" />
-                            {category.tag}
-                          </span>
-                        </div>
-                      </ImageReveal>
+                      <div className="relative aspect-[4/3] overflow-hidden bg-neutral-200">
+                        <CategoryCardImage src={category.image} alt={category.title} />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                        <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary shadow-sm sm:text-xs">
+                          <Icon className="h-3 w-3" />
+                          {category.tag}
+                        </span>
+                      </div>
 
                       <div className="flex flex-1 flex-col p-4 sm:p-5">
                         <h3 className="text-base font-bold text-text transition-colors group-hover:text-primary sm:text-lg">

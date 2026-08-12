@@ -295,8 +295,22 @@ body {
   animation: marquee 50s linear infinite;
 }
 
-.animate-marquee-clients:hover {
+.animate-marquee-clients-reverse {
+  animation: marquee-reverse 55s linear infinite;
+}
+
+.animate-marquee-clients:hover,
+.animate-marquee-clients-reverse:hover {
   animation-play-state: paused;
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 @keyframes hero-kenburns-in {
@@ -369,6 +383,16 @@ body {
 }
 
 .print-crop-marks {
+  position: relative;
+}
+
+.print-crop-marks::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0.35;
   background-image:
     linear-gradient(var(--primary) 0 0) 0 0 / 12px 1px no-repeat,
     linear-gradient(var(--primary) 0 0) 0 0 / 1px 12px no-repeat,
@@ -378,7 +402,6 @@ body {
     linear-gradient(var(--primary) 0 0) 0 100% / 1px 12px no-repeat,
     linear-gradient(var(--primary) 0 0) 100% 100% / 12px 1px no-repeat,
     linear-gradient(var(--primary) 0 0) 100% 100% / 1px 12px no-repeat;
-  opacity: 0.12;
 }
 
 .portfolio-card-overlay {
@@ -415,6 +438,7 @@ body {
 
   .animate-marquee,
   .animate-marquee-clients,
+  .animate-marquee-clients-reverse,
   .hero-kenburns-in,
   .hero-kenburns-out,
   .hero-float,

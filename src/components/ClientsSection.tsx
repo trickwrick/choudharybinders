@@ -1,11 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { motion } from "framer-motion";
 import Container from "./Container";
 import Reveal from "./motion/Reveal";
-import SectionDivider from "./motion/SectionDivider";
-import TextReveal from "./motion/TextReveal";
 
 const clientLogos = [
   { src: "/clients/bosch.png", name: "Bosch" },
@@ -22,63 +19,51 @@ const clientLogos = [
   { src: "/clients/raj-hospital.png", name: "Raj Hospital" },
 ];
 
+const marqueeItems = [...clientLogos, ...clientLogos];
+
 export default function ClientsSection() {
-  const marqueeItems = [...clientLogos, ...clientLogos];
-
   return (
-    <>
-      <SectionDivider variant="white" />
-      <section aria-label="Our clients" className="relative overflow-hidden py-12 sm:py-14">
-        <div className="print-grain pointer-events-none absolute inset-0 opacity-40" />
+    <section
+      aria-label="Our clients"
+      className="-mt-1 overflow-hidden border-b border-border/50 bg-white pb-10 pt-5 sm:pb-12 sm:pt-6"
+    >
+      <Container>
+        <Reveal>
+          <h2 className="text-center text-2xl font-extrabold tracking-tight text-text sm:text-3xl">
+            Trusted Across <span className="text-primary">Industries</span>
+          </h2>
+        </Reveal>
+      </Container>
 
-        <Container className="relative">
-          <div className="mx-auto max-w-3xl text-center">
-            <Reveal delay={0}>
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary/70">
-                Trusted Across Industries
-              </p>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <h2 className="mt-3 text-2xl font-extrabold tracking-tight text-text sm:text-3xl lg:text-4xl">
-                <TextReveal delay={0.15}>Brands That Choose</TextReveal>{" "}
-                <span className="brand-gradient-text">
-                  <TextReveal delay={0.25}>Quality Printing</TextReveal>
-                </span>
-              </h2>
-            </Reveal>
-            <Reveal delay={0.2}>
-              <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-text/55 sm:text-base">
-                From retail showrooms to hospitals and corporates — businesses across Jaipur
-                trust us for precision print, signage &amp; branding.
-              </p>
-            </Reveal>
-          </div>
+      <Reveal delay={0.08} className="relative mt-6 sm:mt-7">
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent sm:w-24" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white to-transparent sm:w-24" />
 
-          <Reveal delay={0.28} className="relative mt-10 sm:mt-12">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 bg-gradient-to-r from-white to-transparent sm:w-24" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-white to-transparent sm:w-24" />
-
-            <div className="animate-marquee-clients flex w-max items-center gap-4 sm:gap-5">
-              {marqueeItems.map((client, index) => (
-                <motion.div
-                  key={`${client.name}-${index}`}
-                  whileHover={{ y: -4, scale: 1.02 }}
-                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-                  className="flex h-16 w-[9.5rem] shrink-0 items-center justify-center rounded-2xl border border-border/80 bg-white px-4 py-2 shadow-sm sm:h-[4.5rem] sm:w-44 sm:px-5"
-                >
-                  <Image
-                    src={client.src}
-                    alt={client.name}
-                    width={140}
-                    height={56}
-                    className="max-h-10 w-auto object-contain sm:max-h-12"
-                  />
-                </motion.div>
-              ))}
+        <div className="flex w-max animate-marquee-clients items-center gap-8 px-4 sm:gap-10">
+          {marqueeItems.map((client, index) => (
+            <div
+              key={`${client.name}-${index}`}
+              className="group flex shrink-0 flex-col items-center gap-3"
+              title={client.name}
+            >
+              <div className="relative flex h-24 w-24 items-center justify-center rounded-full border border-border/70 bg-white shadow-[0_4px_18px_rgba(0,0,0,0.07)] transition-all duration-300 ease-out group-hover:-translate-y-1.5 group-hover:scale-110 group-hover:border-primary/40 group-hover:shadow-[0_12px_32px_rgba(17,192,17,0.22)] sm:h-[6.75rem] sm:w-[6.75rem]">
+                <span className="pointer-events-none absolute inset-0 rounded-full bg-primary/0 transition-colors duration-300 group-hover:bg-primary/[0.06]" />
+                <span className="pointer-events-none absolute -inset-1 rounded-full border-2 border-primary/0 transition-all duration-300 group-hover:border-primary/25" />
+                <Image
+                  src={client.src}
+                  alt={client.name}
+                  width={96}
+                  height={96}
+                  className="relative z-[1] h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-110 sm:h-14 sm:w-14"
+                />
+              </div>
+              <span className="max-w-[6rem] truncate text-center text-[10px] font-semibold text-text/45 transition-colors duration-300 group-hover:font-bold group-hover:text-primary sm:max-w-[6.5rem] sm:text-[11px]">
+                {client.name}
+              </span>
             </div>
-          </Reveal>
-        </Container>
-      </section>
-    </>
+          ))}
+        </div>
+      </Reveal>
+    </section>
   );
 }

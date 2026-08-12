@@ -142,6 +142,27 @@ const defaultSpecsByCategory: Record<CategoryId, ProductSpecification[]> = {
     { label: "Installation", value: "On-site Mounting Support" },
     { label: "Size", value: "Customized" },
   ],
+  "outdoor-advertisement": [
+    { label: "Material", value: "Flex / Vinyl / ACP / Sunboard" },
+    { label: "Usage", value: "Outdoor Advertising & Hoardings" },
+    { label: "Durability", value: "Weather & UV Resistant" },
+    { label: "Installation", value: "On-site (optional)" },
+    { label: "Size", value: "Customized" },
+  ],
+  "led-sign-board": [
+    { label: "Material", value: "Acrylic / ACP with LED Modules" },
+    { label: "Light Source", value: "LED / Neon" },
+    { label: "Input Voltage", value: "220-240V AC" },
+    { label: "Finish", value: "Glossy / Matte" },
+    { label: "Size", value: "Customized" },
+  ],
+  "corporate-gifting": [
+    { label: "Product Type", value: "Corporate & Promotional Gifts" },
+    { label: "Customization", value: "Logo, Name & Design Printing" },
+    { label: "Packaging", value: "Gift Box / Bulk Packing" },
+    { label: "MOQ", value: "As per product" },
+    { label: "Delivery", value: "Pan India (on request)" },
+  ],
 };
 
 function defaultDescription(title: string, categoryTitle: string): string {

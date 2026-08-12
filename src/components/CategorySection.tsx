@@ -23,22 +23,28 @@ const trackTransition = {
   ease: [0.25, 0.1, 0.25, 1] as const,
 };
 
+const IMAGE_FALLBACK = "/categories/flex-printing.jpg";
+
 function CategoryCard({
   item,
 }: {
   item: (typeof categories)[number];
 }) {
   const Icon = item.icon;
+  const [imgSrc, setImgSrc] = useState(item.image);
 
   return (
     <article className="group flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm transition-all duration-300 hover:border-primary/25 hover:shadow-xl sm:flex-row">
-      <div className="relative h-44 shrink-0 overflow-hidden sm:h-auto sm:min-h-[220px] sm:w-[42%]">
+      <div className="relative h-44 shrink-0 overflow-hidden bg-neutral-200 sm:h-auto sm:min-h-[220px] sm:w-[42%]">
         <Image
-          src={item.image}
+          src={imgSrc}
           alt={item.title}
           fill
           sizes="(max-width: 640px) 100vw, 320px"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
+          onError={() => {
+            if (imgSrc !== IMAGE_FALLBACK) setImgSrc(IMAGE_FALLBACK);
+          }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent sm:from-black/40" />
         <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary shadow-sm sm:text-xs">

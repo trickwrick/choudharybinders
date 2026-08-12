@@ -1,9 +1,22 @@
 "use client";
 
-import { Mail, MapPin, Phone } from "lucide-react";
-import { type ReactNode } from "react";
+import { motion } from "framer-motion";
+import { ArrowUp, Clock, Mail, MapPin, Phone } from "lucide-react";
+import Link from "next/link";
+import { categories } from "@/lib/categories";
+import { companyContent } from "@/lib/site-content";
 import { businessInfo } from "@/lib/site-business";
 import Container from "./Container";
+import Logo from "./Logo";
+
+const quickLinks = [
+  { label: "Home", href: "/#home" },
+  { label: "Category", href: "/#category" },
+  { label: "Services", href: "/#services" },
+  { label: "About Us", href: "/about" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Contact Us", href: "/contact" },
+];
 
 const socialLinks = [
   {
@@ -48,108 +61,181 @@ const socialLinks = [
   },
 ];
 
-function ContactBlock({
-  icon,
-  children,
-}: {
-  icon: ReactNode;
-  children: ReactNode;
-}) {
-  return (
-    <div className="flex flex-col items-center text-center">
-      <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white">
-        {icon}
-      </div>
-      <div className="space-y-1 text-sm leading-relaxed text-white/90">
-        {children}
-      </div>
-    </div>
-  );
-}
+const workingHours = [
+  { day: "Monday – Saturday", time: "9:00 AM – 7:00 PM" },
+  { day: "Sunday", time: "Closed" },
+];
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
-    <footer className="bg-[#138808] text-white">
-      <Container className="py-10 sm:py-12">
-        <div className="mx-auto grid max-w-4xl gap-10 sm:grid-cols-3 sm:gap-8">
-          <ContactBlock icon={<Phone className="h-5 w-5" strokeWidth={2} />}>
-            <p>
-              <span className="text-white/75">Contact Us:</span>
-            </p>
-            {businessInfo.phones.map((phone) => (
-              <p key={phone.tel}>
-                <a href={phone.tel} className="font-semibold text-white hover:underline">
-                  {phone.display}
-                </a>
-              </p>
-            ))}
-            <p className="text-white/90">
-              <a href={businessInfo.landline.tel} className="hover:underline">
-                {businessInfo.landline.display}
-              </a>
-            </p>
-          </ContactBlock>
+    <footer id="contact" className="relative bg-[#138808] text-white">
+      <div className="brand-tricolor-bar h-1 w-full" />
 
-          <ContactBlock icon={<Mail className="h-5 w-5" strokeWidth={2} />}>
-            <p>
-              <span className="text-white/75">Email:</span>
+      <Container className="py-12 lg:py-14">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-4">
+            <Logo size="lg" onDark />
+            <p className="mt-5 max-w-sm text-sm leading-relaxed text-white/80">
+              {companyContent.about}
             </p>
-            {businessInfo.emails.map((email) => (
-              <p key={email}>
-                <a href={`mailto:${email}`} className="font-semibold text-white hover:underline">
-                  {email}
-                </a>
-              </p>
-            ))}
-          </ContactBlock>
-
-          <ContactBlock icon={<MapPin className="h-5 w-5" strokeWidth={2} />}>
-            <p>
-              <span className="text-white/75">Address:</span>
-              <br />
-              <span className="font-semibold text-white">{businessInfo.address}</span>
+            <p className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-lime">
+              Since 1980 · {companyContent.tagline}
             </p>
-          </ContactBlock>
-        </div>
-
-        <div className="mx-auto mt-10 max-w-4xl text-center">
-          <p className="text-sm text-white/80">Follow Us On:</p>
-          <div className="mt-4 flex items-center justify-center gap-3">
-            {socialLinks.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={item.label}
-                className={`flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-sm transition-transform hover:scale-105 ${item.color}`}
-              >
-                {item.icon}
-              </a>
-            ))}
+            <div className="mt-5 flex gap-2.5">
+              {socialLinks.map((item) => (
+                <motion.a
+                  key={item.label}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={item.label}
+                  whileHover={{ scale: 1.08, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-sm transition-transform ${item.color}`}
+                >
+                  {item.icon}
+                </motion.a>
+              ))}
+            </div>
           </div>
 
-          <div className="mt-6 text-sm text-white/85">
-            <a href="#" className="hover:underline">
-              Privacy Policy
-            </a>
-            <span className="mx-3 text-white/50">|</span>
-            <a href="#" className="hover:underline">
-              Terms &amp; Conditions
-            </a>
+          <div className="lg:col-span-2">
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-brand-lime">
+              Quick Links
+            </h3>
+            <ul className="space-y-2.5">
+              {quickLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-white/75 transition-colors hover:text-white hover:underline underline-offset-4"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-2">
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-brand-lime">
+              Our Services
+            </h3>
+            <ul className="space-y-2.5">
+              {categories.slice(0, 8).map((category) => (
+                <li key={category.id}>
+                  <Link
+                    href={`/category/${category.id}`}
+                    className="text-sm text-white/75 transition-colors hover:text-white hover:underline underline-offset-4"
+                  >
+                    {category.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="lg:col-span-4">
+            <h3 className="mb-4 text-xs font-bold uppercase tracking-[0.2em] text-brand-lime">
+              Contact Information
+            </h3>
+            <ul className="space-y-3">
+              <li className="flex items-start gap-3">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-brand-lime" />
+                <span className="text-sm text-white/80">{businessInfo.address}</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Phone className="mt-0.5 h-5 w-5 shrink-0 text-brand-lime" />
+                <div className="space-y-1 text-sm">
+                  {businessInfo.phones.map((phone) => (
+                    <a
+                      key={phone.tel}
+                      href={phone.tel}
+                      className="block text-white/80 transition-colors hover:text-white"
+                    >
+                      {phone.display}
+                    </a>
+                  ))}
+                  <a
+                    href={businessInfo.landline.tel}
+                    className="block text-white/80 transition-colors hover:text-white"
+                  >
+                    {businessInfo.landline.display}
+                  </a>
+                </div>
+              </li>
+              <li className="flex items-start gap-3">
+                <Mail className="mt-0.5 h-5 w-5 shrink-0 text-brand-lime" />
+                <div className="space-y-1 text-sm">
+                  {businessInfo.emails.map((email) => (
+                    <a
+                      key={email}
+                      href={`mailto:${email}`}
+                      className="block text-white/80 transition-colors hover:text-white"
+                    >
+                      {email}
+                    </a>
+                  ))}
+                </div>
+              </li>
+            </ul>
+
+            <div className="mt-5 rounded-xl border border-white/15 bg-white/10 p-4 backdrop-blur-sm">
+              <div className="mb-2 flex items-center gap-2">
+                <Clock className="h-4 w-4 text-brand-lime" />
+                <span className="text-sm font-semibold">Working Hours</span>
+              </div>
+              <ul className="space-y-1.5">
+                {workingHours.map((schedule) => (
+                  <li
+                    key={schedule.day}
+                    className="flex justify-between gap-4 text-sm text-white/70"
+                  >
+                    <span>{schedule.day}</span>
+                    <span className="text-white/90">{schedule.time}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </Container>
 
       <div className="border-t border-white/15 bg-[#0f6b06]">
-        <Container className="py-3 text-center text-xs text-white/80 sm:text-sm">
-          Copyright &copy;{year}{" "}
-          <span className="font-medium underline decoration-white/40 underline-offset-2">
-            Choudhary Binders &amp; Printers
-          </span>
-          . All Rights Reserved
+        <Container className="flex flex-col items-center justify-between gap-4 py-4 sm:flex-row">
+          <div className="text-center text-xs text-white/75 sm:text-left sm:text-sm">
+            <p>
+              Copyright &copy; {year}{" "}
+              <span className="font-semibold text-white">Choudhary Binders & Printers</span>.
+              All Rights Reserved.
+            </p>
+            <p className="mt-1">
+              <a href="#" className="hover:underline">
+                Privacy Policy
+              </a>
+              <span className="mx-2 text-white/40">|</span>
+              <a href="#" className="hover:underline">
+                Terms &amp; Conditions
+              </a>
+            </p>
+          </div>
+          <motion.button
+            type="button"
+            onClick={scrollToTop}
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/20"
+            aria-label="Back to top"
+          >
+            <ArrowUp className="h-4 w-4" />
+            Back to Top
+          </motion.button>
         </Container>
       </div>
     </footer>

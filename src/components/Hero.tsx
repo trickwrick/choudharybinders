@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { heroSlides as fallbackSlides } from "@/lib/site-images";
 import type { HeroSlide } from "@/lib/types/cms";
+import StatsStrip from "./StatsStrip";
 
 const AUTO_MS = 6000;
 
@@ -16,13 +17,6 @@ const heroFeatures = [
   "Customizable Branding Solutions",
   "Expert Team with Years of Experience",
   "High-Resolution Print Output",
-];
-
-const stats = [
-  { value: "45+", label: "Years of Experience" },
-  { value: "1000+", label: "Projects Completed" },
-  { value: "500+", label: "Happy Clients" },
-  { value: "7", label: "Print Categories" },
 ];
 
 export default function Hero({ slides }: { slides?: HeroSlide[] }) {
@@ -74,6 +68,7 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
   const zoomIn = current % 2 === 0;
 
   return (
+    <>
     <section id="home" className="relative">
       <div className="relative min-h-[100svh] overflow-hidden">
         {/* Auto zoom + crossfade background — Print Express style */}
@@ -194,29 +189,9 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
 
         <div className="brand-tricolor-bar absolute inset-x-0 bottom-0 z-20 h-1" />
       </div>
-
-      {/* Stats strip */}
-      <div className="border-b border-border/70 bg-white">
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-px bg-border/60 sm:grid-cols-4">
-          {stats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.06, duration: 0.45 }}
-              className="bg-white px-4 py-5 text-center sm:py-6"
-            >
-              <p className="text-2xl font-extrabold tracking-tight text-primary sm:text-3xl">
-                {stat.value}
-              </p>
-              <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-text/50 sm:text-[13px]">
-                {stat.label}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </div>
     </section>
+
+    <StatsStrip />
+  </>
   );
 }

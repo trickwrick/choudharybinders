@@ -1,67 +1,107 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useState } from "react";
-import { fadeUp, slideFromLeft, slideFromRight, staggerContainer } from "@/lib/animations";
-import { businessInfo } from "@/lib/site-business";
+import Button from "./Button";
 import Container from "./Container";
-import MagneticWrap from "./motion/MagneticWrap";
 import Reveal from "./motion/Reveal";
-import SectionDivider from "./motion/SectionDivider";
-import TextReveal from "./motion/TextReveal";
-import SectionHeading from "./SectionHeading";
 
-const contactBlocks = [
-  {
-    icon: MapPin,
-    title: "Our Office Address",
-    content: (
-      <p className="pl-7 text-sm leading-relaxed text-text/70">{businessInfo.address}</p>
-    ),
-  },
-  {
-    icon: Mail,
-    title: "General Enquiries",
-    content: (
-      <div className="space-y-1 pl-7 text-sm text-text/70">
-        {businessInfo.emails.map((email) => (
-          <a key={email} href={`mailto:${email}`} className="block transition-colors hover:text-primary">
-            {email}
-          </a>
-        ))}
+function ContactForm({
+  handleSubmit,
+  message,
+  setMessage,
+  error,
+  loading,
+  submitted,
+}: {
+  handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
+  message: string;
+  setMessage: (value: string) => void;
+  error: string;
+  loading: boolean;
+  submitted: boolean;
+}) {
+  if (submitted) {
+    return (
+      <div className="py-8 text-center">
+        <CheckCircle2 className="mx-auto h-10 w-10 text-primary" />
+        <p className="mt-3 text-lg font-bold text-text">Thank you!</p>
+        <p className="mt-1 text-sm text-text/60">We&apos;ll get back to you soon.</p>
       </div>
-    ),
-  },
-  {
-    icon: Phone,
-    title: "Call Us",
-    content: (
-      <ul className="space-y-1 pl-7 text-sm text-text/70">
-        {businessInfo.phones.map((phone) => (
-          <li key={phone.tel}>
-            <a href={phone.tel} className="hover:text-primary">
-              {phone.display}
-            </a>
-          </li>
-        ))}
-        <li>
-          <a href={businessInfo.landline.tel} className="hover:text-primary">
-            {businessInfo.landline.display}
-          </a>
-        </li>
-      </ul>
-    ),
-  },
-  {
-    icon: Clock,
-    title: "Our Timing",
-    content: (
-      <p className="pl-7 text-sm text-text/70">24/7 Services Available</p>
-    ),
-  },
-];
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div>
+          <label htmlFor="name" className="mb-1 block text-sm font-medium text-text">
+            Name
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            placeholder="Your name"
+            className="w-full rounded-lg border border-border px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          />
+        </div>
+        <div>
+          <label htmlFor="email" className="mb-1 block text-sm font-medium text-text">
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            placeholder="your@email.com"
+            className="w-full rounded-lg border border-border px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="phone" className="mb-1 block text-sm font-medium text-text">
+          Phone
+        </label>
+        <input
+          id="phone"
+          name="phone"
+          type="tel"
+          required
+          placeholder="+91 98290 13457"
+          className="w-full rounded-lg border border-border px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+        />
+      </div>
+
+      <div>
+        <label htmlFor="message" className="mb-1 block text-sm font-medium text-text">
+          Message
+        </label>
+        <textarea
+          id="message"
+          name="message"
+          required
+          rows={4}
+          value={message}
+          onChange={(event) => setMessage(event.target.value)}
+          placeholder="What do you need printed?"
+          className="w-full resize-none rounded-lg border border-border px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+        />
+      </div>
+
+      {error ? <p className="text-sm text-red-600">{error}</p> : null}
+
+      <Button type="submit" size="lg" disabled={loading} className="w-full sm:w-auto">
+        {loading ? "Sending..." : "Send Enquiry"}
+        {!loading ? <ArrowRight className="h-4 w-4" /> : null}
+      </Button>
+    </form>
+  );
+}
 
 export default function ContactSection({ inModal = false }: { inModal?: boolean }) {
   const searchParams = useSearchParams();
@@ -104,146 +144,70 @@ export default function ContactSection({ inModal = false }: { inModal?: boolean 
           productId: productId ?? undefined,
           productTitle: productTitle ?? undefined,
           categoryId: categoryId ?? undefined,
-          quantity: searchParams.get("qty")
-            ? Number(searchParams.get("qty"))
-            : undefined,
+          quantity: searchParams.get("qty") ? Number(searchParams.get("qty")) : undefined,
           unit: searchParams.get("unit") ?? undefined,
           source: productTitle ? "quote" : "contact",
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Submission failed");
-      }
-
+      if (!response.ok) throw new Error("Submission failed");
       setSubmitted(true);
     } catch {
-      setError("Something went wrong. Please try again or call us directly.");
+      setError("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
+  const form = (
+    <ContactForm
+      handleSubmit={handleSubmit}
+      message={message}
+      setMessage={setMessage}
+      error={error}
+      loading={loading}
+      submitted={submitted}
+    />
+  );
+
+  if (inModal) {
+    return (
+      <section className="py-4">
+        {productTitle ? (
+          <p className="mb-4 text-center text-sm font-semibold text-primary">
+            Quote: {productTitle}
+          </p>
+        ) : null}
+        {form}
+      </section>
+    );
+  }
+
   return (
-    <>
-      {!inModal ? <SectionDivider variant="warm" /> : null}
-      <section
-        id={inModal ? undefined : "contact"}
-        className={inModal ? "bg-white py-4 sm:py-6" : "relative bg-white py-12 sm:py-16"}
-      >
-        {!inModal ? (
-          <div className="print-grain pointer-events-none absolute inset-0 opacity-15" />
-        ) : null}
-        <Container className="relative">
-        {!inModal ? (
-          <>
-            <Reveal className="mx-auto mb-10 max-w-3xl text-center sm:mb-14">
-              <p className="text-xs font-semibold uppercase tracking-[0.35em] text-primary/70">
-                Ready to Print?
-              </p>
-              <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-text sm:text-4xl lg:text-[2.75rem]">
-                <TextReveal delay={0.1}>Let&apos;s Bring Your Ideas</TextReveal>
-                <br />
-                <span className="brand-gradient-text">
-                  <TextReveal delay={0.2}>to Print.</TextReveal>
-                </span>
-              </h2>
-              <p className="mx-auto mt-4 max-w-xl text-sm text-text/60 sm:text-base">
-                Share your requirement — our team will guide you from design to delivery.
-              </p>
-            </Reveal>
-            <SectionHeading spaced className="!mb-8 hidden">
-              Contact Us
-            </SectionHeading>
-          </>
-        ) : null}
+    <section id="contact" className="bg-white py-12 sm:py-16">
+      <Container>
+        <Reveal className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-widest text-primary">
+            Ready to Print?
+          </p>
+          <h2 className="mt-2 text-2xl font-bold text-text sm:text-3xl">
+            Get a Free Quote
+          </h2>
+          <p className="mt-2 text-sm text-text/60 sm:text-base">
+            Tell us what you need — we&apos;ll reply with price and delivery details.
+          </p>
+        </Reveal>
 
         {productTitle ? (
-          <div className="mx-auto mb-8 max-w-2xl rounded-2xl border border-primary/15 bg-section-mint px-5 py-4 text-center">
-            <p className="text-sm font-semibold text-primary">Quote Request</p>
-            <p className="mt-1 text-base font-bold text-text">{productTitle}</p>
-          </div>
+          <p className="mx-auto mt-6 max-w-3xl text-center text-sm font-medium text-primary">
+            Enquiring about: {productTitle}
+          </p>
         ) : null}
 
-        <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            {contactBlocks.map((block) => (
-              <motion.div key={block.title} variants={slideFromLeft}>
-                <div className="mb-2 flex items-center gap-2">
-                  <motion.div whileHover={{ scale: 1.1, rotate: 5 }}>
-                    <block.icon className="h-5 w-5 text-primary/60" />
-                  </motion.div>
-                  <h3 className="text-sm font-bold uppercase text-text">
-                    {block.title}
-                  </h3>
-                </div>
-                {block.content}
-              </motion.div>
-            ))}
-          </motion.div>
-
-          <motion.form
-            onSubmit={handleSubmit}
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="space-y-4"
-          >
-            {[
-              { type: "text", name: "name", placeholder: "YOUR NAME" },
-              { type: "email", name: "email", placeholder: "YOUR EMAIL" },
-              { type: "tel", name: "phone", placeholder: "YOUR CONTACT NO" },
-            ].map((field) => (
-              <motion.div key={field.name} variants={slideFromRight}>
-                <motion.input
-                  whileFocus={{ scale: 1.01, borderColor: "var(--primary)" }}
-                  type={field.type}
-                  name={field.name}
-                  required
-                  placeholder={field.placeholder}
-                  className="w-full rounded-md border border-border bg-white px-4 py-3 text-sm uppercase tracking-wide text-text placeholder:text-text/40 transition-shadow focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                />
-              </motion.div>
-            ))}
-            <motion.div variants={slideFromRight}>
-              <motion.textarea
-                whileFocus={{ scale: 1.01 }}
-                name="message"
-                required
-                rows={5}
-                value={message}
-                onChange={(event) => setMessage(event.target.value)}
-                placeholder="YOUR MESSAGE"
-                className="w-full resize-none rounded-md border border-border bg-white px-4 py-3 text-sm uppercase tracking-wide text-text placeholder:text-text/40 transition-shadow focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-              />
-            </motion.div>
-            {error ? (
-              <p className="rounded-md bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>
-            ) : null}
-            <motion.div variants={fadeUp}>
-              <MagneticWrap strength={0.16}>
-                <motion.button
-                  type="submit"
-                  disabled={loading || submitted}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="btn-brand-cta uppercase tracking-wide disabled:opacity-70"
-                >
-                  {submitted ? "Message Sent!" : loading ? "Sending..." : "Submit"}
-                </motion.button>
-              </MagneticWrap>
-            </motion.div>
-          </motion.form>
-        </div>
+        <Reveal delay={0.1} className="mx-auto mt-8 max-w-3xl rounded-xl border border-border bg-white p-6 shadow-sm sm:p-10">
+          {form}
+        </Reveal>
       </Container>
     </section>
-    </>
   );
 }

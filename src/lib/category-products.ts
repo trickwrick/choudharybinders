@@ -114,6 +114,32 @@ export const categoryProducts: Record<CategoryId, CategoryProduct[]> = {
     item("unipole", "Political & Event Campaign Branding", "Custom Order"),
     item("unipole", "Real Estate & Corporate Promotions", "Custom Order"),
   ],
+  "outdoor-advertisement": [
+    item("outdoor-advertisement", "Billboard Advertising", "100 Square Feet"),
+    item("outdoor-advertisement", "Hoarding Print", "50 Square Feet"),
+    item("outdoor-advertisement", "Unipole Board", "1 Unit"),
+    item("outdoor-advertisement", "Shop Signage Board", "15 Square Feet"),
+    item("outdoor-advertisement", "Pole Kiosk Board", "1 Piece"),
+    item("outdoor-advertisement", "Highway Branding", "Custom Order"),
+  ],
+  "led-sign-board": [
+    item("led-sign-board", "Acrylic LED Board", "10 Square Feet"),
+    item("led-sign-board", "Neon Sign Board", "10 Square Feet"),
+    item("led-sign-board", "Glow Sign Board", "10 Square Feet"),
+    item("led-sign-board", "LED Name Board", "8 Square Feet"),
+    item("led-sign-board", "LED Lollipop Sign", "1 Piece"),
+    item("led-sign-board", "Backlit Sign Board", "10 Square Feet"),
+    item("led-sign-board", "Shop Front LED Board", "Custom Order"),
+  ],
+  "corporate-gifting": [
+    item("corporate-gifting", "Corporate Gift Hampers", "25 Sets"),
+    item("corporate-gifting", "Branded Corporate Gifts", "50 Pieces"),
+    item("corporate-gifting", "Promotional Merchandise", "100 Pieces"),
+    item("corporate-gifting", "Employee Welcome Kit", "25 Sets"),
+    item("corporate-gifting", "Executive Gift Set", "Custom Order"),
+    item("corporate-gifting", "Client Appreciation Gifts", "Custom Order"),
+    item("corporate-gifting", "Team Celebration Gifts", "Custom Order"),
+  ],
 };
 
 export function getProductsByCategory(categoryId: CategoryId): CategoryProduct[] {
