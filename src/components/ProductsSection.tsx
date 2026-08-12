@@ -2,10 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { cardHover3d } from "@/lib/animations";
 import { categories } from "@/lib/categories";
 import Container from "./Container";
 import Reveal from "./motion/Reveal";
@@ -23,7 +21,7 @@ function CategoryCardImage({ src, alt }: { src: string; alt: string }) {
       alt={alt}
       fill
       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-      className="object-cover transition-transform duration-600 ease-out group-hover:scale-[1.06]"
+      className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
       onError={() => {
         if (imgSrc !== IMAGE_FALLBACK) setImgSrc(IMAGE_FALLBACK);
       }}
@@ -56,15 +54,9 @@ export default function ProductsSection() {
 
               return (
                 <StaggerItem key={category.id}>
-                  <motion.div
-                    initial="rest"
-                    whileHover="hover"
-                    variants={cardHover3d}
-                    className="perspective-card h-full"
-                  >
                     <Link
                       href={`/category/${category.id}`}
-                      className="press-card group flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm"
+                      className="press-card group flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1 hover:border-primary/25 hover:shadow-lg"
                     >
                       <div className="relative aspect-[4/3] overflow-hidden bg-neutral-200">
                         <CategoryCardImage src={category.image} alt={category.title} />
@@ -88,7 +80,6 @@ export default function ProductsSection() {
                         </span>
                       </div>
                     </Link>
-                  </motion.div>
                 </StaggerItem>
               );
             })}

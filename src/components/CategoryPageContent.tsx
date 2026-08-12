@@ -41,7 +41,7 @@ function ProductCard({
   return (
     <Link
       href={`/category/${categoryId}/${product.id}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-lg"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-md"
     >
       <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
         <Image
@@ -49,7 +49,7 @@ function ProductCard({
           alt={product.title}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           onError={() => {
             if (imgSrc !== IMAGE_FALLBACK) setImgSrc(IMAGE_FALLBACK);
           }}
@@ -130,23 +130,17 @@ export default function CategoryPageContent() {
       <Container>
         <SectionHeading spaced>Category</SectionHeading>
 
-        <div className="sticky top-[5.5rem] z-30 -mx-1 mb-8 rounded-2xl border border-border/60 bg-white/95 px-3 py-3 shadow-sm backdrop-blur-md sm:mb-10 sm:px-4">
+        <div className="mb-8 rounded-2xl border border-border/60 bg-white px-3 py-3 shadow-sm sm:mb-10 sm:px-4">
             <p className="mb-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-text/45">
               Filter by Category
             </p>
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              className="flex flex-wrap justify-center gap-2"
-            >
+            <div className="flex flex-wrap justify-center gap-2">
               {filters.map((filter) => (
                 <button
                   key={filter.id}
                   type="button"
                   onClick={() => setActiveFilter(filter.id)}
-                  className={`rounded-full px-4 py-2 text-xs font-semibold transition-all sm:px-5 sm:text-sm ${
+                  className={`rounded-full px-4 py-2 text-xs font-semibold transition-colors sm:px-5 sm:text-sm ${
                     activeFilter === filter.id
                       ? "bg-primary text-white shadow-md shadow-primary/25"
                       : "border border-border bg-white text-text/70 hover:border-primary/30 hover:text-primary"
@@ -155,7 +149,7 @@ export default function CategoryPageContent() {
                   {filter.label}
                 </button>
               ))}
-            </motion.div>
+            </div>
           </div>
 
           <motion.div
