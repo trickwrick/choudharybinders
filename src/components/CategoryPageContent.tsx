@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { fadeUp } from "@/lib/animations";
-import { categories, type CategoryId } from "@/lib/categories";
+import { categories, getCategoryById, type CategoryId } from "@/lib/categories";
 import {
   categoryProducts,
   type CategoryProduct,
@@ -117,9 +117,7 @@ export default function CategoryPageContent() {
   const [activeFilter, setActiveFilter] = useState<CategoryFilter>("all");
 
   const activeCategory =
-    activeFilter === "all"
-      ? null
-      : categories.find((item) => item.id === activeFilter)!;
+    activeFilter === "all" ? null : getCategoryById(activeFilter) ?? null;
 
   const activeProducts =
     activeFilter === "all" ? [] : (categoryProducts[activeFilter] ?? []);
@@ -175,7 +173,7 @@ export default function CategoryPageContent() {
                   />
                 ))}
               </div>
-            ) : (
+            ) : activeCategory ? (
               <>
                 <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                   <div>
@@ -208,13 +206,15 @@ export default function CategoryPageContent() {
                   ))}
                 </div>
               </>
-            )}
+            ) : null}
           </motion.div>
 
           <p className="mt-8 text-center text-sm text-text/50">
             {activeFilter === "all"
               ? `Showing all ${categories.length} categories with ${visibleProductCount} products`
-              : `Showing ${visibleProductCount} products in ${activeCategory.title}`}
+              : activeCategory
+                ? `Showing ${visibleProductCount} products in ${activeCategory.title}`
+                : null}
           </p>
 
           <motion.div
