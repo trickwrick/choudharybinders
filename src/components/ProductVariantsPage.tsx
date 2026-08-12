@@ -18,27 +18,34 @@ function VariantCard({
   return (
     <Link
       href={`/category/${categorySlug}/${productId}/${variant.id}`}
-      className="group flex flex-col transition-transform duration-300 hover:-translate-y-1"
+      className="group flex flex-col transition-transform duration-300 hover:-translate-y-0.5"
     >
-      <div className="relative overflow-hidden rounded-xl border border-border/70 shadow-sm transition-shadow group-hover:border-primary/30 group-hover:shadow-lg">
-        <div className="brand-gradient-bg flex min-h-[88px] items-center justify-center px-4 py-5 sm:min-h-[96px]">
-          <p className="text-center text-sm font-bold uppercase leading-snug tracking-wide text-white sm:text-base">
+      <div className="relative overflow-hidden rounded-lg border border-white/60 shadow-md transition-shadow group-hover:shadow-lg">
+        <div className="brand-gradient-bg relative flex aspect-[1.75/1] items-center justify-center px-2.5 py-3">
+          <div className="absolute inset-[6px] rounded border border-white/35 bg-white/10" />
+          <p className="relative z-[1] px-1 text-center text-[10px] font-bold uppercase leading-tight tracking-wide text-white sm:text-[11px]">
             {variant.label}
           </p>
+          <span className="absolute left-1.5 top-1.5 rounded bg-white/95 px-1.5 py-0.5 text-[8px] font-bold text-text shadow-sm">
+            #{variant.code}
+          </span>
         </div>
       </div>
 
-      <div className="mt-3 space-y-1 px-0.5">
-        <p className="text-sm font-bold text-text">
-          Product Code:{" "}
-          <span className="font-semibold">{variant.code}</span>
+      <div className="mt-2 space-y-0.5 px-0.5">
+        <p className="text-[11px] font-bold text-text sm:text-xs">
+          Code: <span className="font-semibold">{variant.code}</span>
         </p>
-        <p className="text-sm text-text/80">{variant.description}</p>
+        <p className="line-clamp-2 text-[10px] leading-snug text-text/75 sm:text-[11px]">
+          {variant.description}
+        </p>
         {variant.options ? (
-          <p className="text-sm font-medium text-primary">{variant.options}</p>
+          <p className="text-[10px] font-medium leading-snug text-primary sm:text-[11px]">
+            {variant.options}
+          </p>
         ) : null}
-        <p className="text-sm font-medium text-accent">
-          Production Time: {variant.productionTime}
+        <p className="text-[10px] font-medium text-accent sm:text-[11px]">
+          {variant.productionTime}
         </p>
       </div>
     </Link>
@@ -59,11 +66,11 @@ export default function ProductVariantsPage({
   const pageTitle = `${variantGroup.title.toUpperCase()} (QTY. ${variantGroup.minQty.toUpperCase()})`;
 
   return (
-    <section className="bg-section-mint pb-12 pt-6 sm:pb-16 sm:pt-8">
+    <section className="bg-section-mint pb-10 pt-6 sm:pb-12 sm:pt-8">
       <Container>
         <nav
           aria-label="Breadcrumb"
-          className="mb-6 text-xs text-text/55 sm:text-sm"
+          className="mb-5 text-xs text-text/55 sm:text-sm"
         >
           <ol className="flex flex-wrap items-center gap-1.5">
             <li>
@@ -100,13 +107,13 @@ export default function ProductVariantsPage({
           </ol>
         </nav>
 
-        <h1 className="brand-gradient-text text-xl font-bold uppercase tracking-wide sm:text-2xl lg:text-[1.65rem]">
+        <h1 className="brand-gradient-text text-lg font-bold uppercase tracking-wide sm:text-xl lg:text-2xl">
           {pageTitle}
         </h1>
 
-        <div className="section-heading-tricolor mx-auto mt-3 h-1 w-16 rounded-full sm:mx-0" />
+        <div className="section-heading-tricolor mx-auto mt-2 h-1 w-14 rounded-full sm:mx-0" />
 
-        <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-3">
+        <div className="mx-auto mt-6 grid max-w-5xl grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-4 sm:gap-x-4 sm:gap-y-6">
           {variantGroup.variants.map((variant) => (
             <VariantCard
               key={variant.id}
