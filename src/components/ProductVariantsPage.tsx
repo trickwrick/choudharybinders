@@ -26,9 +26,6 @@ function VariantCard({
           <p className="relative z-[1] px-1 text-center text-[10px] font-bold uppercase leading-tight tracking-wide text-white sm:text-[11px]">
             {variant.label}
           </p>
-          <span className="absolute left-1.5 top-1.5 rounded bg-white/95 px-1.5 py-0.5 text-[8px] font-bold text-text shadow-sm">
-            #{variant.code}
-          </span>
         </div>
       </div>
 

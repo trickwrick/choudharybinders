@@ -11,7 +11,7 @@ export default function ClientsSection() {
   return (
     <section
       aria-label="Our clients"
-      className="-mt-1 overflow-hidden border-b border-border/50 bg-white pb-10 pt-5 sm:pb-12 sm:pt-6"
+      className="-mt-1 overflow-hidden border-b border-border/50 bg-white pb-12 pt-6 sm:pb-14 sm:pt-8"
     >
       <Container>
         <Reveal>
@@ -25,29 +25,29 @@ export default function ClientsSection() {
         </Reveal>
       </Container>
 
-      <Reveal delay={0.08} className="relative mt-6 sm:mt-8">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-white to-transparent sm:w-24" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-white to-transparent sm:w-24" />
+      <Reveal delay={0.08} className="relative mt-8 sm:mt-10">
+        <div className="relative mx-auto w-full max-w-[1064px] overflow-hidden px-4 sm:px-0">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-white to-transparent sm:w-12" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-white to-transparent sm:w-12" />
 
-        <div className="flex w-max animate-marquee-clients items-center gap-6 px-4 sm:gap-8">
-          {marqueeItems.map((client, index) => (
-            <div
-              key={`${client.src}-${index}`}
-              className="group flex shrink-0 flex-col items-center"
-              title={client.name}
-            >
-              <div className="relative flex h-[5.5rem] w-[5.5rem] items-center justify-center rounded-full border border-border/70 bg-white p-3 shadow-[0_4px_18px_rgba(0,0,0,0.07)] transition-all duration-300 ease-out group-hover:-translate-y-1.5 group-hover:scale-105 group-hover:border-primary/40 group-hover:shadow-[0_12px_32px_rgba(17,192,17,0.2)] sm:h-24 sm:w-24 sm:p-3.5">
-                <span className="pointer-events-none absolute inset-0 rounded-full bg-primary/0 transition-colors duration-300 group-hover:bg-primary/[0.05]" />
+          <div className="flex w-max animate-marquee-clients items-center gap-8 py-2 sm:gap-10">
+            {marqueeItems.map((client, index) => (
+              <div
+                key={`${client.src}-${index}`}
+                className="flex h-20 w-28 shrink-0 items-center justify-center sm:h-[5.25rem] sm:w-36"
+                title={client.name}
+              >
                 <Image
                   src={client.src}
                   alt={client.name}
-                  width={80}
-                  height={80}
-                  className="relative z-[1] h-full w-full object-contain transition-transform duration-300 group-hover:scale-105"
+                  width={144}
+                  height={84}
+                  className="max-h-16 max-w-full object-contain object-center sm:max-h-[4.5rem]"
+                  style={{ width: "auto", height: "auto" }}
                 />
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </Reveal>
     </section>

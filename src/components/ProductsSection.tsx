@@ -9,7 +9,6 @@ import { cardHover3d } from "@/lib/animations";
 import { categories } from "@/lib/categories";
 import Container from "./Container";
 import Reveal from "./motion/Reveal";
-import SectionDivider from "./motion/SectionDivider";
 import { StaggerItem, StaggerReveal } from "./motion/StaggerReveal";
 import SectionHeading from "./SectionHeading";
 
@@ -34,9 +33,7 @@ function CategoryCardImage({ src, alt }: { src: string; alt: string }) {
 
 export default function ProductsSection() {
   return (
-    <>
-      <SectionDivider variant="mint" />
-      <section id="category" className="relative bg-section-mint py-12 sm:py-16 lg:py-20">
+    <section id="category" className="relative bg-section-mint py-12 sm:py-16 lg:py-20">
         <div className="print-grain pointer-events-none absolute inset-0 opacity-25" />
 
         <Container className="relative">
@@ -98,6 +95,5 @@ export default function ProductsSection() {
           </StaggerReveal>
         </Container>
       </section>
-    </>
   );
 }

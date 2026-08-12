@@ -10,7 +10,6 @@ function fileToLabel(filename: string): string {
 
 const trustedClientFiles = [
   "Aashish_Group.png",
-  "AHC.png",
   "Allen_Career_Institute.png",
   "Anytime_Fitness.png",
   "Braveheart_Gym.png",
