@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { Check } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 import { heroSlides as fallbackSlides } from "@/lib/site-images";
@@ -25,16 +25,6 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
   const [progress, setProgress] = useState(0);
 
   const slideCount = heroSlides.length;
-
-  const next = useCallback(() => {
-    setCurrent((c) => (c + 1) % slideCount);
-    setProgress(0);
-  }, [slideCount]);
-
-  const prev = useCallback(() => {
-    setCurrent((c) => (c === 0 ? slideCount - 1 : c - 1));
-    setProgress(0);
-  }, [slideCount]);
 
   const goTo = useCallback((index: number) => {
     setCurrent(index);
@@ -145,26 +135,7 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
             ))}
           </ul>
 
-          <div className="mx-auto mt-6 flex max-w-6xl items-center justify-between">
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={prev}
-                aria-label="Previous slide"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </button>
-              <button
-                type="button"
-                onClick={next}
-                aria-label="Next slide"
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </button>
-            </div>
-
+          <div className="mx-auto mt-6 flex max-w-6xl items-center justify-center">
             <div className="flex items-center gap-2">
               {heroSlides.map((item, index) => (
                 <button
