@@ -292,7 +292,7 @@ body {
 }
 
 .animate-marquee-clients {
-  animation: marquee 50s linear infinite;
+  animation: marquee 90s linear infinite;
 }
 
 .animate-marquee-clients-reverse {
