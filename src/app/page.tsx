@@ -10,6 +10,7 @@ import Navbar from "@/components/Navbar";
 import ContactSectionWrapper from "@/components/ContactSectionWrapper";
 import FloatingActions from "@/components/FloatingActions";
 import ProcessSection from "@/components/ProcessSection";
+import SolutionsSection from "@/components/SolutionsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import VideosSection from "@/components/VideosSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
@@ -29,6 +30,7 @@ export default async function Home() {
         <Hero slides={slides} />
         <ClientsSection />
         <ProductsSection />
+        <SolutionsSection />
         <WhyChooseUsSection />
         <CenterBannerSection />
         <ProcessSection />

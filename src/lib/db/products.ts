@@ -46,9 +46,11 @@ export async function getProductsByCategoryFromDb(
 export async function getProductsForCategory(
   categoryId: CategoryId,
 ): Promise<CategoryProduct[]> {
+  const staticList = staticProducts[categoryId] ?? [];
+  if (staticList.length > 0) return staticList;
+
   const fromDb = await getProductsByCategoryFromDb(categoryId);
-  if (fromDb) return fromDb;
-  return staticProducts[categoryId] ?? [];
+  return fromDb ?? [];
 }
 
 export async function getProductFromDb(categoryId: CategoryId, productId: string) {
@@ -103,6 +105,9 @@ export async function getProductDetailForPage(
   productId: string,
   categoryTitle: string,
 ) {
+  const staticDetail = getProductDetail(categoryId, productId, categoryTitle);
+  if (staticDetail) return staticDetail;
+
   const fromDb = await getProductFromDb(categoryId, productId);
   if (fromDb) {
     return {
@@ -118,7 +123,7 @@ export async function getProductDetailForPage(
     };
   }
 
-  return getProductDetail(categoryId, productId, categoryTitle);
+  return undefined;
 }
 
 export async function seedProductsIfEmpty() {
@@ -126,14 +131,23 @@ export async function seedProductsIfEmpty() {
   const count = await collection.countDocuments();
   if (count > 0) return;
 
+  await syncProductsFromStatic();
+}
+
+export async function syncProductsFromStatic() {
+  const collection = await getCollection();
   const now = new Date();
-  const docs: ProductDoc[] = [];
+  const activeKeys = new Set<string>();
 
   for (const category of categories) {
     const products = staticProducts[category.id] ?? [];
-    products.forEach((product, index) => {
+
+    for (const [index, product] of products.entries()) {
       const detail = getProductDetail(category.id, product.id, category.title);
-      docs.push({
+      const key = `${category.id}:${product.id}`;
+      activeKeys.add(key);
+
+      const doc = {
         id: product.id,
         categoryId: category.id,
         title: detail?.title ?? product.title,
@@ -146,13 +160,25 @@ export async function seedProductsIfEmpty() {
         description: detail?.description ?? "",
         active: true,
         order: index,
-        createdAt: now,
         updatedAt: now,
-      });
-    });
+      };
+
+      await collection.updateOne(
+        { categoryId: category.id, id: product.id },
+        { $set: doc, $setOnInsert: { createdAt: now } },
+        { upsert: true },
+      );
+    }
   }
 
-  if (docs.length > 0) {
-    await collection.insertMany(docs);
+  const existing = await collection.find({}).toArray();
+  for (const doc of existing) {
+    const key = `${doc.categoryId}:${doc.id}`;
+    if (!activeKeys.has(key)) {
+      await collection.updateOne(
+        { _id: doc._id },
+        { $set: { active: false, updatedAt: now } },
+      );
+    }
   }
 }

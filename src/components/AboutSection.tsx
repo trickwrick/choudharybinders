@@ -16,7 +16,7 @@ import {
   staggerContainer,
   staggerItem,
 } from "@/lib/animations";
-import { sectionImages } from "@/lib/site-images";
+import { companyContent, contentImages, coreValues } from "@/lib/site-content";
 import Button from "./Button";
 import Container from "./Container";
 import CountUp from "./motion/CountUp";
@@ -35,26 +35,11 @@ const stats = [
   { value: "10+", label: "Printing Services" },
 ];
 
-const highlights = [
-  {
-    icon: Award,
-    title: "Premium Quality",
-    description:
-      "High-grade materials, sharp print finish, and durable signage built to last outdoors and indoors.",
-  },
-  {
-    icon: Clock,
-    title: "On-Time Delivery",
-    description:
-      "Fast turnaround for banners, flex boards, LED signs, and bulk printing — without compromising quality.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Trusted Since 1980",
-    description:
-      "Decades of experience serving businesses, showrooms, hotels, and brands across Jaipur and India.",
-  },
-];
+const highlights = coreValues.map((item, index) => ({
+  icon: [Award, Clock, ShieldCheck, Sparkles][index] ?? Award,
+  title: item.title,
+  description: item.description,
+}));
 
 export default function AboutSection({
   contactHref = "#contact",
@@ -77,8 +62,7 @@ export default function AboutSection({
           viewport={{ once: true }}
           className="mx-auto mb-10 max-w-2xl text-center text-sm text-text/60 sm:mb-12 sm:text-base"
         >
-          Jaipur&apos;s trusted name in printing, advertising &amp; branding
-          solutions
+          {companyContent.brandLine}
         </motion.p>
 
         <div className="grid items-start gap-8 md:grid-cols-2 md:gap-10 lg:gap-14">
@@ -93,8 +77,8 @@ export default function AboutSection({
             <ImageReveal direction="left" className="relative overflow-hidden rounded-2xl border border-border/80 shadow-xl">
               <div className="group relative">
                 <SectionImage
-                  src={sectionImages.about}
-                  alt="Choudhary Binders & Printers — printing and signage work in Jaipur"
+                  src={contentImages.visionMissionAbout}
+                  alt="Choudhary Binders & Printers — vision, mission and about us"
                   aspect="4/3"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   imageClassName="!p-0 transition-transform duration-700 group-hover:scale-[1.03]"
@@ -133,32 +117,23 @@ export default function AboutSection({
             </span>
 
             <h3 className="mt-5 text-2xl font-bold leading-snug text-text sm:text-3xl lg:text-[2rem]">
-              Your Complete Printing &amp;{" "}
+              Complete Printing &amp;{" "}
               <span className="brand-gradient-text">
-                <TextReveal delay={0.1}>Branding Partner</TextReveal>
+                <TextReveal delay={0.1}>Binding Solutions</TextReveal>
               </span>
             </h3>
 
             <div className="mt-5 space-y-4 text-sm leading-relaxed text-text/70 sm:text-base">
-              <p>
-                <strong className="font-semibold text-text">
-                  Choudhary Binders &amp; Printers
-                </strong>{" "}
-                was founded in 1980 with a simple vision — to deliver reliable,
-                high-quality printing and advertising solutions that help
-                businesses stand out. From a modest beginning in Jaipur, we have
-                grown into a full-service printing house trusted by retail
-                stores, corporates, hotels, jewellers, and institutions across
-                Rajasthan and beyond.
-              </p>
-              <p>
-                We specialize in offset printing, flex &amp; banner printing,
-                LED sign boards, shop branding, outdoor hoardings, promotional
-                materials, and complete visual identity solutions. Our experienced
-                team handles everything from design support to fabrication and
-                on-site installation — so you get a seamless, professional
-                experience every time.
-              </p>
+              <div className="rounded-xl border border-primary/15 bg-primary/5 p-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-primary">Vision</p>
+                <p className="mt-2">{companyContent.vision}</p>
+              </div>
+              <div className="rounded-xl border border-accent/15 bg-accent/5 p-4">
+                <p className="text-xs font-bold uppercase tracking-wide text-accent">Our Mission</p>
+                <p className="mt-2">{companyContent.mission}</p>
+              </div>
+              <p>{companyContent.about}</p>
+              <p>{companyContent.intro}</p>
             </div>
 
             <motion.div

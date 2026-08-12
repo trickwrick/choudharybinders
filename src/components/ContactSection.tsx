@@ -5,6 +5,7 @@ import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { type FormEvent, useEffect, useState } from "react";
 import { fadeUp, slideFromLeft, slideFromRight, staggerContainer } from "@/lib/animations";
+import { businessInfo } from "@/lib/site-business";
 import Container from "./Container";
 import MagneticWrap from "./motion/MagneticWrap";
 import Reveal from "./motion/Reveal";
@@ -17,22 +18,20 @@ const contactBlocks = [
     icon: MapPin,
     title: "Our Office Address",
     content: (
-      <p className="pl-7 text-sm leading-relaxed text-text/70">
-        B-25, Basement, Unnati Tower, Central Spine, Vidhyadhar Nagar,
-        Jaipur, Rajasthan — 302039
-      </p>
+      <p className="pl-7 text-sm leading-relaxed text-text/70">{businessInfo.address}</p>
     ),
   },
   {
     icon: Mail,
     title: "General Enquiries",
     content: (
-      <a
-        href="mailto:choudharybinders@gmail.com"
-        className="pl-7 text-sm text-text/70 transition-colors hover:text-primary"
-      >
-        choudharybinders@gmail.com
-      </a>
+      <div className="space-y-1 pl-7 text-sm text-text/70">
+        {businessInfo.emails.map((email) => (
+          <a key={email} href={`mailto:${email}`} className="block transition-colors hover:text-primary">
+            {email}
+          </a>
+        ))}
+      </div>
     ),
   },
   {
@@ -40,19 +39,16 @@ const contactBlocks = [
     title: "Call Us",
     content: (
       <ul className="space-y-1 pl-7 text-sm text-text/70">
+        {businessInfo.phones.map((phone) => (
+          <li key={phone.tel}>
+            <a href={phone.tel} className="hover:text-primary">
+              {phone.display}
+            </a>
+          </li>
+        ))}
         <li>
-          <a href="tel:01414107270" className="hover:text-primary">
-            0141-4107270
-          </a>
-        </li>
-        <li>
-          <a href="tel:+917220015427" className="hover:text-primary">
-            +91-7220015427
-          </a>
-        </li>
-        <li>
-          <a href="tel:+919829015427" className="hover:text-primary">
-            +91-9829015427
+          <a href={businessInfo.landline.tel} className="hover:text-primary">
+            {businessInfo.landline.display}
           </a>
         </li>
       </ul>

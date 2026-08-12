@@ -5,6 +5,7 @@ import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ProcessSection from "@/components/ProcessSection";
+import SolutionsSection from "@/components/SolutionsSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function AboutPage() {
       <Navbar />
       <main className="pt-[7.25rem]">
         <AboutSection contactHref="/contact" />
+        <SolutionsSection />
         <WhyChooseUsSection />
         <ProcessSection />
         <ClientsSection />

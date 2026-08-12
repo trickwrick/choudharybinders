@@ -22,10 +22,10 @@ type DetailOverride = Partial<
 >;
 
 const detailOverrides: Record<string, DetailOverride> = {
-  "glow-sign-board": {
-    title: "LED Acrylic SignBoard",
+  "neon-sign-board": {
+    title: "Neon Sign Board",
     price: 1250,
-    unit: "Ft",
+    unit: "Sq.ft",
     images: [
       galleryImages[7].src,
       galleryImages[3].src,
@@ -43,12 +43,12 @@ const detailOverrides: Record<string, DetailOverride> = {
         value: "Energy Efficient 12V DC Internal Drivers",
       },
       { label: "Input Voltage", value: "220-240V AC" },
-      { label: "Light Source", value: "LED" },
+      { label: "Light Source", value: "LED / Neon" },
     ],
     description:
-      "This LED Acrylic SignBoard combines aesthetic elegance with industrial durability. The high-grade acrylic front panel offers a crystal-clear finish that enhances brand visibility, while the ACP backing ensures the sign remains lightweight yet robust against weather elements. Ideal for retail storefronts, jewellery showrooms, hotels, and corporate offices.",
+      "Premium neon and LED sign boards for shops, showrooms, hotels, and commercial fronts. Custom sizes, bright illumination, and durable outdoor performance.",
   },
-  "vinyl-sunboard": {
+  "glowsign-boards": {
     images: [
       galleryImages[6].src,
       galleryImages[5].src,
@@ -64,9 +64,9 @@ const detailOverrides: Record<string, DetailOverride> = {
       { label: "Durability", value: "UV Resistant & Weather Proof" },
     ],
     description:
-      "Premium vinyl sunboard branding for shop fronts, promotions, and campaign displays. Sharp colours, clean finishing, and durable outdoor performance make this a reliable choice for high-visibility advertising.",
+      "Glowsign boards for shop fronts, promotions, and campaign displays. Sharp colours, clean finishing, and durable outdoor performance.",
   },
-  "acrylic-sandwich": {
+  "acrylic-led-signage": {
     images: [
       galleryImages[3].src,
       galleryImages[7].src,
@@ -74,14 +74,14 @@ const detailOverrides: Record<string, DetailOverride> = {
       galleryImages[1].src,
     ],
     specifications: [
-      { label: "Material", value: "Acrylic Sandwich Panel" },
+      { label: "Material", value: "Acrylic Sandwich Panel with LED" },
       { label: "Thickness", value: "Custom (3mm to 10mm)" },
       { label: "Finish", value: "Glossy / Matte" },
       { label: "Size", value: "Customized" },
       { label: "Application", value: "Indoor Branding & Signage" },
     ],
     description:
-      "Acrylic sandwich boards deliver a premium look for name boards, retail signage, and indoor branding. Lightweight, elegant, and available in custom sizes to match your storefront requirements.",
+      "Acrylic LED signage delivers a premium look for name boards, retail signage, and indoor branding. Lightweight, elegant, and available in custom sizes.",
   },
 };
 
@@ -93,12 +93,26 @@ const defaultSpecsByCategory: Record<CategoryId, ProductSpecification[]> = {
     { label: "Finishing", value: "Cutting, Folding, Binding (optional)" },
     { label: "Size", value: "Customized" },
   ],
-  led: [
-    { label: "Material", value: "Acrylic / ACP with LED Modules" },
-    { label: "Light Source", value: "LED" },
+  signage: [
+    { label: "Material", value: "Acrylic / SS / ACP with LED Modules" },
+    { label: "Light Source", value: "LED / Neon" },
     { label: "Input Voltage", value: "220-240V AC" },
     { label: "Finish", value: "Glossy / Matte" },
     { label: "Size", value: "Customized" },
+  ],
+  binding: [
+    { label: "Binding Type", value: "Perfect / Spiral / Wire-O / Hard Cover" },
+    { label: "Paper", value: "Premium Art / Gloss / Matte" },
+    { label: "Finishing", value: "Lamination & Document Finishing" },
+    { label: "Use Case", value: "Books, Reports, Catalogues, Thesis" },
+    { label: "Quantity", value: "Custom Order" },
+  ],
+  "customized-gifts": [
+    { label: "Product Type", value: "Corporate & Promotional Gifts" },
+    { label: "Customization", value: "Logo, Name & Design Printing" },
+    { label: "Packaging", value: "Gift Box / Bulk Packing" },
+    { label: "MOQ", value: "As per product" },
+    { label: "Delivery", value: "Pan India (on request)" },
   ],
   digital: [
     { label: "Print Type", value: "Digital Printing" },
@@ -121,18 +135,11 @@ const defaultSpecsByCategory: Record<CategoryId, ProductSpecification[]> = {
     { label: "Durability", value: "Weather & UV Resistant" },
     { label: "Size", value: "Vehicle Specific" },
   ],
-  acp: [
-    { label: "Material", value: "Aluminum Composite Panel (ACP)" },
-    { label: "Thickness", value: "3mm / 4mm (as required)" },
-    { label: "Finish", value: "PVDF Coated" },
-    { label: "Application", value: "Façade & Exterior Cladding" },
-    { label: "Size", value: "Customized" },
-  ],
-  outdoor: [
-    { label: "Material", value: "Flex / ACP / Sunboard" },
-    { label: "Usage", value: "Outdoor Advertising" },
-    { label: "Durability", value: "Weather Resistant" },
-    { label: "Installation", value: "On-site (optional)" },
+  unipole: [
+    { label: "Material", value: "Flex / ACP / Steel Structure" },
+    { label: "Usage", value: "Highway & Commercial Unipole Advertising" },
+    { label: "Print Quality", value: "Eco-Solvent High Resolution" },
+    { label: "Installation", value: "On-site Mounting Support" },
     { label: "Size", value: "Customized" },
   ],
 };

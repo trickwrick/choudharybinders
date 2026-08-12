@@ -1,5 +1,5 @@
 import type { CategoryId } from "@/lib/categories";
-import { galleryImages, productImages } from "@/lib/site-images";
+import { getProductImage } from "@/lib/catalog-images";
 
 export type CategoryProduct = {
   id: string;
@@ -10,180 +10,109 @@ export type CategoryProduct = {
   unit?: string;
 };
 
+function slugify(title: string) {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function item(
+  categoryId: CategoryId,
+  title: string,
+  minQty = "Custom Order",
+): CategoryProduct {
+  const id = slugify(title);
+  return {
+    id,
+    title,
+    image: getProductImage(id, categoryId),
+    minQty,
+  };
+}
+
 export const categoryProducts: Record<CategoryId, CategoryProduct[]> = {
   offset: [
-    {
-      id: "business-brochure",
-      title: "Business Brochure",
-      image: productImages[4],
-      minQty: "500 Pieces",
-    },
-    {
-      id: "catalogue-print",
-      title: "Catalogue Printing",
-      image: galleryImages[0].src,
-      minQty: "200 Pieces",
-      price: 8,
-      unit: "Piece",
-    },
-    {
-      id: "letterhead-stationery",
-      title: "Letterhead & Stationery",
-      image: productImages[5],
-      minQty: "1000 Sheets",
-      price: 3,
-      unit: "Sheet",
-    },
-  ],
-  led: [
-    {
-      id: "acrylic-sandwich",
-      title: "Acrylic Sandwich",
-      image: galleryImages[3].src,
-      minQty: "10 Square Feet",
-    },
-    {
-      id: "glow-sign-board",
-      title: "Glow Sign Board",
-      image: productImages[2],
-      minQty: "10 Square Feet",
-      price: 450,
-      unit: "Sq.ft",
-    },
-    {
-      id: "led-name-board",
-      title: "LED Name Board",
-      image: galleryImages[7].src,
-      minQty: "8 Square Feet",
-      price: 650,
-      unit: "Sq.ft",
-    },
-  ],
-  digital: [
-    {
-      id: "poster-print",
-      title: "Poster Printing",
-      image: productImages[1],
-      minQty: "50 Pieces",
-      price: 25,
-      unit: "Piece",
-    },
-    {
-      id: "visiting-card",
-      title: "Visiting Cards",
-      image: productImages[4],
-      minQty: "500 Pieces",
-      price: 2,
-      unit: "Piece",
-    },
-    {
-      id: "sticker-print",
-      title: "Sticker Printing",
-      image: galleryImages[8].src,
-      minQty: "100 Pieces",
-      price: 5,
-      unit: "Piece",
-    },
+    item("offset", "Business Card", "500 Pieces"),
+    item("offset", "Letterhead", "1000 Sheets"),
+    item("offset", "Envelope", "500 Pieces"),
+    item("offset", "Pamphlet & Flyer", "500 Pieces"),
+    item("offset", "Brochure & Catalogue", "200 Pieces"),
+    item("offset", "OPD / Doctor File", "100 Pieces"),
+    item("offset", "Book & Magazine", "100 Pieces"),
+    item("offset", "Dairy & Calendars", "100 Pieces"),
+    item("offset", "Poster", "50 Pieces"),
+    item("offset", "Bill Book & Office Stationery", "100 Pieces"),
   ],
   flex: [
-    {
-      id: "flex-banner",
-      title: "Flex Banner",
-      image: productImages[1],
-      minQty: "10 Square Feet",
-      price: 35,
-      unit: "Sq.ft",
-    },
-    {
-      id: "vinyl-sunboard",
-      title: "Vinyl Sunboard Branding",
-      image: galleryImages[6].src,
-      minQty: "10 Square Feet",
-      price: 100,
-      unit: "Sq.ft",
-    },
-    {
-      id: "hoarding-flex",
-      title: "Hoarding Flex Print",
-      image: galleryImages[5].src,
-      minQty: "50 Square Feet",
-      price: 28,
-      unit: "Sq.ft",
-    },
+    item("flex", "Banners & Hoardings", "50 Square Feet"),
+    item("flex", "Event Displays", "1 Set"),
+    item("flex", "Glowsign Boards", "10 Square Feet"),
+    item("flex", "Roll-Up Standees", "1 Piece"),
+    item("flex", "One-Way Vision", "20 Square Feet"),
+    item("flex", "Frosted Vinyl", "10 Square Feet"),
+    item("flex", "Indoor & Outdoor Branding", "Custom Order"),
+    item("flex", "Canvas Frames", "1 Piece"),
+    item("flex", "Wall Graphics", "10 Square Feet"),
+  ],
+  digital: [
+    item("digital", "Certificates", "50 Pieces"),
+    item("digital", "Visiting Cards", "500 Pieces"),
+    item("digital", "Flyers & Posters", "100 Pieces"),
+    item("digital", "Personalized Prints", "Custom Order"),
+    item("digital", "Customized Catalogue", "100 Pieces"),
+    item("digital", "Customized Brochure", "200 Pieces"),
+    item("digital", "Custom Invitations", "100 Pieces"),
+    item("digital", "Stickers & Labels", "500 Pieces"),
+    item("digital", "Menu Cards", "100 Pieces"),
+  ],
+  signage: [
+    item("signage", "Acrylic Led Signage", "10 Square Feet"),
+    item("signage", "Neon Sign Board", "10 Square Feet"),
+    item("signage", "Acrylic Photo Frames", "1 Piece"),
+    item("signage", "Acrylic Letters", "Custom Order"),
+    item("signage", "Stainless Steel Letters", "Custom Order"),
+    item("signage", "Name Plates", "10 Pieces"),
+    item("signage", "Laser & CNC", "Custom Order"),
+    item("signage", "Cut Vinyl Glowing Board", "10 Square Feet"),
+    item("signage", "Bothside Led Lollipop", "1 Piece"),
+    item("signage", "Road Direction Sign Board", "1 Piece"),
+  ],
+  binding: [
+    item("binding", "Perfect Binding", "50 Copies"),
+    item("binding", "Spiral Binding", "25 Copies"),
+    item("binding", "Wire-O Binding", "25 Copies"),
+    item("binding", "Hard Binding", "10 Copies"),
+    item("binding", "Document Finishing", "Custom Order"),
+  ],
+  "customized-gifts": [
+    item("customized-gifts", "Corporate Gifts", "50 Pieces"),
+    item("customized-gifts", "Promotional Merchandise", "100 Pieces"),
+    item("customized-gifts", "Employee Welcome Kits", "25 Sets"),
+    item("customized-gifts", "Photo Gifts", "Custom Order"),
+    item("customized-gifts", "Personalized Accessories", "Custom Order"),
+    item("customized-gifts", "Event & Wedding Gifts", "Custom Order"),
+    item("customized-gifts", "School & College Merchandise", "100 Pieces"),
+    item("customized-gifts", "Festival Gift Hampers", "25 Sets"),
   ],
   "mobile-van": [
-    {
-      id: "van-wrap-full",
-      title: "Full Van Wrap",
-      image: productImages[3],
-      minQty: "1 Vehicle",
-    },
-    {
-      id: "van-side-panel",
-      title: "Side Panel Branding",
-      image: galleryImages[5].src,
-      minQty: "2 Panels",
-      price: 3500,
-      unit: "Panel",
-    },
-    {
-      id: "mobile-campaign",
-      title: "Mobile Campaign Kit",
-      image: productImages[0],
-      minQty: "1 Set",
-      price: 8000,
-      unit: "Set",
-    },
+    item("mobile-van", "Vehicle Branding", "1 Vehicle"),
+    item("mobile-van", "Pole Kiosk Sign Board", "1 Piece"),
+    item("mobile-van", "Promotional Van Rental Service", "1 Day"),
+    item("mobile-van", "Promotional Road Show Van Rental Service", "1 Day"),
+    item("mobile-van", "Promotional Van with Running Video Screen", "1 Day"),
   ],
-  acp: [
-    {
-      id: "acp-cladding",
-      title: "ACP Cladding",
-      image: galleryImages[2].src,
-      minQty: "50 Square Feet",
-      price: 180,
-      unit: "Sq.ft",
-    },
-    {
-      id: "facade-panel",
-      title: "Façade Panel",
-      image: galleryImages[4].src,
-      minQty: "30 Square Feet",
-      price: 220,
-      unit: "Sq.ft",
-    },
-    {
-      id: "shop-front-acp",
-      title: "Shop Front ACP",
-      image: galleryImages[1].src,
-      minQty: "20 Square Feet",
-      price: 250,
-      unit: "Sq.ft",
-    },
-  ],
-  outdoor: [
-    {
-      id: "standee",
-      title: "Standee",
-      image: productImages[0],
-      minQty: "10 Square Feet",
-    },
-    {
-      id: "billboard",
-      title: "Billboard Advertising",
-      image: galleryImages[5].src,
-      minQty: "100 Square Feet",
-      price: 45,
-      unit: "Sq.ft",
-    },
-    {
-      id: "shop-signage",
-      title: "Shop Signage Board",
-      image: galleryImages[2].src,
-      minQty: "15 Square Feet",
-      price: 120,
-      unit: "Sq.ft",
-    },
+  unipole: [
+    item("unipole", "Highway Unipole Advertising", "1 Unit"),
+    item("unipole", "Commercial Area Branding", "Custom Order"),
+    item("unipole", "Custom Size Unipole Designs", "1 Unit"),
+    item("unipole", "LED & Glow Sign Integration", "1 Unit"),
+    item("unipole", "Creative Design Solutions", "Custom Order"),
+    item("unipole", "Backlit & Frontlit Flex Printing", "50 Square Feet"),
+    item("unipole", "Installation & Mounting Support", "1 Site"),
+    item("unipole", "Eco Solvent High-Resolution Printing", "50 Square Feet"),
+    item("unipole", "Political & Event Campaign Branding", "Custom Order"),
+    item("unipole", "Real Estate & Corporate Promotions", "Custom Order"),
   ],
 };
 

@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
+import { companyContent } from "@/lib/site-content";
 import { sectionImages } from "@/lib/site-images";
 import Button from "./Button";
 import Container from "./Container";
@@ -72,15 +73,20 @@ export default function CenterBannerSection() {
                 <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-10 lg:px-14">
                   <Reveal delay={0.15}>
                     <p className="text-xs font-semibold uppercase tracking-[0.3em] text-white/75 sm:text-sm">
-                      Paper → Ink → Print → Finish
+                      {companyContent.completeSolutionsBadge}
                     </p>
                   </Reveal>
                   <Reveal delay={0.25}>
-                    <h2 className="mt-2 max-w-lg text-2xl font-extrabold text-white sm:text-3xl lg:text-4xl">
-                      <TextReveal delay={0.3}>We Print Miracles</TextReveal>
+                    <h2 className="mt-2 max-w-xl text-2xl font-extrabold text-white sm:text-3xl lg:text-4xl">
+                      <TextReveal delay={0.3}>Printing That</TextReveal>
                       <br />
-                      <TextReveal delay={0.4}>for Your Brand</TextReveal>
+                      <TextReveal delay={0.4}>Builds Your Brand</TextReveal>
                     </h2>
+                  </Reveal>
+                  <Reveal delay={0.35}>
+                    <p className="mt-3 max-w-md text-sm text-white/85 sm:text-base">
+                      {companyContent.tagline} — vibrant prints, professional finishes.
+                    </p>
                   </Reveal>
                   <Reveal delay={0.45} className="mt-5">
                     <MagneticWrap strength={0.2}>

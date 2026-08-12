@@ -2,6 +2,7 @@
 
 import { Mail, MapPin, Phone } from "lucide-react";
 import { type ReactNode } from "react";
+import { businessInfo } from "@/lib/site-business";
 import Container from "./Container";
 
 const socialLinks = [
@@ -76,21 +77,17 @@ export default function Footer() {
           <ContactBlock icon={<Phone className="h-5 w-5" strokeWidth={2} />}>
             <p>
               <span className="text-white/75">Contact Us:</span>
-              <br />
-              <a
-                href="tel:+917821013457"
-                className="font-semibold text-white hover:underline"
-              >
-                +91-7821013457
-              </a>
             </p>
+            {businessInfo.phones.map((phone) => (
+              <p key={phone.tel}>
+                <a href={phone.tel} className="font-semibold text-white hover:underline">
+                  {phone.display}
+                </a>
+              </p>
+            ))}
             <p className="text-white/90">
-              <a href="tel:01414107270" className="hover:underline">
-                0141-4107270
-              </a>
-              ,{" "}
-              <a href="tel:+919829015427" className="hover:underline">
-                +91-9829015427
+              <a href={businessInfo.landline.tel} className="hover:underline">
+                {businessInfo.landline.display}
               </a>
             </p>
           </ContactBlock>
@@ -98,24 +95,21 @@ export default function Footer() {
           <ContactBlock icon={<Mail className="h-5 w-5" strokeWidth={2} />}>
             <p>
               <span className="text-white/75">Email:</span>
-              <br />
-              <a
-                href="mailto:choudharybinders@gmail.com"
-                className="font-semibold text-white hover:underline"
-              >
-                choudharybinders@gmail.com
-              </a>
             </p>
+            {businessInfo.emails.map((email) => (
+              <p key={email}>
+                <a href={`mailto:${email}`} className="font-semibold text-white hover:underline">
+                  {email}
+                </a>
+              </p>
+            ))}
           </ContactBlock>
 
           <ContactBlock icon={<MapPin className="h-5 w-5" strokeWidth={2} />}>
             <p>
               <span className="text-white/75">Address:</span>
               <br />
-              <span className="font-semibold text-white">
-                B-25, Basement, Unnati Tower, Central Spine, Vidhyadhar Nagar,
-                Jaipur (Raj.) — 302039
-              </span>
+              <span className="font-semibold text-white">{businessInfo.address}</span>
             </p>
           </ContactBlock>
         </div>

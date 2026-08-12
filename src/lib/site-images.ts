@@ -1,3 +1,5 @@
+import { categoryCoverImages } from "@/lib/catalog-images";
+
 export const heroSlides = [
   {
     src: "/hero/billboard-advertising.jpg",
@@ -19,15 +21,7 @@ export const heroSlides = [
   },
 ] as const;
 
-export const categoryImages = {
-  offset: "/categories/offset-printing.jpg",
-  led: "/categories/led-sign-boards.jpg",
-  digital: "/services/advertising-printing.jpg",
-  flex: "/categories/flex-printing-standee.jpg",
-  mobileVan: "/services/hoarding-advertising.jpg",
-  acp: "/services/fabrication-cladding.jpg",
-  outdoor: "/categories/outdoor-advertising.jpg",
-} as const;
+export const categoryImages = categoryCoverImages;
 
 export const serviceImages = [
   "/services/alu-fabricators.jpg",
