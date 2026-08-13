@@ -138,13 +138,13 @@ export default function SolutionsSection() {
           </Reveal>
         </div>
 
-        <div className="mt-6 grid gap-4 lg:mt-7 lg:grid-cols-12 lg:gap-5">
-          <Reveal className="lg:col-span-5">
-            <div className="group relative">
+        <div className="mt-6 grid gap-4 lg:mt-7 lg:grid-cols-12 lg:grid-rows-[auto_auto_auto] lg:gap-5">
+          <Reveal className="h-full lg:col-span-5 lg:row-span-2 lg:row-start-1">
+            <div className="group relative h-full min-h-[280px]">
               <div className="absolute -inset-3 rounded-[1.75rem] bg-gradient-to-br from-primary/15 via-accent/10 to-primary/5 opacity-60 blur-sm transition-opacity duration-500 group-hover:opacity-100" />
-              <div className="relative overflow-hidden rounded-2xl border border-border/70 shadow-[0_12px_40px_rgba(0,0,0,0.1)]">
+              <div className="relative flex h-full min-h-[280px] flex-col overflow-hidden rounded-2xl border border-border/70 shadow-[0_12px_40px_rgba(0,0,0,0.1)]">
                 <div className="brand-tricolor-bar absolute inset-x-0 top-0 z-10 h-1" />
-                <div className="relative aspect-[4/3] max-h-[320px] sm:max-h-[360px] lg:max-h-none lg:aspect-[5/4]">
+                <div className="relative min-h-[280px] flex-1 sm:min-h-[320px] lg:min-h-0">
                   <Image
                     src={contentImages.printingSolutions}
                     alt="Our printing solutions — Choudhary Binders & Printers"
@@ -188,7 +188,7 @@ export default function SolutionsSection() {
             </div>
           </Reveal>
 
-          <div className="flex flex-col gap-3 lg:col-span-7 lg:gap-4">
+          <div className="lg:col-span-7 lg:row-start-1">
             <ServicePanel
               title="Printing"
               subtitle={printingSolutions.description}
@@ -196,7 +196,9 @@ export default function SolutionsSection() {
               items={printingSolutions.items}
               accent="primary"
             />
+          </div>
 
+          <div className="lg:col-span-7 lg:row-start-2">
             <ServicePanel
               title={bindingSolutions.title}
               subtitle={bindingSolutions.subtitle}
@@ -205,18 +207,18 @@ export default function SolutionsSection() {
               accent="accent"
               delay={0.08}
             />
-
-            <Reveal delay={0.14}>
-              <div className="flex items-center gap-2.5 rounded-xl border border-border/70 bg-section-warm/80 p-4">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
-                  <Handshake className="h-4 w-4" />
-                </div>
-                <p className="text-xs font-semibold text-text sm:text-sm">
-                  {companyContent.completeSolutionsBadge}
-                </p>
-              </div>
-            </Reveal>
           </div>
+
+          <Reveal delay={0.14} className="lg:col-span-7 lg:row-start-3">
+            <div className="flex items-center gap-2.5 rounded-xl border border-border/70 bg-section-warm/80 p-4">
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
+                <Handshake className="h-4 w-4" />
+              </div>
+              <p className="text-xs font-semibold text-text sm:text-sm">
+                {companyContent.completeSolutionsBadge}
+              </p>
+            </div>
+          </Reveal>
         </div>
 
         <Reveal delay={0.16} className="mt-6 lg:mt-7">

@@ -21,7 +21,6 @@ const primaryLinks = [
 const moreLinks = [
   { label: "Why Us", href: "/#why-us" },
   { label: "Gallery", href: "/gallery" },
-  { label: "Videos", href: "/#videos" },
   { label: "Testimonials", href: "/#testimonials" },
   { label: "FAQ", href: "/#faq" },
 ];

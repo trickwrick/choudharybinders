@@ -12,7 +12,6 @@ import FloatingActions from "@/components/FloatingActions";
 import ProcessSection from "@/components/ProcessSection";
 import SolutionsSection from "@/components/SolutionsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import VideosSection from "@/components/VideosSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
 import { getHeroSlidesFromDb } from "@/lib/db/hero-slides";
 import { seedDatabaseIfEmpty } from "@/lib/db/seed";
@@ -36,7 +35,6 @@ export default async function Home() {
         <ProcessSection />
         <AboutSection compact />
         <GallerySection />
-        <VideosSection />
         <TestimonialsSection />
         <FAQSection />
         <ContactSectionWrapper />
