@@ -18,14 +18,15 @@ function AboutImage() {
   const [src, setSrc] = useState<string>(ABOUT_IMAGE);
 
   return (
-    <div className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-border/80 bg-[#f4f4f4] shadow-lg">
+    <div className="group relative overflow-hidden rounded-2xl border border-border/80 bg-white shadow-lg">
       <Image
         src={src}
         alt="Choudhary Binders & Printers — vision, mission and about us"
-        fill
+        width={1020}
+        height={1020}
         sizes="(max-width: 768px) 100vw, 45vw"
         quality={90}
-        className="object-contain p-1 transition-transform duration-700 group-hover:scale-[1.02]"
+        className="h-auto w-full transition-transform duration-700 group-hover:scale-[1.02]"
         onError={() => {
           if (src !== ABOUT_IMAGE_FALLBACK) setSrc(ABOUT_IMAGE_FALLBACK);
         }}

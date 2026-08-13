@@ -2,14 +2,14 @@ export const categoryCoverImages = {
   offset: "/categories/offset-printing-v2.jpg",
   flex: "/categories/flex-printing-v2.jpg",
   digital: "/categories/digital-printing-v2.jpg",
-  signage: "/categories/acrylic-ss-acp-v2.jpg",
+  signage: "/categories/acrylic-ss-acp-v3.jpg",
   binding: "/gallery/01-printing-solution.jpg",
   "customized-gifts": "/categories/customized-gifts-v3.jpg",
   "mobile-van": "/categories/mobile-van-advertising-v2.jpg",
   unipole: "/categories/unipole-advertising-v2.jpg",
   "outdoor-advertisement": "/categories/outdoor-branding.jpg",
-  "led-sign-board": "/categories/led-sign-board-v2.jpg",
-  "corporate-gifting": "/gallery/09-corporate-branding.jpg",
+  "led-sign-board": "/categories/led-sign-board-v3.jpg",
+  "corporate-gifting": "/categories/corporate-gifting-v2.jpg",
 } as const;
 
 export type CatalogCategoryId = keyof typeof categoryCoverImages;
@@ -18,7 +18,7 @@ const img = {
   offsetCover: "/categories/offset-printing-v2.jpg",
   flexCover: "/categories/flex-printing-v2.jpg",
   digitalCover: "/categories/digital-printing-v2.jpg",
-  signageCover: "/categories/acrylic-ss-acp-v2.jpg",
+  signageCover: "/categories/acrylic-ss-acp-v3.jpg",
   giftsCover: "/categories/customized-gifts-v3.jpg",
   vanCover: "/categories/mobile-van-advertising-v2.jpg",
   unipoleCover: "/categories/unipole-advertising-v2.jpg",

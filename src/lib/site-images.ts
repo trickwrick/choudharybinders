@@ -76,7 +76,7 @@ export const productImages = [
 ] as const;
 
 export const sectionImages = {
-  centerBanner: "/gallery/01-printing-solution.jpg",
+  centerBanner: "/content/center-banner-v2.png",
   about: "/about.jpg",
   testimonialBrochure: "/testimonials/brochure.jpg",
 } as const;

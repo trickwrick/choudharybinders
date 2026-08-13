@@ -83,7 +83,7 @@ export const contactDetails = {
 } as const;
 
 export const contentImages = {
-  visionMissionAbout: "/content/vision-mission-about.png",
+  visionMissionAbout: "/content/about-us-v2.png",
   printingSolutions: "/content/printing-solutions-v2.png",
   printingBinding: "/content/printing-binding.png",
 } as const;
