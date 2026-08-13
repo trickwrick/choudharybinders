@@ -1,8 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, ChevronDown, X, Menu } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { ArrowRight, X, Menu } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import Button from "./Button";
 import Container from "./Container";
@@ -10,22 +10,13 @@ import Logo from "./Logo";
 import QuoteModal from "./QuoteModal";
 import TopBar from "./TopBar";
 
-const primaryLinks = [
+const navLinks = [
   { label: "Home", href: "/#home" },
-  { label: "Category", href: "/category" },
-  { label: "Services", href: "/#services" },
+  { label: "All Products", href: "/category" },
+  { label: "Gallery", href: "/gallery" },
   { label: "About Us", href: "/about" },
   { label: "Contact Us", href: "/contact" },
 ];
-
-const moreLinks = [
-  { label: "Why Us", href: "/#why-us" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "Testimonials", href: "/#testimonials" },
-  { label: "FAQ", href: "/#faq" },
-];
-
-const allLinks = [...primaryLinks, ...moreLinks];
 
 function getSectionId(href: string): string | null {
   if (href.startsWith("/#")) return href.slice(2);
@@ -37,10 +28,8 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
-  const [isMoreOpen, setIsMoreOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("#home");
   const pathname = usePathname();
-  const moreRef = useRef<HTMLLIElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -50,7 +39,7 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    const sectionIds = allLinks
+    const sectionIds = navLinks
       .map((link) => getSectionId(link.href))
       .filter(Boolean) as string[];
     const elements = sectionIds
@@ -89,16 +78,6 @@ export default function Navbar() {
     return () => window.removeEventListener("hashchange", closeOnNavigate);
   }, []);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (moreRef.current && !moreRef.current.contains(e.target as Node)) {
-        setIsMoreOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   const openQuoteModal = useCallback(() => {
     setIsMobileOpen(false);
     setIsQuoteOpen(true);
@@ -123,8 +102,6 @@ export default function Navbar() {
     },
     [activeSection, pathname],
   );
-
-  const isMoreActive = moreLinks.some((link) => isLinkActive(link.href));
 
   const isHome = pathname === "/";
   const isHeroOverlay = isHome && !isScrolled;
@@ -199,66 +176,13 @@ export default function Navbar() {
             <Logo size="md" className="shrink-0" onDark={isHeroOverlay} />
 
             <ul className="hidden flex-1 items-center justify-center gap-0.5 lg:flex xl:gap-1">
-              {primaryLinks.map((link) => (
+              {navLinks.map((link) => (
                 <li key={link.href}>
                   <a href={link.href} className={linkClass(link.href)}>
                     {link.label}
                   </a>
                 </li>
               ))}
-
-              <li ref={moreRef} className="relative">
-                <button
-                  type="button"
-                  onClick={() => setIsMoreOpen((open) => !open)}
-                  aria-expanded={isMoreOpen}
-                  aria-haspopup="true"
-                  className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-2 text-[13px] font-medium transition-all duration-200 xl:px-3 xl:text-sm ${
-                    isMoreActive || isMoreOpen
-                      ? isHeroOverlay
-                        ? "text-white font-semibold underline decoration-white/80 decoration-2 underline-offset-[6px]"
-                        : "bg-primary/15 text-primary font-semibold"
-                      : isHeroOverlay
-                        ? "text-white/90 hover:text-white"
-                        : "text-text/70 hover:bg-accent/10 hover:text-accent"
-                  }`}
-                >
-                  More
-                  <motion.span
-                    animate={{ rotate: isMoreOpen ? 180 : 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <ChevronDown className="h-3.5 w-3.5" />
-                  </motion.span>
-                </button>
-
-                <AnimatePresence>
-                  {isMoreOpen && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute left-1/2 top-full z-50 mt-2 w-48 -translate-x-1/2 overflow-hidden rounded-xl border border-border bg-white py-1.5 shadow-xl shadow-black/10"
-                    >
-                      {moreLinks.map((link) => (
-                        <a
-                          key={link.href}
-                          href={link.href}
-                          onClick={() => setIsMoreOpen(false)}
-                          className={`block px-4 py-2.5 text-sm font-medium transition-colors ${
-                            isLinkActive(link.href)
-                              ? "bg-primary/15 text-primary font-semibold"
-                              : "text-text/75 hover:bg-accent/10 hover:text-accent"
-                          }`}
-                        >
-                          {link.label}
-                        </a>
-                      ))}
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </li>
             </ul>
 
             <div className="hidden shrink-0 items-center gap-3 lg:flex">
@@ -334,35 +258,13 @@ export default function Navbar() {
                   Menu
                 </p>
                 <nav className="flex flex-col gap-0.5">
-                  {primaryLinks.map((link, index) => (
+                  {navLinks.map((link, index) => (
                     <motion.a
                       key={link.href}
                       href={link.href}
                       initial={{ opacity: 0, x: 16 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: index * 0.04 }}
-                      onClick={() => setIsMobileOpen(false)}
-                      className={linkClass(link.href, true)}
-                    >
-                      {link.label}
-                      {isLinkActive(link.href) && (
-                        <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-                      )}
-                    </motion.a>
-                  ))}
-                </nav>
-
-                <p className="mb-2 mt-6 px-2 text-[10px] font-bold uppercase tracking-widest text-text/40">
-                  More
-                </p>
-                <nav className="flex flex-col gap-0.5">
-                  {moreLinks.map((link, index) => (
-                    <motion.a
-                      key={link.href}
-                      href={link.href}
-                      initial={{ opacity: 0, x: 16 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.2 + index * 0.04 }}
                       onClick={() => setIsMobileOpen(false)}
                       className={linkClass(link.href, true)}
                     >
