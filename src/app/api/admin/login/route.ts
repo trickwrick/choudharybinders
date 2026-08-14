@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     const username = body.username?.trim() ?? "";
     const password = body.password ?? "";
 
-    if (!username || !password || !verifyAdminCredentials(username, password)) {
+    if (!username || !password || !(await verifyAdminCredentials(username, password))) {
       return NextResponse.json({ error: "Invalid username or password" }, { status: 401 });
     }
 

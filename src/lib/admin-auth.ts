@@ -1,5 +1,11 @@
 import crypto from "node:crypto";
 import { cookies } from "next/headers";
+import { verifyPassword } from "@/lib/password-utils";
+import {
+  getEnvAdminCredentials,
+  getStoredAdminCredentials,
+  saveAdminCredentials,
+} from "@/lib/db/admin-settings";
 
 const COOKIE_NAME = "admin_session";
 const SESSION_MAX_AGE = 60 * 60 * 24 * 7;
@@ -19,10 +25,43 @@ function signPayload(payload: string) {
     .digest("hex");
 }
 
-export function verifyAdminCredentials(username: string, password: string) {
-  const expectedUsername = process.env.ADMIN_USERNAME ?? "admin";
-  const expectedPassword = process.env.ADMIN_PASSWORD ?? "admin123";
-  return username === expectedUsername && password === expectedPassword;
+export async function getAdminUsername() {
+  const stored = await getStoredAdminCredentials();
+  if (stored?.username) return stored.username;
+  return getEnvAdminCredentials().username;
+}
+
+export async function verifyAdminCredentials(username: string, password: string) {
+  const stored = await getStoredAdminCredentials();
+
+  if (stored) {
+    return (
+      username === stored.username && verifyPassword(password, stored.passwordHash)
+    );
+  }
+
+  const envCredentials = getEnvAdminCredentials();
+  return (
+    username === envCredentials.username && password === envCredentials.password
+  );
+}
+
+export async function changeAdminPassword(
+  currentPassword: string,
+  newPassword: string,
+) {
+  const username = await getAdminUsername();
+  const valid = await verifyAdminCredentials(username, currentPassword);
+
+  if (!valid) {
+    throw new Error("Current password is incorrect.");
+  }
+
+  if (newPassword.length < 6) {
+    throw new Error("New password must be at least 6 characters.");
+  }
+
+  await saveAdminCredentials(username, newPassword);
 }
 
 export async function createAdminSession() {

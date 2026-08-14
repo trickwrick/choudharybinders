@@ -6,6 +6,7 @@ import type { CategorySummary } from "@/lib/categories";
 import type { ProductVariant, ProductVariantGroup } from "@/lib/product-variants";
 import Button from "./Button";
 import Container from "./Container";
+import WhatsAppButton from "./WhatsAppButton";
 
 export default function ProductVariantDetailPage({
   category,
@@ -20,6 +21,8 @@ export default function ProductVariantDetailPage({
   variantGroup: ProductVariantGroup;
   variant: ProductVariant;
 }) {
+  const whatsappMessage = `Hello, I would like the best price for ${variant.label} (Code: ${variant.code}) - ${productTitle} from Choudhary Binders & Printers.`;
+
   return (
     <section className="bg-section-warm pb-12 pt-6 sm:pb-16 sm:pt-8">
       <Container>
@@ -120,15 +123,21 @@ export default function ProductVariantDetailPage({
               <p className="mt-1 text-base text-text/80">{variantGroup.minQty}</p>
             </div>
 
-            <div className="flex flex-wrap gap-3 pt-2">
-              <Button href="/contact" size="lg">
+            <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:flex-wrap">
+              <Button href="/contact" size="lg" className="sm:min-w-[180px]">
                 Get Best Price
                 <ArrowRight className="h-4 w-4" />
               </Button>
+              <WhatsAppButton
+                message={whatsappMessage}
+                size="lg"
+                className="sm:min-w-[180px]"
+              />
               <Button
                 href={`/category/${categorySlug}/${variantGroup.productId}`}
                 variant="outline"
                 size="lg"
+                className="sm:min-w-[180px]"
               >
                 View All Options
               </Button>

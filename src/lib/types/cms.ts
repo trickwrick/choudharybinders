@@ -58,6 +58,20 @@ export type CategoryProduct = {
   unit?: string;
 };
 
+export type CategoryDoc = {
+  _id?: ObjectId | string;
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  tag: string;
+  icon: string;
+  order: number;
+  active: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+};
+
 export type HeroSlide = {
   src: string;
   alt: string;

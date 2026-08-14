@@ -26,3 +26,8 @@ export const businessInfo = {
   landline: contactDetails.landline,
   logo: "/logo-brand.png",
 } as const;
+
+export function buildWhatsAppHref(message?: string) {
+  const text = encodeURIComponent(message ?? businessInfo.whatsappMessage);
+  return `${businessInfo.whatsapp}?text=${text}`;
+}

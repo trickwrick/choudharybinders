@@ -5,6 +5,7 @@ import { ChevronRight } from "lucide-react";
 import type { CategorySummary } from "@/lib/categories";
 import type { ProductVariantGroup } from "@/lib/product-variants";
 import Container from "./Container";
+import WhatsAppButton from "./WhatsAppButton";
 
 function VariantCard({
   variant,
@@ -61,6 +62,7 @@ export default function ProductVariantsPage({
   variantGroup: ProductVariantGroup;
 }) {
   const pageTitle = `${variantGroup.title.toUpperCase()} (QTY. ${variantGroup.minQty.toUpperCase()})`;
+  const whatsappMessage = `Hello, I would like the best price for ${productTitle} (${variantGroup.title}) from Choudhary Binders & Printers.`;
 
   return (
     <section className="bg-section-mint pb-10 pt-6 sm:pb-12 sm:pt-8">
@@ -119,6 +121,10 @@ export default function ProductVariantsPage({
               productId={variantGroup.productId}
             />
           ))}
+        </div>
+
+        <div className="mx-auto mt-8 flex max-w-5xl flex-col gap-3 sm:flex-row sm:justify-center">
+          <WhatsAppButton message={whatsappMessage} size="lg" className="sm:min-w-[200px]" />
         </div>
       </Container>
     </section>

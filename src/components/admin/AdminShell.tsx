@@ -6,17 +6,21 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   ImageIcon,
   LayoutDashboard,
+  LayoutGrid,
   LogOut,
   Mail,
   Package,
   ExternalLink,
+  Settings,
 } from "lucide-react";
 
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/slider", label: "Hero Slider", icon: ImageIcon },
+  { href: "/admin/categories", label: "Categories", icon: LayoutGrid },
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/inquiries", label: "Inquiries", icon: Mail },
+  { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {

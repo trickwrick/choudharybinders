@@ -8,7 +8,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Clock,
-  MessageCircle,
   Share2,
   Star,
 } from "lucide-react";
@@ -24,6 +23,7 @@ import Container from "./Container";
 import ProductQuoteModal, {
   type ProductQuoteInfo,
 } from "./ProductQuoteModal";
+import WhatsAppButton from "./WhatsAppButton";
 
 function RelatedProductCard({
   product,
@@ -32,6 +32,8 @@ function RelatedProductCard({
   product: CategoryProduct;
   categorySlug: string;
 }) {
+  const whatsappMessage = `Hello, I would like the best price for ${product.title} from Choudhary Binders & Printers.`;
+
   return (
     <article className="flex min-w-[220px] max-w-[240px] shrink-0 flex-col overflow-hidden rounded-xl border border-border/70 bg-white shadow-sm">
       <Link
@@ -74,6 +76,12 @@ function RelatedProductCard({
           >
             Get Best Price
           </Link>
+          <WhatsAppButton
+            message={whatsappMessage}
+            size="sm"
+            fullWidth
+            label="WhatsApp"
+          />
         </div>
       </div>
     </article>
@@ -126,6 +134,8 @@ export default function ProductDetailPage({
     product.price != null
       ? formatProductPrice(product.price, product.unit)
       : "Price on request";
+
+  const whatsappMessage = `Hello, I would like the best price for ${product.title} (Min. Qty: ${product.minQty}) from Choudhary Binders & Printers.`;
 
   return (
     <>
@@ -251,6 +261,7 @@ export default function ProductDetailPage({
                 >
                   Get Quote
                 </Button>
+                <WhatsAppButton message={whatsappMessage} size="sm" label="WhatsApp" />
               </div>
             </div>
 
@@ -363,15 +374,11 @@ export default function ProductDetailPage({
                   >
                     Get Best Price
                   </Button>
-                  <a
-                    href={businessInfo.whatsapp}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 rounded-lg border border-[#25D366] px-4 py-3 text-sm font-bold text-[#25D366] transition-colors hover:bg-[#25D366]/5"
-                  >
-                    <MessageCircle className="h-4 w-4" />
-                    WhatsApp
-                  </a>
+                  <WhatsAppButton
+                    message={whatsappMessage}
+                    fullWidth
+                    label="WhatsApp"
+                  />
                 </div>
               </div>
             </div>

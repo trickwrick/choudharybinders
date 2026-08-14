@@ -1,7 +1,10 @@
 import dns from "node:dns";
+import { execSync } from "node:child_process";
 import { resolveSrv, resolveTxt } from "node:dns/promises";
 
-dns.setServers(["8.8.8.8", "8.8.4.4"]);
+const DNS_SERVERS = ["8.8.8.8", "8.8.4.4", "1.1.1.1"];
+
+dns.setServers(DNS_SERVERS);
 
 type MongoModule = typeof import("mongodb");
 type MongoClient = import("mongodb").MongoClient;
@@ -27,7 +30,51 @@ function getDbName() {
 }
 
 function ensureGoogleDns() {
-  dns.setServers(["8.8.8.8", "8.8.4.4"]);
+  dns.setServers(DNS_SERVERS);
+}
+
+function resolveSrvViaNslookup(host: string) {
+  const output = execSync(`nslookup -type=SRV _mongodb._tcp.${host} 8.8.8.8`, {
+    encoding: "utf8",
+  });
+  const hosts: string[] = [];
+  for (const line of output.split("\n")) {
+    const match = line.match(/svr hostname\s*=\s*(\S+)/i);
+    if (match) hosts.push(`${match[1]}:27017`);
+  }
+  return hosts;
+}
+
+function resolveTxtViaNslookup(host: string) {
+  try {
+    const output = execSync(`nslookup -type=TXT ${host} 8.8.8.8`, {
+      encoding: "utf8",
+    });
+    const match = output.match(/"([^"]+)"/);
+    return match?.[1] ?? "";
+  } catch {
+    return "";
+  }
+}
+
+async function resolveMongoSrv(host: string) {
+  ensureGoogleDns();
+  try {
+    const srvRecords = await resolveSrv(`_mongodb._tcp.${host}`);
+    return srvRecords.map((record) => `${record.name}:${record.port}`);
+  } catch {
+    return resolveSrvViaNslookup(host);
+  }
+}
+
+async function resolveMongoTxt(host: string) {
+  ensureGoogleDns();
+  try {
+    const txtRecords = await resolveTxt(host);
+    return txtRecords.flat().join("&");
+  } catch {
+    return resolveTxtViaNslookup(host);
+  }
 }
 
 /**
@@ -35,6 +82,11 @@ function ensureGoogleDns() {
  * Avoids Windows/Next.js "querySrv ECONNREFUSED" when the driver uses a broken local DNS.
  */
 async function toDirectMongoUri(uri: string): Promise<string> {
+  const directUri = process.env.MONGODB_URI_DIRECT?.trim();
+  if (directUri) {
+    return directUri;
+  }
+
   if (!uri.startsWith("mongodb+srv://")) {
     return uri;
   }
@@ -55,31 +107,25 @@ async function toDirectMongoUri(uri: string): Promise<string> {
   const pathAndQuery = slashIndex >= 0 ? hostAndRest.slice(slashIndex) : "/";
   const [pathPart, existingQuery = ""] = pathAndQuery.split("?");
 
-  const [srvRecords, txtRecords] = await Promise.all([
-    resolveSrv(`_mongodb._tcp.${host}`),
-    resolveTxt(host).catch(() => [] as string[][]),
+  const [hosts, txt] = await Promise.all([
+    resolveMongoSrv(host),
+    resolveMongoTxt(host),
   ]);
 
-  if (!srvRecords.length) {
+  if (!hosts.length) {
     throw new Error(`No SRV records found for ${host}`);
   }
 
-  const hosts = srvRecords
-    .map((record) => `${record.name}:${record.port}`)
-    .join(",");
-
   const params = new URLSearchParams(existingQuery);
-  for (const entry of txtRecords.flat()) {
-    for (const pair of entry.split("&")) {
-      const [key, value] = pair.split("=");
-      if (key && value && !params.has(key)) {
-        params.set(key, value);
-      }
+  for (const pair of txt.split("&")) {
+    const [key, value] = pair.split("=");
+    if (key && value && !params.has(key)) {
+      params.set(key, value);
     }
   }
   params.set("tls", "true");
 
-  return `mongodb://${credentials}@${hosts}${pathPart || "/"}?${params.toString()}`;
+  return `mongodb://${credentials}@${hosts.join(",")}${pathPart || "/"}?${params.toString()}`;
 }
 
 async function loadMongoModule(): Promise<MongoModule> {

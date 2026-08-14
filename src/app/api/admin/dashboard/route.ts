@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { adminGuard } from "@/lib/api-utils";
 import { seedDatabaseIfEmpty } from "@/lib/db/seed";
 import { countInquiries } from "@/lib/db/inquiries";
+import { listAllCategories } from "@/lib/db/categories";
 import { listAllHeroSlides } from "@/lib/db/hero-slides";
 import { listAllProducts } from "@/lib/db/products";
 
@@ -16,8 +17,9 @@ export async function GET() {
     dns.setServers(["8.8.8.8", "8.8.4.4"]);
     await seedDatabaseIfEmpty();
 
-    const [slides, products, newInquiries, totalInquiries] = await Promise.all([
+    const [slides, categories, products, newInquiries, totalInquiries] = await Promise.all([
       listAllHeroSlides(),
+      listAllCategories(),
       listAllProducts(),
       countInquiries("new"),
       countInquiries(),
@@ -26,6 +28,7 @@ export async function GET() {
     return NextResponse.json({
       stats: {
         slides: slides.length,
+        categories: categories.length,
         products: products.length,
         newInquiries,
         totalInquiries,

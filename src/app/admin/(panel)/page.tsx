@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ImageIcon, Mail, Package, Sparkles } from "lucide-react";
+import { ImageIcon, LayoutGrid, Mail, Package, Sparkles } from "lucide-react";
 
 type Stats = {
   slides: number;
+  categories: number;
   products: number;
   newInquiries: number;
   totalInquiries: number;
@@ -28,6 +29,13 @@ export default function AdminDashboardPage() {
       href: "/admin/slider",
       icon: ImageIcon,
       color: "from-blue-500 to-blue-600",
+    },
+    {
+      label: "Categories",
+      value: stats?.categories ?? "—",
+      href: "/admin/categories",
+      icon: LayoutGrid,
+      color: "from-violet-500 to-violet-600",
     },
     {
       label: "Products",
@@ -61,7 +69,7 @@ export default function AdminDashboardPage() {
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {cards.map((card) => {
           const Icon = card.icon;
           return (
@@ -88,6 +96,9 @@ export default function AdminDashboardPage() {
           <div className="mt-4 space-y-3">
             <Link href="/admin/slider" className="block rounded-xl bg-light-bg px-4 py-3 text-sm font-semibold text-text hover:bg-primary/10 hover:text-primary">
               Update homepage slider
+            </Link>
+            <Link href="/admin/categories" className="block rounded-xl bg-light-bg px-4 py-3 text-sm font-semibold text-text hover:bg-primary/10 hover:text-primary">
+              Manage categories
             </Link>
             <Link href="/admin/products" className="block rounded-xl bg-light-bg px-4 py-3 text-sm font-semibold text-text hover:bg-primary/10 hover:text-primary">
               Add a new product
