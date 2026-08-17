@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Pencil, Plus, RefreshCw, Trash2 } from "lucide-react";
+import { Pencil, Plus, Trash2 } from "lucide-react";
 import type { CategoryDoc } from "@/lib/types/cms";
 import type { ProductDoc } from "@/lib/types/cms";
 
@@ -12,9 +12,6 @@ export default function AdminProductsPage() {
   const [categories, setCategories] = useState<CategoryDoc[]>([]);
   const [filter, setFilter] = useState<string>("all");
   const [loading, setLoading] = useState(true);
-  const [syncing, setSyncing] = useState(false);
-  const [message, setMessage] = useState("");
-  const [catalogTotal, setCatalogTotal] = useState<number | null>(null);
 
   const loadCategories = async () => {
     const response = await fetch("/api/admin/categories");
@@ -31,9 +28,6 @@ export default function AdminProductsPage() {
     const response = await fetch(url);
     const data = await response.json();
     setProducts(data.products ?? []);
-    setCatalogTotal(
-      typeof data.catalogTotal === "number" ? data.catalogTotal : null,
-    );
     setLoading(false);
   };
 
@@ -53,22 +47,6 @@ export default function AdminProductsPage() {
     loadProducts();
   };
 
-  const handleSync = async () => {
-    setSyncing(true);
-    setMessage("");
-    const response = await fetch("/api/admin/sync-products", { method: "POST" });
-    const data = await response.json();
-    setSyncing(false);
-
-    if (!response.ok) {
-      setMessage(data.error || "Sync failed.");
-      return;
-    }
-
-    setMessage("Products synced from website catalog.");
-    loadProducts();
-  };
-
   const newProductHref =
     filter === "all" ? "/admin/products/new" : `/admin/products/new?category=${filter}`;
 
@@ -78,38 +56,17 @@ export default function AdminProductsPage() {
         <div>
           <h2 className="text-2xl font-bold text-text">Products</h2>
           <p className="mt-1 text-sm text-text/60">
-            {loading
-              ? "Loading products from catalog..."
-              : catalogTotal != null
-                ? `Showing ${filteredCount} products (website catalog has ${catalogTotal} products).`
-                : `Add and manage products by category (${filteredCount} shown).`}
+            Manage your products manually ({filteredCount} shown).
           </p>
         </div>
-        <div className="flex flex-wrap gap-2">
-          <button
-            type="button"
-            onClick={handleSync}
-            disabled={syncing}
-            className="inline-flex items-center gap-2 rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold text-text/70 hover:border-primary/30 hover:text-primary disabled:opacity-60"
-          >
-            <RefreshCw className={`h-4 w-4 ${syncing ? "animate-spin" : ""}`} />
-            Sync Catalog
-          </button>
-          <Link
-            href={newProductHref}
-            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white hover:bg-primary-dark"
-          >
-            <Plus className="h-4 w-4" />
-            Add Product
-          </Link>
-        </div>
+        <Link
+          href={newProductHref}
+          className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white hover:bg-primary-dark"
+        >
+          <Plus className="h-4 w-4" />
+          Add Product
+        </Link>
       </div>
-
-      {message ? (
-        <p className="rounded-xl bg-primary/10 px-4 py-3 text-sm font-medium text-primary">
-          {message}
-        </p>
-      ) : null}
 
       <div className="flex flex-wrap gap-2">
         <button
@@ -141,6 +98,20 @@ export default function AdminProductsPage() {
 
       {loading ? (
         <p className="text-sm text-text/60">Loading products...</p>
+      ) : products.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-border/70 bg-white px-6 py-12 text-center">
+          <p className="text-base font-semibold text-text">No products yet</p>
+          <p className="mt-2 text-sm text-text/60">
+            Add products manually — auto-imported catalog items have been removed.
+          </p>
+          <Link
+            href="/admin/products/new"
+            className="mt-5 inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white hover:bg-primary-dark"
+          >
+            <Plus className="h-4 w-4" />
+            Add Product
+          </Link>
+        </div>
       ) : (
         <div className="overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm">
           <div className="overflow-x-auto">

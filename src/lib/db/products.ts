@@ -139,58 +139,44 @@ export async function getProductDetailForPage(
 }
 
 export async function seedProductsIfEmpty() {
-  const collection = await getCollection();
-  const count = await collection.countDocuments();
-  if (count > 0) {
-    await ensureMissingProductsFromStatic();
-    return;
-  }
-
-  await syncProductsFromStatic();
+  // Products are managed manually in admin. Website falls back to static catalog when DB is empty.
 }
 
-export function getStaticProductCount() {
-  return Object.values(staticProducts).reduce(
-    (total, products) => total + products.length,
-    0,
-  );
-}
-
-export async function ensureMissingProductsFromStatic() {
-  const collection = await getCollection();
-  const now = new Date();
+export function getCatalogProductKeys(): Set<string> {
+  const keys = new Set<string>();
 
   for (const category of categories) {
-    const products = staticProducts[category.id] ?? [];
-
-    for (const [index, product] of products.entries()) {
-      const existing = await collection.findOne({
-        categoryId: category.id,
-        id: product.id,
-      });
-
-      if (existing) continue;
-
-      const detail = getProductDetail(category.id, product.id, category.title);
-
-      await collection.insertOne({
-        id: product.id,
-        categoryId: category.id,
-        title: detail?.title ?? product.title,
-        image: product.image,
-        images: detail?.images ?? [product.image],
-        minQty: product.minQty,
-        price: product.price,
-        unit: product.unit,
-        specifications: detail?.specifications ?? [],
-        description: detail?.description ?? "",
-        active: true,
-        order: index,
-        createdAt: now,
-        updatedAt: now,
-      });
+    for (const product of staticProducts[category.id] ?? []) {
+      keys.add(`${category.id}:${product.id}`);
     }
   }
+
+  return keys;
+}
+
+export async function removeCatalogSeededProducts() {
+  const collection = await getCollection();
+  const validCategoryIds = categories.map((category) => category.id);
+  const orConditions = categories.flatMap((category) =>
+    (staticProducts[category.id] ?? []).map((product) => ({
+      categoryId: category.id,
+      id: product.id,
+    })),
+  );
+
+  let removed = 0;
+
+  if (orConditions.length > 0) {
+    const catalogResult = await collection.deleteMany({ $or: orConditions });
+    removed += catalogResult.deletedCount ?? 0;
+  }
+
+  const legacyResult = await collection.deleteMany({
+    categoryId: { $nin: validCategoryIds },
+  });
+  removed += legacyResult.deletedCount ?? 0;
+
+  return removed;
 }
 
 export async function syncProductsFromStatic() {
