@@ -5,7 +5,9 @@ import { adminGuard } from "@/lib/api-utils";
 import {
   createProduct,
   deleteProduct,
+  ensureMissingProductsFromStatic,
   getProductByMongoId,
+  getStaticProductCount,
   listAllProducts,
   updateProduct,
 } from "@/lib/db/products";
@@ -32,12 +34,14 @@ export async function GET(request: Request) {
       });
     }
 
+    await ensureMissingProductsFromStatic();
     const products = await listAllProducts(categoryId ?? undefined);
     return NextResponse.json({
       products: products.map((product) => ({
         ...product,
         _id: product._id?.toString(),
       })),
+      catalogTotal: getStaticProductCount(),
     });
   } catch {
     return NextResponse.json({ error: "Failed to load products" }, { status: 500 });

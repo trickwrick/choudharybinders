@@ -1,9 +1,79 @@
 import type { Collection } from "mongodb";
-import { categories as defaultCategories } from "@/lib/categories";
+import {
+  categories as defaultCategories,
+  getCategoryById,
+  toCategorySummary,
+} from "@/lib/categories";
 import { resolveCategoryIconKey } from "@/lib/category-icons";
 import type { CategoryDoc } from "@/lib/types/cms";
 import { COLLECTIONS } from "@/lib/db/collections";
 import { getDatabase } from "@/lib/mongodb";
+
+import type { PublicCategory } from "@/lib/types/public-catalog";
+
+export type { PublicCategory };
+
+function docToPublicCategory(doc: CategoryDoc): PublicCategory {
+  return {
+    id: doc.id,
+    title: doc.title,
+    description: doc.description,
+    image: doc.image,
+    tag: doc.tag,
+    iconKey: doc.icon ?? "Sparkles",
+  };
+}
+
+function staticToPublicCategory(
+  category: (typeof defaultCategories)[number],
+): PublicCategory {
+  return {
+    ...toCategorySummary(category),
+    iconKey: resolveCategoryIconKey(category.icon),
+  };
+}
+
+export async function getActiveCategoriesForPublic(): Promise<PublicCategory[]> {
+  try {
+    const collection = await getCollection();
+    const docs = await collection
+      .find({ active: { $ne: false } })
+      .sort({ order: 1 })
+      .toArray();
+
+    if (docs.length > 0) {
+      const seen = new Set<string>();
+      return docs
+        .map(docToPublicCategory)
+        .filter((category) => {
+          if (!category.id || seen.has(category.id)) return false;
+          seen.add(category.id);
+          return true;
+        });
+    }
+  } catch {
+    // fall back to static catalog
+  }
+
+  return defaultCategories.map(staticToPublicCategory);
+}
+
+export async function getCategoryForPublic(
+  slug: string,
+): Promise<PublicCategory | undefined> {
+  try {
+    const collection = await getCollection();
+    const doc = await collection.findOne({ id: slug, active: { $ne: false } });
+    if (doc) return docToPublicCategory(doc);
+  } catch {
+    // fall back to static catalog
+  }
+
+  const staticCategory = getCategoryById(slug);
+  if (staticCategory) return staticToPublicCategory(staticCategory);
+
+  return undefined;
+}
 
 async function getCollection(): Promise<Collection<CategoryDoc>> {
   const db = await getDatabase();

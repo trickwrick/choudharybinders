@@ -5,12 +5,8 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ProductDetailPage from "@/components/ProductDetailPage";
 import ProductVariantsPage from "@/components/ProductVariantsPage";
-import {
-  getCategoryById,
-  toCategorySummary,
-  type CategoryId,
-} from "@/lib/categories";
-import { categoryProducts } from "@/lib/category-products";
+import { type CategoryId, type CategorySummary } from "@/lib/categories";
+import { getCategoryForPublic } from "@/lib/db/categories";
 import {
   getProductDetailForPage,
   getProductsForCategory,
@@ -28,7 +24,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug, productId } = await params;
-  const category = getCategoryById(slug);
+  const category = await getCategoryForPublic(slug);
 
   if (!category) {
     return { title: "Product Not Found" };
@@ -64,11 +60,20 @@ export async function generateMetadata({
 
 export default async function ProductDetailRoute({ params }: PageProps) {
   const { slug, productId } = await params;
-  const category = getCategoryById(slug);
+  await seedDatabaseIfEmpty();
+  const category = await getCategoryForPublic(slug);
 
   if (!category) {
     notFound();
   }
+
+  const categorySummary: CategorySummary = {
+    id: category.id as CategoryId,
+    title: category.title,
+    description: category.description,
+    image: category.image,
+    tag: category.tag,
+  };
 
   const variantGroup = getProductVariantGroup(
     category.id as CategoryId,
@@ -76,13 +81,9 @@ export default async function ProductDetailRoute({ params }: PageProps) {
   );
 
   if (variantGroup) {
-    const product =
-      (await getProductsForCategory(category.id as CategoryId)).find(
-        (item) => item.id === productId,
-      ) ??
-      categoryProducts[category.id as CategoryId]?.find(
-        (item) => item.id === productId,
-      );
+    const product = (await getProductsForCategory(category.id as CategoryId)).find(
+      (item) => item.id === productId,
+    );
 
     if (!product) {
       notFound();
@@ -93,7 +94,7 @@ export default async function ProductDetailRoute({ params }: PageProps) {
         <Navbar />
         <main className="pt-[7.25rem]">
           <ProductVariantsPage
-            category={toCategorySummary(category)}
+            category={categorySummary}
             categorySlug={slug}
             productTitle={product.title}
             variantGroup={variantGroup}
@@ -105,8 +106,6 @@ export default async function ProductDetailRoute({ params }: PageProps) {
     );
   }
 
-  await seedDatabaseIfEmpty();
-
   const product = await getProductDetailForPage(
     category.id as CategoryId,
     productId,
@@ -117,16 +116,16 @@ export default async function ProductDetailRoute({ params }: PageProps) {
     notFound();
   }
 
-  const relatedProducts = (await getProductsForCategory(category.id as CategoryId)).filter(
-    (item) => item.id !== productId,
-  );
+  const relatedProducts = (
+    await getProductsForCategory(category.id as CategoryId)
+  ).filter((item) => item.id !== productId);
 
   return (
     <>
       <Navbar />
       <main className="pt-[7.25rem]">
         <ProductDetailPage
-          category={toCategorySummary(category)}
+          category={categorySummary}
           categorySlug={slug}
           product={product}
           relatedProducts={relatedProducts}

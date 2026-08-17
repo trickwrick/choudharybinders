@@ -13,6 +13,7 @@ import ProcessSection from "@/components/ProcessSection";
 import SolutionsSection from "@/components/SolutionsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
+import { getActiveCategoriesForPublic } from "@/lib/db/categories";
 import { getHeroSlidesFromDb } from "@/lib/db/hero-slides";
 import { seedDatabaseIfEmpty } from "@/lib/db/seed";
 
@@ -20,7 +21,10 @@ export const dynamic = "force-dynamic";
 
 export default async function Home() {
   await seedDatabaseIfEmpty();
-  const slides = await getHeroSlidesFromDb();
+  const [slides, categories] = await Promise.all([
+    getHeroSlidesFromDb(),
+    getActiveCategoriesForPublic(),
+  ]);
 
   return (
     <>
@@ -28,7 +32,7 @@ export default async function Home() {
       <main>
         <Hero slides={slides} />
         <ClientsSection />
-        <ProductsSection />
+        <ProductsSection categories={categories} />
         <SolutionsSection />
         <WhyChooseUsSection />
         <CenterBannerSection />

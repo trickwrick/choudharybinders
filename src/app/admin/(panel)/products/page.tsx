@@ -3,14 +3,24 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { Pencil, Plus, Trash2 } from "lucide-react";
-import { categories, type CategoryId } from "@/lib/categories";
+import { Pencil, Plus, RefreshCw, Trash2 } from "lucide-react";
+import type { CategoryDoc } from "@/lib/types/cms";
 import type { ProductDoc } from "@/lib/types/cms";
 
 export default function AdminProductsPage() {
   const [products, setProducts] = useState<ProductDoc[]>([]);
-  const [filter, setFilter] = useState<CategoryId | "all">("all");
+  const [categories, setCategories] = useState<CategoryDoc[]>([]);
+  const [filter, setFilter] = useState<string>("all");
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
+  const [message, setMessage] = useState("");
+  const [catalogTotal, setCatalogTotal] = useState<number | null>(null);
+
+  const loadCategories = async () => {
+    const response = await fetch("/api/admin/categories");
+    const data = await response.json();
+    setCategories(data.categories ?? []);
+  };
 
   const loadProducts = async () => {
     setLoading(true);
@@ -21,8 +31,15 @@ export default function AdminProductsPage() {
     const response = await fetch(url);
     const data = await response.json();
     setProducts(data.products ?? []);
+    setCatalogTotal(
+      typeof data.catalogTotal === "number" ? data.catalogTotal : null,
+    );
     setLoading(false);
   };
+
+  useEffect(() => {
+    loadCategories();
+  }, []);
 
   useEffect(() => {
     loadProducts();
@@ -36,6 +53,22 @@ export default function AdminProductsPage() {
     loadProducts();
   };
 
+  const handleSync = async () => {
+    setSyncing(true);
+    setMessage("");
+    const response = await fetch("/api/admin/sync-products", { method: "POST" });
+    const data = await response.json();
+    setSyncing(false);
+
+    if (!response.ok) {
+      setMessage(data.error || "Sync failed.");
+      return;
+    }
+
+    setMessage("Products synced from website catalog.");
+    loadProducts();
+  };
+
   const newProductHref =
     filter === "all" ? "/admin/products/new" : `/admin/products/new?category=${filter}`;
 
@@ -45,17 +78,38 @@ export default function AdminProductsPage() {
         <div>
           <h2 className="text-2xl font-bold text-text">Products</h2>
           <p className="mt-1 text-sm text-text/60">
-            Add and manage products by category ({filteredCount} shown).
+            {loading
+              ? "Loading products from catalog..."
+              : catalogTotal != null
+                ? `Showing ${filteredCount} products (website catalog has ${catalogTotal} products).`
+                : `Add and manage products by category (${filteredCount} shown).`}
           </p>
         </div>
-        <Link
-          href={newProductHref}
-          className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white hover:bg-primary-dark"
-        >
-          <Plus className="h-4 w-4" />
-          Add Product
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <button
+            type="button"
+            onClick={handleSync}
+            disabled={syncing}
+            className="inline-flex items-center gap-2 rounded-xl border border-border bg-white px-4 py-2.5 text-sm font-semibold text-text/70 hover:border-primary/30 hover:text-primary disabled:opacity-60"
+          >
+            <RefreshCw className={`h-4 w-4 ${syncing ? "animate-spin" : ""}`} />
+            Sync Catalog
+          </button>
+          <Link
+            href={newProductHref}
+            className="inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white hover:bg-primary-dark"
+          >
+            <Plus className="h-4 w-4" />
+            Add Product
+          </Link>
+        </div>
       </div>
+
+      {message ? (
+        <p className="rounded-xl bg-primary/10 px-4 py-3 text-sm font-medium text-primary">
+          {message}
+        </p>
+      ) : null}
 
       <div className="flex flex-wrap gap-2">
         <button

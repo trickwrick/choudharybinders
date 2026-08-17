@@ -4,7 +4,8 @@ import CategoryProductsPage from "@/components/CategoryProductsPage";
 import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
-import { categories, getCategoryById, toCategorySummary, type CategoryId } from "@/lib/categories";
+import { categories, type CategoryId, type CategorySummary } from "@/lib/categories";
+import { getCategoryForPublic } from "@/lib/db/categories";
 import { getProductsForCategory } from "@/lib/db/products";
 import { seedDatabaseIfEmpty } from "@/lib/db/seed";
 
@@ -22,7 +23,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const category = getCategoryById(slug);
+  const category = await getCategoryForPublic(slug);
 
   if (!category) {
     return { title: "Category Not Found" };
@@ -36,21 +37,28 @@ export async function generateMetadata({
 
 export default async function CategoryProductsRoute({ params }: PageProps) {
   const { slug } = await params;
-  const category = getCategoryById(slug);
+  await seedDatabaseIfEmpty();
+  const category = await getCategoryForPublic(slug);
 
   if (!category) {
     notFound();
   }
 
-  await seedDatabaseIfEmpty();
   const products = await getProductsForCategory(category.id as CategoryId);
+  const categorySummary: CategorySummary = {
+    id: category.id as CategoryId,
+    title: category.title,
+    description: category.description,
+    image: category.image,
+    tag: category.tag,
+  };
 
   return (
     <>
       <Navbar />
       <main className="pt-[7.25rem]">
         <CategoryProductsPage
-          category={toCategorySummary(category)}
+          category={categorySummary}
           products={products}
         />
       </main>

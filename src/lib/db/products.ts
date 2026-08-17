@@ -46,11 +46,23 @@ export async function getProductsByCategoryFromDb(
 export async function getProductsForCategory(
   categoryId: CategoryId,
 ): Promise<CategoryProduct[]> {
-  const staticList = staticProducts[categoryId] ?? [];
-  if (staticList.length > 0) return staticList;
-
   const fromDb = await getProductsByCategoryFromDb(categoryId);
-  return fromDb ?? [];
+  if (fromDb && fromDb.length > 0) return fromDb;
+
+  return staticProducts[categoryId] ?? [];
+}
+
+export async function getProductsByCategoryMap(
+  categoryIds: string[],
+): Promise<Record<string, CategoryProduct[]>> {
+  const entries = await Promise.all(
+    categoryIds.map(async (id) => [
+      id,
+      await getProductsForCategory(id as CategoryId),
+    ] as const),
+  );
+
+  return Object.fromEntries(entries);
 }
 
 export async function getProductFromDb(categoryId: CategoryId, productId: string) {
@@ -105,9 +117,6 @@ export async function getProductDetailForPage(
   productId: string,
   categoryTitle: string,
 ) {
-  const staticDetail = getProductDetail(categoryId, productId, categoryTitle);
-  if (staticDetail) return staticDetail;
-
   const fromDb = await getProductFromDb(categoryId, productId);
   if (fromDb) {
     return {
@@ -123,15 +132,65 @@ export async function getProductDetailForPage(
     };
   }
 
+  const staticDetail = getProductDetail(categoryId, productId, categoryTitle);
+  if (staticDetail) return staticDetail;
+
   return undefined;
 }
 
 export async function seedProductsIfEmpty() {
   const collection = await getCollection();
   const count = await collection.countDocuments();
-  if (count > 0) return;
+  if (count > 0) {
+    await ensureMissingProductsFromStatic();
+    return;
+  }
 
   await syncProductsFromStatic();
+}
+
+export function getStaticProductCount() {
+  return Object.values(staticProducts).reduce(
+    (total, products) => total + products.length,
+    0,
+  );
+}
+
+export async function ensureMissingProductsFromStatic() {
+  const collection = await getCollection();
+  const now = new Date();
+
+  for (const category of categories) {
+    const products = staticProducts[category.id] ?? [];
+
+    for (const [index, product] of products.entries()) {
+      const existing = await collection.findOne({
+        categoryId: category.id,
+        id: product.id,
+      });
+
+      if (existing) continue;
+
+      const detail = getProductDetail(category.id, product.id, category.title);
+
+      await collection.insertOne({
+        id: product.id,
+        categoryId: category.id,
+        title: detail?.title ?? product.title,
+        image: product.image,
+        images: detail?.images ?? [product.image],
+        minQty: product.minQty,
+        price: product.price,
+        unit: product.unit,
+        specifications: detail?.specifications ?? [],
+        description: detail?.description ?? "",
+        active: true,
+        order: index,
+        createdAt: now,
+        updatedAt: now,
+      });
+    }
+  }
 }
 
 export async function syncProductsFromStatic() {
