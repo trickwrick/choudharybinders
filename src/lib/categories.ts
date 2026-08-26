@@ -3,6 +3,7 @@ import { categoryCoverImages } from "@/lib/catalog-images";
 import { bindingSolutions } from "@/lib/site-content";
 
 export type CategoryId =
+  | "printing"
   | "offset"
   | "flex"
   | "digital"
@@ -29,9 +30,20 @@ export type Category = {
   image: string;
   icon: LucideIcon;
   tag: string;
+  subcategories?: CategoryId[];
 };
 
 export const categories: Category[] = [
+  {
+    id: "printing",
+    title: "Printing",
+    tag: "Printing",
+    icon: Sparkles,
+    image: categoryCoverImages.offset, // reuse offset image
+    description:
+      "Offset, Flex, Eco Solvent, and Digital Printing services for all your needs.",
+    subcategories: ["offset", "flex", "digital"],
+  },
   {
     id: "offset",
     title: "Offset Printing",
@@ -125,7 +137,7 @@ export const categories: Category[] = [
 
 export type CategorySummary = Pick<
   Category,
-  "id" | "title" | "description" | "image" | "tag"
+  "id" | "title" | "description" | "image" | "tag" | "subcategories"
 >;
 
 export function getCategoryById(id: string): Category | undefined {

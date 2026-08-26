@@ -36,7 +36,7 @@ function ProductCard({
       href={`/category/${categoryId}/${product.id}`}
       className="group flex flex-col overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-md"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-neutral-100">
+      <div className="relative aspect-4/3 overflow-hidden bg-neutral-100">
         <Image
           src={imgSrc}
           alt={product.title}
@@ -116,12 +116,19 @@ export default function CategoryPageContent({
 }: CategoryPageContentProps) {
   const [activeFilter, setActiveFilter] = useState<CategoryFilter>("all");
 
+  const topLevelCategories = useMemo(() => {
+    return categories.filter(
+      (c) =>
+        !categories.some((parent) => parent.subcategories?.includes(c.id))
+    );
+  }, [categories]);
+
   const filters = useMemo(
     () => [
       { id: "all" as const, label: "All Categories" },
-      ...categories.map((item) => ({ id: item.id, label: item.title })),
+      ...topLevelCategories.map((item) => ({ id: item.id, label: item.title })),
     ],
-    [categories],
+    [topLevelCategories],
   );
 
   const totalProductCount = useMemo(
@@ -136,10 +143,18 @@ export default function CategoryPageContent({
   const activeCategory =
     activeFilter === "all"
       ? null
-      : (categories.find((item) => item.id === activeFilter) ?? null);
+      : (topLevelCategories.find((item) => item.id === activeFilter) ?? null);
 
-  const activeProducts =
-    activeFilter === "all" ? [] : (productsByCategory[activeFilter] ?? []);
+  const activeProducts = useMemo(() => {
+    if (activeFilter === "all") return [];
+    if (!activeCategory) return [];
+    if (activeCategory.subcategories && activeCategory.subcategories.length > 0) {
+      return activeCategory.subcategories.flatMap(
+        (sub) => productsByCategory[sub] ?? [],
+      );
+    }
+    return productsByCategory[activeFilter] ?? [];
+  }, [activeFilter, activeCategory, productsByCategory]);
 
   const visibleProductCount =
     activeFilter === "all" ? totalProductCount : activeProducts.length;
@@ -179,13 +194,21 @@ export default function CategoryPageContent({
         >
           {activeFilter === "all" ? (
             <div className="space-y-12 sm:space-y-14">
-              {categories.map((category) => (
-                <CategoryProductsGroup
-                  key={category.id}
-                  category={category}
-                  products={productsByCategory[category.id] ?? []}
-                />
-              ))}
+              {topLevelCategories.map((category) => {
+                let catProducts = productsByCategory[category.id] ?? [];
+                if (category.subcategories && category.subcategories.length > 0) {
+                  catProducts = category.subcategories.flatMap(
+                    (sub) => productsByCategory[sub] ?? [],
+                  );
+                }
+                return (
+                  <CategoryProductsGroup
+                    key={category.id}
+                    category={category}
+                    products={catProducts}
+                  />
+                );
+              })}
             </div>
           ) : activeCategory ? (
             <>
@@ -225,7 +248,7 @@ export default function CategoryPageContent({
 
         <p className="mt-8 text-center text-sm text-text/50">
           {activeFilter === "all"
-            ? `Showing all ${categories.length} categories with ${visibleProductCount} products`
+            ? `Showing all ${topLevelCategories.length} categories`
             : activeCategory
               ? `Showing ${visibleProductCount} products in ${activeCategory.title}`
               : null}
@@ -236,7 +259,7 @@ export default function CategoryPageContent({
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mt-10 flex flex-col items-center justify-between gap-4 rounded-2xl border border-primary/15 bg-gradient-to-r from-white via-white to-primary/5 px-6 py-6 sm:mt-12 sm:flex-row sm:px-8 sm:py-7"
+          className="mt-10 flex flex-col items-center justify-between gap-4 rounded-2xl border border-primary/15 bg-linear-to-r from-white via-white to-primary/5 px-6 py-6 sm:mt-12 sm:flex-row sm:px-8 sm:py-7"
         >
           <div className="text-center sm:text-left">
             <p className="text-lg font-bold text-text sm:text-xl">

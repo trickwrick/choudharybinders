@@ -28,6 +28,7 @@ function mergeWithStaticCatalog(category: PublicCategory): PublicCategory {
     image: staticCategory.image,
     tag: staticCategory.tag,
     iconKey: resolveCategoryIconKey(staticCategory.icon),
+    subcategories: staticCategory.subcategories,
   };
 }
 
@@ -39,6 +40,7 @@ function docToPublicCategory(doc: CategoryDoc): PublicCategory {
     image: doc.image,
     tag: doc.tag,
     iconKey: doc.icon ?? "Sparkles",
+    subcategories: doc.subcategories,
   };
 }
 
@@ -117,6 +119,7 @@ function toCategorySeedDoc(
     image: category.image,
     tag: category.tag,
     icon: resolveCategoryIconKey(category.icon),
+    subcategories: category.subcategories,
     order,
     active: true,
     createdAt: now,
@@ -193,6 +196,7 @@ export async function syncCategoriesFromStatic() {
           image: category.image,
           tag: category.tag,
           icon: resolveCategoryIconKey(category.icon),
+          subcategories: category.subcategories,
           order: index,
           active: true,
           updatedAt: now,

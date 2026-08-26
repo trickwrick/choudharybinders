@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import CategoryProductsPage from "@/components/CategoryProductsPage";
+import CategorySubcategoriesPage from "@/components/CategorySubcategoriesPage";
 import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
@@ -10,7 +11,7 @@ import {
   type CategoryId,
   type CategorySummary,
 } from "@/lib/categories";
-import { getCategoryForPublic } from "@/lib/db/categories";
+import { getCategoryForPublic, getActiveCategoriesForPublic } from "@/lib/db/categories";
 import { getProductsForCategory } from "@/lib/db/products";
 import { seedDatabaseIfEmpty } from "@/lib/db/seed";
 
@@ -55,19 +56,42 @@ export default async function CategoryProductsRoute({ params }: PageProps) {
     notFound();
   }
 
-  const products = await getProductsForCategory(category.id as CategoryId);
   const categorySummary: CategorySummary = {
     id: category.id as CategoryId,
     title: category.title,
     description: category.description,
     image: category.image,
     tag: category.tag,
+    subcategories: category.subcategories as CategoryId[] | undefined,
   };
+
+  if (category.subcategories && category.subcategories.length > 0) {
+    const allCategories = await getActiveCategoriesForPublic();
+    const subcats = category.subcategories
+      .map((subId) => allCategories.find((c) => c.id === subId))
+      .filter((c): c is NonNullable<typeof c> => Boolean(c));
+
+    return (
+      <>
+        <Navbar />
+        <main className="pt-29">
+          <CategorySubcategoriesPage
+            category={categorySummary}
+            subcategories={subcats}
+          />
+        </main>
+        <Footer />
+        <FloatingActions />
+      </>
+    );
+  }
+
+  const products = await getProductsForCategory(category.id as CategoryId);
 
   return (
     <>
       <Navbar />
-      <main className="pt-[7.25rem]">
+      <main className="pt-29">
         <CategoryProductsPage
           category={categorySummary}
           products={products}

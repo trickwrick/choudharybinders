@@ -5,4 +5,5 @@ export type PublicCategory = {
   image: string;
   tag: string;
   iconKey: string;
+  subcategories?: string[];
 };

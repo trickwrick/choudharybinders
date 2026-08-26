@@ -69,6 +69,10 @@ const workingHours = [
 export default function Footer() {
   const year = new Date().getFullYear();
 
+  const topLevelCategories = categories.filter(
+    (c) => !categories.some((parent) => parent.subcategories?.includes(c.id))
+  );
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -128,7 +132,7 @@ export default function Footer() {
               Our Services
             </h3>
             <ul className="space-y-2.5">
-              {categories.slice(0, 8).map((category) => (
+              {topLevelCategories.slice(0, 8).map((category) => (
                 <li key={category.id}>
                   <Link
                     href={`/category/${category.id}`}

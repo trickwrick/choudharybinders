@@ -84,6 +84,7 @@ export type CategoryDoc = {
   image: string;
   tag: string;
   icon: string;
+  subcategories?: string[];
   order: number;
   active: boolean;
   createdAt?: Date;

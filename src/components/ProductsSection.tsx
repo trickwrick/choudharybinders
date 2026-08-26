@@ -40,6 +40,10 @@ type ProductsSectionProps = {
 export default function ProductsSection({ categories = [] }: ProductsSectionProps) {
   const reduced = useReducedMotion();
 
+  const topLevelCategories = categories.filter(
+    (c) => !categories.some((parent) => parent.subcategories?.includes(c.id))
+  );
+
   return (
     <section id="category" className="relative bg-section-mint py-12 sm:py-16 lg:py-20">
       <div className="print-grain pointer-events-none absolute inset-0 opacity-25" />
@@ -59,7 +63,7 @@ export default function ProductsSection({ categories = [] }: ProductsSectionProp
           stagger={0.08}
           delayChildren={0.05}
         >
-          {categories.map((category, index) => {
+          {topLevelCategories.map((category, index) => {
             const Icon = getCategoryIcon(category.iconKey);
             const itemKey = category.id || `category-${index}`;
 
@@ -73,9 +77,9 @@ export default function ProductsSection({ categories = [] }: ProductsSectionProp
                   href={`/category/${category.id}`}
                   className="press-card group flex h-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-1 hover:border-primary/25 hover:shadow-lg"
                 >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-neutral-200">
+                  <div className="relative aspect-4/3 overflow-hidden bg-neutral-200">
                     <CategoryCardImage src={category.image} alt={category.title} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/25 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
                     <span className="absolute left-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary shadow-sm sm:text-xs">
                       <Icon className="h-3 w-3" />
                       {category.tag}

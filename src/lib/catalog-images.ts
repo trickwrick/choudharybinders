@@ -1,4 +1,5 @@
 export const categoryCoverImages = {
+  printing: "/categories/offset-printing-v2.jpg",
   offset: "/categories/offset-printing-v2.jpg",
   flex: "/categories/flex-printing-v2.jpg",
   digital: "/categories/digital-printing-v2.jpg",

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { LockKeyhole, Shield, User } from "lucide-react";
+import { LockKeyhole, Shield, User, Eye, EyeOff } from "lucide-react";
 
 export default function AdminLoginForm() {
   const router = useRouter();
@@ -11,6 +11,7 @@ export default function AdminLoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -100,7 +101,7 @@ export default function AdminLoginForm() {
                     required
                     autoComplete="username"
                     placeholder="Enter admin user ID"
-                    className="w-full rounded-xl border border-border bg-light-bg/40 py-3 pl-10 pr-4 text-sm outline-none transition-colors focus:border-primary focus:bg-white"
+                    className={["w-full rounded-xl border border-border bg-light-bg/40 py-3 pl-10 pr-4 text-sm", "outline-none transition-colors focus:border-primary focus:bg-white"].join(" ")}
                   />
                 </div>
               </label>
@@ -112,14 +113,26 @@ export default function AdminLoginForm() {
                 <div className="relative">
                   <LockKeyhole className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text/40" />
                   <input
-                    type="password"
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(event) => setPassword(event.target.value)}
                     required
                     autoComplete="current-password"
                     placeholder="Enter admin password"
-                    className="w-full rounded-xl border border-border bg-light-bg/40 py-3 pl-10 pr-4 text-sm outline-none transition-colors focus:border-primary focus:bg-white"
+                    className={["w-full rounded-xl border border-border bg-light-bg/40 py-3 pl-10 pr-10 text-sm", "outline-none transition-colors focus:border-primary focus:bg-white"].join(" ")}
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-text/40 hover:text-text/80 focus:outline-none"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="h-4 w-4" />
+                    ) : (
+                      <Eye className="h-4 w-4" />
+                    )}
+                  </button>
                 </div>
               </label>
 
@@ -132,7 +145,7 @@ export default function AdminLoginForm() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-xl bg-gradient-to-r from-[#0f3d0f] to-[#138808] py-3 text-sm font-bold text-white transition-opacity hover:opacity-95 disabled:opacity-60"
+                className="w-full rounded-xl bg-linear-to-r from-[#0f3d0f] to-[#138808] py-3 text-sm font-bold text-white transition-opacity hover:opacity-95 disabled:opacity-60"
               >
                 {loading ? "Signing in..." : "Sign In"}
               </button>

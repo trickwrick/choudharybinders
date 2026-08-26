@@ -32,6 +32,7 @@ function item(
 }
 
 export const categoryProducts: Record<CategoryId, CategoryProduct[]> = {
+  printing: [],
   offset: [
     item("offset", "Business Card", "500 Pieces"),
     item("offset", "Letterhead", "1000 Sheets"),
