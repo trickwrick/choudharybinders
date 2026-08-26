@@ -7,10 +7,9 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Reveal from "./motion/Reveal";
 import SectionDivider from "./motion/SectionDivider";
-import { galleryImages } from "@/lib/site-images";
 import Container from "./Container";
 
-type GalleryItem = (typeof galleryImages)[number];
+type GalleryItem = { src: string; label: string };
 
 function CarouselRow({
   items,
@@ -105,15 +104,14 @@ function CarouselRow({
         className="flex flex-1 snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:gap-4 [&::-webkit-scrollbar]:hidden"
       >
         {loopItems.map((item, index) => {
-          const globalIndex = galleryImages.findIndex(
-            (img) => img.src === item.src,
-          );
+          const globalIndex = index % items.length; // Actually we want to select by index from original items. But since we use loopItems, we can just pass the modulo. Or better, find the index in original array, but items is the array passed here. It's safe to just use items.findIndex.
+          const realGlobalIndex = items.findIndex((img) => img.src === item.src);
 
           return (
             <button
               key={`${size}-${item.src}-${index}`}
               type="button"
-              onClick={() => onSelect(globalIndex)}
+              onClick={() => onSelect(realGlobalIndex)}
               className={`group relative shrink-0 snap-start overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-400 hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
                 isLarge
                   ? "h-[11rem] w-[17.5rem] sm:h-[14rem] sm:w-[22rem] lg:h-[15rem] lg:w-[24rem]"
@@ -153,20 +151,20 @@ function CarouselRow({
   );
 }
 
-export default function GallerySection() {
+export default function GallerySection({ images = [] }: { images?: GalleryItem[] }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
 
   const showPrev = useCallback(() => {
     setLightboxIndex((i) =>
-      i === null ? null : (i - 1 + galleryImages.length) % galleryImages.length,
+      i === null ? null : (i - 1 + images.length) % images.length,
     );
   }, []);
 
   const showNext = useCallback(() => {
     setLightboxIndex((i) =>
-      i === null ? null : (i + 1) % galleryImages.length,
+      i === null ? null : (i + 1) % images.length,
     );
   }, []);
 
@@ -188,10 +186,10 @@ export default function GallerySection() {
   }, [lightboxIndex, closeLightbox, showPrev, showNext]);
 
   const activeItem =
-    lightboxIndex !== null ? galleryImages[lightboxIndex] : null;
+    lightboxIndex !== null ? images[lightboxIndex] : null;
 
-  const topRowItems = [...galleryImages];
-  const bottomRowItems = galleryImages.slice(0, 5);
+  const topRowItems = [...images];
+  const bottomRowItems = images.slice(0, 5);
 
   return (
     <>
@@ -309,7 +307,7 @@ export default function GallerySection() {
                   {activeItem.label}
                 </p>
                 <p className="mt-1 text-xs text-white/50">
-                  {lightboxIndex + 1} / {galleryImages.length}
+                  {lightboxIndex + 1} / {images.length}
                 </p>
               </div>
             </motion.div>

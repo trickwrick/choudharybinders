@@ -3,6 +3,9 @@ import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import GalleryPageContent from "@/components/GalleryPageContent";
 import Navbar from "@/components/Navbar";
+import { getActiveGalleryImagesForPublic } from "@/lib/db/gallery";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Gallery | Choudhary Binders & Printers",
@@ -10,12 +13,14 @@ export const metadata: Metadata = {
     "Browse our complete gallery of printing, branding, signage, flex boards, LED signs, and outdoor advertising work in Jaipur.",
 };
 
-export default function GalleryPage() {
+export default async function GalleryPage() {
+  const images = await getActiveGalleryImagesForPublic();
+
   return (
     <>
       <Navbar />
       <main className="pt-[7.25rem]">
-        <GalleryPageContent />
+        <GalleryPageContent images={images} />
       </main>
       <Footer />
       <FloatingActions />

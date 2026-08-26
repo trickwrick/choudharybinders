@@ -15,15 +15,17 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
 import { getActiveCategoriesForPublic } from "@/lib/db/categories";
 import { getHeroSlidesFromDb } from "@/lib/db/hero-slides";
+import { getActiveGalleryImagesForPublic } from "@/lib/db/gallery";
 import { seedDatabaseIfEmpty } from "@/lib/db/seed";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
   await seedDatabaseIfEmpty();
-  const [slides, categories] = await Promise.all([
+  const [slides, categories, galleryImages] = await Promise.all([
     getHeroSlidesFromDb(),
     getActiveCategoriesForPublic(),
+    getActiveGalleryImagesForPublic(),
   ]);
 
   return (
@@ -38,7 +40,7 @@ export default async function Home() {
         <CenterBannerSection />
         <ProcessSection />
         <AboutSection compact />
-        <GallerySection />
+        <GallerySection images={galleryImages} />
         <TestimonialsSection />
         <FAQSection />
         <ContactSectionWrapper />

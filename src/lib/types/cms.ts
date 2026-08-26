@@ -97,3 +97,13 @@ export type HeroSlide = {
   title: string;
   subtitle: string;
 };
+
+export type GalleryImageDoc = {
+  _id?: ObjectId | string;
+  src: string;
+  label: string;
+  order: number;
+  active: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+};

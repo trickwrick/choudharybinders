@@ -4,23 +4,24 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import { galleryImages } from "@/lib/site-images";
 import Container from "./Container";
 
-export default function GalleryPageContent() {
+type GalleryItem = { src: string; label: string };
+
+export default function GalleryPageContent({ images = [] }: { images?: GalleryItem[] }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), []);
 
   const showPrev = useCallback(() => {
     setLightboxIndex((i) =>
-      i === null ? null : (i - 1 + galleryImages.length) % galleryImages.length,
+      i === null ? null : (i - 1 + images.length) % images.length,
     );
   }, []);
 
   const showNext = useCallback(() => {
     setLightboxIndex((i) =>
-      i === null ? null : (i + 1) % galleryImages.length,
+      i === null ? null : (i + 1) % images.length,
     );
   }, []);
 
@@ -42,7 +43,7 @@ export default function GalleryPageContent() {
   }, [lightboxIndex, closeLightbox, showPrev, showNext]);
 
   const activeItem =
-    lightboxIndex !== null ? galleryImages[lightboxIndex] : null;
+    lightboxIndex !== null ? images[lightboxIndex] : null;
 
   return (
     <section className="bg-[#f8f9fb] py-10 sm:py-14 lg:py-16">
@@ -61,7 +62,7 @@ export default function GalleryPageContent() {
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
-          {galleryImages.map((item, index) => (
+          {images.map((item, index) => (
             <motion.button
               key={item.src}
               type="button"
@@ -159,7 +160,7 @@ export default function GalleryPageContent() {
                   {activeItem.label}
                 </p>
                 <p className="mt-1 text-xs text-white/50">
-                  {lightboxIndex + 1} / {galleryImages.length}
+                  {lightboxIndex + 1} / {images.length}
                 </p>
               </div>
             </motion.div>
