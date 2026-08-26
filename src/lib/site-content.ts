@@ -84,6 +84,7 @@ export const contactDetails = {
 
 export const contentImages = {
   visionMissionAbout: "/content/about-us-v2.png",
+  aboutUsVideo: "/content/choudhary binders.mp4",
   printingSolutions: "/content/printing-solutions-v2.png",
   printingBinding: "/content/printing-binding.png",
 } as const;

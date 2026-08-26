@@ -1,5 +1,5 @@
 import type { Collection } from "mongodb";
-import type { InquiryDoc, InquiryStatus } from "@/lib/types/cms";
+import type { InquiryDoc, InquiryStatus, OrderDetails } from "@/lib/types/cms";
 import { COLLECTIONS } from "@/lib/db/collections";
 import { getDatabase } from "@/lib/mongodb";
 
@@ -18,6 +18,7 @@ export type CreateInquiryInput = {
   categoryId?: string;
   quantity?: number;
   unit?: string;
+  orderDetails?: OrderDetails;
   source?: InquiryDoc["source"];
 };
 

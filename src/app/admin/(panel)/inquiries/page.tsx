@@ -30,6 +30,7 @@ const sourceLabels: Record<InquiryDoc["source"], string> = {
   contact: "Contact Form",
   product: "Product Quote",
   quote: "Get Quote",
+  order: "Card Order",
 };
 
 function formatWhen(date: Date | string) {
@@ -408,6 +409,67 @@ export default function AdminInquiriesPage() {
                   </p>
                 </div>
               </div>
+
+              {selected.orderDetails ? (
+                <div className="mt-4 rounded-xl border border-[#2563eb]/15 bg-[#2563eb]/5 px-4 py-4">
+                  <p className="text-xs font-bold uppercase tracking-wide text-[#2563eb]">
+                    Order Details
+                  </p>
+                  <div className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
+                    {selected.orderDetails.sectionTitle ? (
+                      <p>
+                        <span className="font-semibold text-text/55">Section:</span>{" "}
+                        {selected.orderDetails.sectionTitle}
+                      </p>
+                    ) : null}
+                    {selected.orderDetails.variantCode ? (
+                      <p>
+                        <span className="font-semibold text-text/55">Code:</span>{" "}
+                        {selected.orderDetails.variantCode}
+                      </p>
+                    ) : null}
+                    {selected.orderDetails.printing ? (
+                      <p>
+                        <span className="font-semibold text-text/55">Printing:</span>{" "}
+                        {selected.orderDetails.printing}
+                      </p>
+                    ) : null}
+                    {selected.orderDetails.privacyPacking ? (
+                      <p>
+                        <span className="font-semibold text-text/55">Privacy Packing:</span>{" "}
+                        {selected.orderDetails.privacyPacking === "required"
+                          ? "Required"
+                          : "Not Required"}
+                      </p>
+                    ) : null}
+                    {selected.orderDetails.fileOption ? (
+                      <p>
+                        <span className="font-semibold text-text/55">File Option:</span>{" "}
+                        {selected.orderDetails.fileOption === "attach-online"
+                          ? "Attach File Online"
+                          : "Send via Email"}
+                      </p>
+                    ) : null}
+                    {selected.orderDetails.attachedFileName ? (
+                      <p className="sm:col-span-2">
+                        <span className="font-semibold text-text/55">File:</span>{" "}
+                        {selected.orderDetails.attachedFileName}
+                      </p>
+                    ) : null}
+                    {selected.orderDetails.freeDeliveryEligible ? (
+                      <p className="sm:col-span-2 font-medium text-primary">
+                        Eligible for free delivery
+                      </p>
+                    ) : null}
+                  </div>
+                  {selected.orderDetails.specialRemark ? (
+                    <p className="mt-3 text-sm text-text/75">
+                      <span className="font-semibold text-text/55">Remark:</span>{" "}
+                      {selected.orderDetails.specialRemark}
+                    </p>
+                  ) : null}
+                </div>
+              ) : null}
 
               {selected.productTitle ? (
                 <div className="mt-4 rounded-xl border border-primary/15 bg-primary/5 px-4 py-4">

@@ -80,9 +80,9 @@ export default function AdminProductsPage() {
         >
           All
         </button>
-        {categories.map((category) => (
+        {categories.map((category, index) => (
           <button
-            key={category.id}
+            key={String(category._id ?? category.id ?? `category-${index}`)}
             type="button"
             onClick={() => setFilter(category.id)}
             className={`rounded-full px-3 py-1.5 text-xs font-semibold ${

@@ -76,6 +76,7 @@ export default async function ProductVariantDetailRoute({ params }: PageProps) {
           productTitle={product.title}
           variantGroup={result.group}
           variant={result.variant}
+          section={result.section}
         />
       </main>
       <Footer />

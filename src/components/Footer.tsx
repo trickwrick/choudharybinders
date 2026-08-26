@@ -62,7 +62,7 @@ const socialLinks = [
 ];
 
 const workingHours = [
-  { day: "Monday – Saturday", time: "9:00 AM – 7:00 PM" },
+  { day: "Monday – Saturday", time: "10:00 AM – 8:00 PM" },
   { day: "Sunday", time: "Closed" },
 ];
 

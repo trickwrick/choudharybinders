@@ -33,6 +33,23 @@ export type ProductDoc = {
 
 export type InquiryStatus = "new" | "read" | "replied";
 
+export type OrderDetails = {
+  variantId?: string;
+  variantCode?: string;
+  variantLabel?: string;
+  variantName?: string;
+  sectionTitle?: string;
+  printing?: string;
+  privacyPacking?: "required" | "not-required";
+  fileOption?: "attach-online" | "send-email";
+  attachedFileName?: string;
+  applicableCost?: number;
+  gst?: number;
+  amountPayable?: number;
+  specialRemark?: string;
+  freeDeliveryEligible?: boolean;
+};
+
 export type InquiryDoc = {
   _id?: ObjectId | string;
   name: string;
@@ -44,7 +61,8 @@ export type InquiryDoc = {
   categoryId?: string;
   quantity?: number;
   unit?: string;
-  source: "contact" | "product" | "quote";
+  orderDetails?: OrderDetails;
+  source: "contact" | "product" | "quote" | "order";
   status: InquiryStatus;
   createdAt: Date;
 };

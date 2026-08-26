@@ -139,6 +139,105 @@ body {
   );
 }
 
+.variant-card-surface {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid transparent;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.variant-card-surface::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.45;
+  background: radial-gradient(circle at 85% 15%, rgba(255, 255, 255, 0.9) 0%, transparent 42%);
+  pointer-events: none;
+}
+
+.variant-card-tone-amber {
+  background: linear-gradient(145deg, #fff7ed 0%, #ffedd5 48%, #fed7aa 100%);
+  border-color: #fdba74;
+  color: #c2410c;
+}
+
+.variant-card-tone-green {
+  background: linear-gradient(145deg, #f0fdf4 0%, #dcfce7 48%, #bbf7d0 100%);
+  border-color: #86efac;
+  color: #166534;
+}
+
+.variant-card-tone-sky {
+  background: linear-gradient(145deg, #f0f9ff 0%, #e0f2fe 48%, #bae6fd 100%);
+  border-color: #7dd3fc;
+  color: #0369a1;
+}
+
+.variant-card-tone-violet {
+  background: linear-gradient(145deg, #f5f3ff 0%, #ede9fe 48%, #ddd6fe 100%);
+  border-color: #c4b5fd;
+  color: #6d28d9;
+}
+
+.variant-card-tone-rose {
+  background: linear-gradient(145deg, #fff1f2 0%, #ffe4e6 48%, #fecdd3 100%);
+  border-color: #fda4af;
+  color: #be123c;
+}
+
+.variant-card-tone-indigo {
+  background: linear-gradient(145deg, #eef2ff 0%, #e0e7ff 48%, #c7d2fe 100%);
+  border-color: #a5b4fc;
+  color: #3730a3;
+}
+
+.variant-card-tone-crimson {
+  background: linear-gradient(145deg, #fef2f2 0%, #fee2e2 48%, #fecaca 100%);
+  border-color: #fca5a5;
+  color: #b91c1c;
+}
+
+.variant-section-title {
+  text-shadow: 1px 1px 0 rgba(15, 23, 42, 0.08);
+}
+
+.variant-page-title {
+  background: linear-gradient(
+    120deg,
+    #138808 0%,
+    #3da85a 42%,
+    #e87500 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.variant-detail-banner {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
+}
+
+.variant-detail-banner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  background: radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.85) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.variant-detail-banner.variant-card-tone-amber,
+.variant-detail-banner.variant-card-tone-green,
+.variant-detail-banner.variant-card-tone-sky,
+.variant-detail-banner.variant-card-tone-violet,
+.variant-detail-banner.variant-card-tone-rose,
+.variant-detail-banner.variant-card-tone-indigo,
+.variant-detail-banner.variant-card-tone-crimson {
+  border-bottom-width: 0;
+}
+
 .btn-brand-cta,
 .btn-india-tricolor {
   position: relative;

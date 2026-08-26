@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin, Sparkles, Target, Telescope } from "lucide-react";
 import { fadeUp, slideFromLeft, slideFromRight } from "@/lib/animations";
@@ -11,26 +9,24 @@ import Container from "./Container";
 import SectionDivider from "./motion/SectionDivider";
 import SectionHeading from "./SectionHeading";
 
-const ABOUT_IMAGE = contentImages.visionMissionAbout;
-const ABOUT_IMAGE_FALLBACK = "/gallery/01-printing-solution.jpg";
+const ABOUT_VIDEO = contentImages.aboutUsVideo;
 
-function AboutImage() {
-  const [src, setSrc] = useState<string>(ABOUT_IMAGE);
-
+function AboutVideo() {
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-border/80 bg-white shadow-lg">
-      <Image
-        src={src}
-        alt="Choudhary Binders & Printers — vision, mission and about us"
-        width={1020}
-        height={1020}
-        sizes="(max-width: 768px) 100vw, 45vw"
-        quality={90}
-        className="h-auto w-full transition-transform duration-700 group-hover:scale-[1.02]"
-        onError={() => {
-          if (src !== ABOUT_IMAGE_FALLBACK) setSrc(ABOUT_IMAGE_FALLBACK);
-        }}
-      />
+    <div className="group relative w-full overflow-hidden rounded-2xl border border-border/80 bg-black shadow-sm">
+      <div className="relative h-[220px] w-full sm:h-[260px] md:h-[300px] lg:h-[600px]">
+        <video
+          src={ABOUT_VIDEO}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        >
+          Your browser does not support the video tag.
+        </video>
+      </div>
       <div className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full bg-brand-lime px-3 py-1.5 shadow-md">
         <Sparkles className="h-3.5 w-3.5 text-text" />
         <span className="text-xs font-bold text-text">Since 1980</span>
@@ -118,7 +114,7 @@ function CompactAbout() {
             whileInView="visible"
             viewport={{ once: true, margin: "-40px" }}
           >
-            <AboutImage />
+            <AboutVideo />
           </motion.div>
 
           <motion.div
@@ -171,7 +167,7 @@ function FullAbout() {
               whileInView="visible"
               viewport={{ once: true, margin: "-40px" }}
             >
-              <AboutImage />
+              <AboutVideo />
             </motion.div>
 
             <motion.div
