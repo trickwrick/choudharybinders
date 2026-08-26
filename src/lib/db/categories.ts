@@ -1,7 +1,9 @@
 import type { Collection } from "mongodb";
 import {
   categories as defaultCategories,
+  CATEGORY_SLUG_ALIASES,
   getCategoryById,
+  resolveCategorySlug,
   toCategorySummary,
 } from "@/lib/categories";
 import { resolveCategoryIconKey } from "@/lib/category-icons";
@@ -12,6 +14,22 @@ import { getDatabase } from "@/lib/mongodb";
 import type { PublicCategory } from "@/lib/types/public-catalog";
 
 export type { PublicCategory };
+
+const deprecatedCategoryIds = new Set(Object.keys(CATEGORY_SLUG_ALIASES));
+
+function mergeWithStaticCatalog(category: PublicCategory): PublicCategory {
+  const staticCategory = getCategoryById(category.id);
+  if (!staticCategory) return category;
+
+  return {
+    ...category,
+    title: staticCategory.title,
+    description: staticCategory.description,
+    image: staticCategory.image,
+    tag: staticCategory.tag,
+    iconKey: resolveCategoryIconKey(staticCategory.icon),
+  };
+}
 
 function docToPublicCategory(doc: CategoryDoc): PublicCategory {
   return {
@@ -47,9 +65,11 @@ export async function getActiveCategoriesForPublic(): Promise<PublicCategory[]> 
         .map(docToPublicCategory)
         .filter((category) => {
           if (!category.id || seen.has(category.id)) return false;
+          if (deprecatedCategoryIds.has(category.id)) return false;
           seen.add(category.id);
           return true;
-        });
+        })
+        .map(mergeWithStaticCatalog);
     }
   } catch {
     // fall back to static catalog
@@ -61,15 +81,20 @@ export async function getActiveCategoriesForPublic(): Promise<PublicCategory[]> 
 export async function getCategoryForPublic(
   slug: string,
 ): Promise<PublicCategory | undefined> {
+  const resolvedSlug = resolveCategorySlug(slug);
+
   try {
     const collection = await getCollection();
-    const doc = await collection.findOne({ id: slug, active: { $ne: false } });
-    if (doc) return docToPublicCategory(doc);
+    const doc = await collection.findOne({
+      id: resolvedSlug,
+      active: { $ne: false },
+    });
+    if (doc) return mergeWithStaticCatalog(docToPublicCategory(doc));
   } catch {
     // fall back to static catalog
   }
 
-  const staticCategory = getCategoryById(slug);
+  const staticCategory = getCategoryById(resolvedSlug);
   if (staticCategory) return staticToPublicCategory(staticCategory);
 
   return undefined;
@@ -156,6 +181,7 @@ export async function seedCategoriesIfEmpty() {
 export async function syncCategoriesFromStatic() {
   const collection = await getCollection();
   const now = new Date();
+  const staticIds = defaultCategories.map((category) => category.id);
 
   for (const [index, category] of defaultCategories.entries()) {
     await collection.updateOne(
@@ -168,15 +194,34 @@ export async function syncCategoriesFromStatic() {
           tag: category.tag,
           icon: resolveCategoryIconKey(category.icon),
           order: index,
+          active: true,
           updatedAt: now,
         },
         $setOnInsert: {
           id: category.id,
-          active: true,
           createdAt: now,
         },
       },
       { upsert: true },
     );
   }
+
+  const deprecatedIds = Object.keys(CATEGORY_SLUG_ALIASES);
+  const db = await getDatabase();
+
+  for (const [deprecatedId, targetId] of Object.entries(CATEGORY_SLUG_ALIASES)) {
+    await db.collection(COLLECTIONS.products).updateMany(
+      { categoryId: deprecatedId },
+      { $set: { categoryId: targetId, updatedAt: now } },
+    );
+  }
+
+  if (deprecatedIds.length > 0) {
+    await collection.deleteMany({ id: { $in: deprecatedIds } });
+  }
+
+  await collection.updateMany(
+    { id: { $nin: staticIds } },
+    { $set: { active: false, updatedAt: now } },
+  );
 }

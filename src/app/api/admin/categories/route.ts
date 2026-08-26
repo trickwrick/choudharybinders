@@ -8,6 +8,7 @@ import {
   getCategoryDocBySlug,
   listAllCategories,
   seedCategoriesIfEmpty,
+  syncCategoriesFromStatic,
   updateCategory,
 } from "@/lib/db/categories";
 
@@ -41,7 +42,10 @@ export async function GET(request: Request) {
     }
 
     await seedCategoriesIfEmpty();
-    const categories = await listAllCategories();
+    await syncCategoriesFromStatic();
+    const categories = (await listAllCategories()).filter(
+      (category) => category.active !== false,
+    );
     return NextResponse.json({
       categories: categories.map((category) => ({
         ...category,

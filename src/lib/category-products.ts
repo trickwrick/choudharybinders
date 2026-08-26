@@ -94,6 +94,11 @@ export const categoryProducts: Record<CategoryId, CategoryProduct[]> = {
     item("customized-gifts", "Event & Wedding Gifts", "Custom Order"),
     item("customized-gifts", "School & College Merchandise", "100 Pieces"),
     item("customized-gifts", "Festival Gift Hampers", "25 Sets"),
+    item("customized-gifts", "Corporate Gift Hampers", "25 Sets"),
+    item("customized-gifts", "Branded Corporate Gifts", "50 Pieces"),
+    item("customized-gifts", "Executive Gift Set", "Custom Order"),
+    item("customized-gifts", "Client Appreciation Gifts", "Custom Order"),
+    item("customized-gifts", "Team Celebration Gifts", "Custom Order"),
   ],
   "mobile-van": [
     item("mobile-van", "Vehicle Branding", "1 Vehicle"),
@@ -130,15 +135,6 @@ export const categoryProducts: Record<CategoryId, CategoryProduct[]> = {
     item("led-sign-board", "LED Lollipop Sign", "1 Piece"),
     item("led-sign-board", "Backlit Sign Board", "10 Square Feet"),
     item("led-sign-board", "Shop Front LED Board", "Custom Order"),
-  ],
-  "corporate-gifting": [
-    item("corporate-gifting", "Corporate Gift Hampers", "25 Sets"),
-    item("corporate-gifting", "Branded Corporate Gifts", "50 Pieces"),
-    item("corporate-gifting", "Promotional Merchandise", "100 Pieces"),
-    item("corporate-gifting", "Employee Welcome Kit", "25 Sets"),
-    item("corporate-gifting", "Executive Gift Set", "Custom Order"),
-    item("corporate-gifting", "Client Appreciation Gifts", "Custom Order"),
-    item("corporate-gifting", "Team Celebration Gifts", "Custom Order"),
   ],
 };
 

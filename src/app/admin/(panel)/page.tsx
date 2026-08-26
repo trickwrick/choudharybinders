@@ -2,7 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { ImageIcon, LayoutGrid, Mail, Package, Sparkles } from "lucide-react";
+import {
+  ArrowRight,
+  ImageIcon,
+  LayoutGrid,
+  Mail,
+  Package,
+  Sparkles,
+} from "lucide-react";
 
 type Stats = {
   slides: number;
@@ -28,46 +35,62 @@ export default function AdminDashboardPage() {
       value: stats?.slides ?? "—",
       href: "/admin/slider",
       icon: ImageIcon,
-      color: "from-blue-500 to-blue-600",
+      tone: "bg-blue-50 text-blue-700 ring-blue-100",
     },
     {
       label: "Categories",
       value: stats?.categories ?? "—",
       href: "/admin/categories",
       icon: LayoutGrid,
-      color: "from-violet-500 to-violet-600",
+      tone: "bg-violet-50 text-violet-700 ring-violet-100",
     },
     {
       label: "Products",
       value: stats?.products ?? "—",
       href: "/admin/products",
       icon: Package,
-      color: "from-primary to-[#0ADB0A]",
+      tone: "bg-primary/10 text-primary ring-primary/15",
     },
     {
       label: "New Inquiries",
       value: stats?.newInquiries ?? "—",
       href: "/admin/inquiries",
       icon: Mail,
-      color: "from-accent to-[#ff9933]",
+      tone: "bg-accent/10 text-accent ring-accent/15",
     },
     {
       label: "Total Inquiries",
       value: stats?.totalInquiries ?? "—",
       href: "/admin/inquiries",
       icon: Sparkles,
-      color: "from-[#0f172a] to-[#334155]",
+      tone: "bg-[#0f3d0f]/10 text-[#0f3d0f] ring-[#0f3d0f]/10",
     },
+  ];
+
+  const quickActions = [
+    { label: "Update homepage slider", href: "/admin/slider" },
+    { label: "Manage categories", href: "/admin/categories" },
+    { label: "Add a new product", href: "/admin/products/new" },
+    { label: "View quote inquiries", href: "/admin/inquiries" },
   ];
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-2xl font-bold text-text">Dashboard</h2>
-        <p className="mt-1 text-sm text-text/60">
-          Welcome back. Manage your website content from here.
-        </p>
-      </div>
+      <section className="admin-card overflow-hidden rounded-3xl">
+        <div className="brand-tricolor-bar h-1.5 w-full" />
+        <div className="bg-gradient-to-r from-[#0f3d0f] via-[#138808] to-[#0f3d0f] px-6 py-7 text-white sm:px-8">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-lime">
+            Welcome back
+          </p>
+          <h2 className="mt-2 text-2xl font-bold sm:text-3xl">
+            Choudhary Binders Admin
+          </h2>
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-white/80">
+            Manage slider, categories, products, and customer inquiries from one
+            place.
+          </p>
+        </div>
+      </section>
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         {cards.map((card) => {
@@ -76,45 +99,60 @@ export default function AdminDashboardPage() {
             <Link
               key={card.label}
               href={card.href}
-              className="group overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg"
+              className="admin-stat-card group rounded-2xl border border-border/70 p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/20 hover:shadow-md"
             >
-              <div className={`bg-gradient-to-r ${card.color} px-5 py-4 text-white`}>
-                <Icon className="h-5 w-5 opacity-90" />
+              <div className="flex items-start justify-between gap-3">
+                <div
+                  className={`flex h-11 w-11 items-center justify-center rounded-2xl ring-1 ${card.tone}`}
+                >
+                  <Icon className="h-5 w-5" />
+                </div>
+                <ArrowRight className="h-4 w-4 text-text/25 transition-transform group-hover:translate-x-0.5 group-hover:text-primary" />
               </div>
-              <div className="px-5 py-4">
-                <p className="text-sm text-text/55">{card.label}</p>
-                <p className="mt-1 text-3xl font-bold text-text">{card.value}</p>
-              </div>
+              <p className="mt-5 text-sm font-medium text-text/55">{card.label}</p>
+              <p className="mt-1 text-3xl font-bold tracking-tight text-text">
+                {card.value}
+              </p>
             </Link>
           );
         })}
       </div>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <div className="rounded-2xl border border-border/70 bg-white p-6 shadow-sm">
+        <div className="admin-card rounded-3xl p-6">
           <h3 className="text-lg font-bold text-text">Quick Actions</h3>
-          <div className="mt-4 space-y-3">
-            <Link href="/admin/slider" className="block rounded-xl bg-light-bg px-4 py-3 text-sm font-semibold text-text hover:bg-primary/10 hover:text-primary">
-              Update homepage slider
-            </Link>
-            <Link href="/admin/categories" className="block rounded-xl bg-light-bg px-4 py-3 text-sm font-semibold text-text hover:bg-primary/10 hover:text-primary">
-              Manage categories
-            </Link>
-            <Link href="/admin/products" className="block rounded-xl bg-light-bg px-4 py-3 text-sm font-semibold text-text hover:bg-primary/10 hover:text-primary">
-              Add a new product
-            </Link>
-            <Link href="/admin/inquiries" className="block rounded-xl bg-light-bg px-4 py-3 text-sm font-semibold text-text hover:bg-primary/10 hover:text-primary">
-              View quote inquiries
-            </Link>
+          <p className="mt-1 text-sm text-text/55">
+            Jump straight to common admin tasks.
+          </p>
+          <div className="mt-5 space-y-2.5">
+            {quickActions.map((action) => (
+              <Link
+                key={action.href}
+                href={action.href}
+                className="flex items-center justify-between rounded-2xl border border-border/70 bg-light-bg/70 px-4 py-3.5 text-sm font-semibold text-text transition-colors hover:border-primary/25 hover:bg-primary/5 hover:text-primary"
+              >
+                {action.label}
+                <ArrowRight className="h-4 w-4 opacity-40" />
+              </Link>
+            ))}
           </div>
         </div>
 
-        <div className="rounded-2xl border border-primary/15 bg-section-mint p-6 shadow-sm">
+        <div className="admin-card rounded-3xl border-primary/15 bg-section-mint p-6">
           <h3 className="text-lg font-bold text-text">Tips</h3>
-          <ul className="mt-4 space-y-2 text-sm leading-relaxed text-text/70">
-            <li>• Image paths should start with `/` — e.g. `/hero/slide-1.jpg`</li>
-            <li>• Product slug is used in the URL — use lowercase with hyphens</li>
-            <li>• Contact form submissions appear automatically in Inquiries</li>
+          <p className="mt-1 text-sm text-text/55">
+            A few helpful notes while updating content.
+          </p>
+          <ul className="mt-5 space-y-3 text-sm leading-relaxed text-text/70">
+            <li className="rounded-xl bg-white/70 px-4 py-3">
+              Image paths should start with `/` — e.g. `/hero/slide-1.jpg`
+            </li>
+            <li className="rounded-xl bg-white/70 px-4 py-3">
+              Product slug is used in the URL — use lowercase with hyphens
+            </li>
+            <li className="rounded-xl bg-white/70 px-4 py-3">
+              Contact form and card orders appear automatically in Inquiries
+            </li>
           </ul>
         </div>
       </div>

@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ProductVariantDetailPage from "@/components/ProductVariantDetailPage";
 import {
   getCategoryById,
+  resolveCategorySlug,
   toCategorySummary,
   type CategoryId,
 } from "@/lib/categories";
@@ -21,7 +22,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug, productId, variantId } = await params;
-  const category = getCategoryById(slug);
+  const category = getCategoryById(resolveCategorySlug(slug));
   const result = category
     ? getProductVariant(category.id as CategoryId, productId, variantId)
     : undefined;
@@ -38,7 +39,13 @@ export async function generateMetadata({
 
 export default async function ProductVariantDetailRoute({ params }: PageProps) {
   const { slug, productId, variantId } = await params;
-  const category = getCategoryById(slug);
+  const resolvedSlug = resolveCategorySlug(slug);
+
+  if (resolvedSlug !== slug) {
+    redirect(`/category/${resolvedSlug}/${productId}/${variantId}`);
+  }
+
+  const category = getCategoryById(resolvedSlug);
 
   if (!category) {
     notFound();

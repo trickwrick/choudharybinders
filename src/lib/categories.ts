@@ -12,8 +12,15 @@ export type CategoryId =
   | "mobile-van"
   | "unipole"
   | "outdoor-advertisement"
-  | "led-sign-board"
-  | "corporate-gifting";
+  | "led-sign-board";
+
+export const CATEGORY_SLUG_ALIASES: Partial<Record<string, CategoryId>> = {
+  "corporate-gifting": "customized-gifts",
+};
+
+export function resolveCategorySlug(slug: string): string {
+  return CATEGORY_SLUG_ALIASES[slug] ?? slug;
+}
 
 export type Category = {
   id: CategoryId;
@@ -71,12 +78,12 @@ export const categories: Category[] = [
   },
   {
     id: "customized-gifts",
-    title: "Customized Gifts",
+    title: "Corporate & Customized Gifts",
     tag: "Gifting",
     icon: Gift,
     image: categoryCoverImages["customized-gifts"],
     description:
-      "Personalized gifts that leave a lasting impression for corporates and events.",
+      "Premium corporate gifts, personalized merchandise & branded hampers for clients, teams, and events.",
   },
   {
     id: "mobile-van",
@@ -114,15 +121,6 @@ export const categories: Category[] = [
     description:
       "Bright LED boards, glow signs & illuminated shop fronts for day and night visibility.",
   },
-  {
-    id: "corporate-gifting",
-    title: "Corporate Gifting",
-    tag: "Gifting",
-    icon: Gift,
-    image: categoryCoverImages["corporate-gifting"],
-    description:
-      "Premium corporate gifts, promotional merchandise & branded hampers for clients and teams.",
-  },
 ];
 
 export type CategorySummary = Pick<
@@ -131,7 +129,8 @@ export type CategorySummary = Pick<
 >;
 
 export function getCategoryById(id: string): Category | undefined {
-  return categories.find((category) => category.id === id);
+  const resolvedId = resolveCategorySlug(id);
+  return categories.find((category) => category.id === resolvedId);
 }
 
 export function toCategorySummary(category: Category): CategorySummary {

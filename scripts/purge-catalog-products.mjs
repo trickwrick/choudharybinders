@@ -82,6 +82,11 @@ const catalogPairs = [
   ["customized-gifts", "event-wedding-gifts"],
   ["customized-gifts", "school-college-merchandise"],
   ["customized-gifts", "festival-gift-hampers"],
+  ["customized-gifts", "corporate-gift-hampers"],
+  ["customized-gifts", "branded-corporate-gifts"],
+  ["customized-gifts", "executive-gift-set"],
+  ["customized-gifts", "client-appreciation-gifts"],
+  ["customized-gifts", "team-celebration-gifts"],
   ["mobile-van", "vehicle-branding"],
   ["mobile-van", "pole-kiosk-sign-board"],
   ["mobile-van", "promotional-van-rental-service"],
@@ -110,13 +115,6 @@ const catalogPairs = [
   ["led-sign-board", "led-lollipop-sign"],
   ["led-sign-board", "backlit-sign-board"],
   ["led-sign-board", "shop-front-led-board"],
-  ["corporate-gifting", "corporate-gift-hampers"],
-  ["corporate-gifting", "branded-corporate-gifts"],
-  ["corporate-gifting", "promotional-merchandise"],
-  ["corporate-gifting", "employee-welcome-kit"],
-  ["corporate-gifting", "executive-gift-set"],
-  ["corporate-gifting", "client-appreciation-gifts"],
-  ["corporate-gifting", "team-celebration-gifts"],
 ];
 
 const client = new MongoClient(uri);

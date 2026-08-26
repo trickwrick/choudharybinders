@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import ProductDetailPage from "@/components/ProductDetailPage";
 import ProductVariantsPage from "@/components/ProductVariantsPage";
-import { type CategoryId, type CategorySummary } from "@/lib/categories";
+import {
+  resolveCategorySlug,
+  type CategoryId,
+  type CategorySummary,
+} from "@/lib/categories";
 import { getCategoryForPublic } from "@/lib/db/categories";
 import {
   getProductDetailForPage,
@@ -24,7 +28,8 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const { slug, productId } = await params;
-  const category = await getCategoryForPublic(slug);
+  const resolvedSlug = resolveCategorySlug(slug);
+  const category = await getCategoryForPublic(resolvedSlug);
 
   if (!category) {
     return { title: "Product Not Found" };
@@ -60,8 +65,14 @@ export async function generateMetadata({
 
 export default async function ProductDetailRoute({ params }: PageProps) {
   const { slug, productId } = await params;
+  const resolvedSlug = resolveCategorySlug(slug);
+
+  if (resolvedSlug !== slug) {
+    redirect(`/category/${resolvedSlug}/${productId}`);
+  }
+
   await seedDatabaseIfEmpty();
-  const category = await getCategoryForPublic(slug);
+  const category = await getCategoryForPublic(resolvedSlug);
 
   if (!category) {
     notFound();

@@ -9,7 +9,6 @@ export const categoryCoverImages = {
   unipole: "/categories/unipole-advertising-v2.jpg",
   "outdoor-advertisement": "/categories/outdoor-branding.jpg",
   "led-sign-board": "/categories/led-sign-board-v3.jpg",
-  "corporate-gifting": "/categories/corporate-gifting-v2.jpg",
 } as const;
 
 export type CatalogCategoryId = keyof typeof categoryCoverImages;
@@ -106,7 +105,7 @@ export const productImagesById: Record<string, string> = {
   "hard-binding": img.magazine,
   "document-finishing": img.printing,
 
-  // Customized Gifts
+  // Corporate & Customized Gifts
   "corporate-gifts": img.corporate,
   "promotional-merchandise": img.promoCanopy,
   "employee-welcome-kits": img.promoDesk,
@@ -115,6 +114,11 @@ export const productImagesById: Record<string, string> = {
   "event-wedding-gifts": img.promoCanopy,
   "school-college-merchandise": img.corporate,
   "festival-gift-hampers": img.promoCanopy,
+  "corporate-gift-hampers": img.promoCanopy,
+  "branded-corporate-gifts": img.corporate,
+  "executive-gift-set": img.promoDesk,
+  "client-appreciation-gifts": img.corporate,
+  "team-celebration-gifts": img.promoDesk,
 
   // Mobile Van
   "vehicle-branding": img.hoarding,
@@ -150,14 +154,6 @@ export const productImagesById: Record<string, string> = {
   "led-lollipop-sign": img.ledGallery,
   "backlit-sign-board": img.ledBoard,
   "shop-front-led-board": img.hotelSign,
-
-  // Corporate Gifting
-  "corporate-gift-hampers": img.promoCanopy,
-  "branded-corporate-gifts": img.corporate,
-  "executive-gift-set": img.promoDesk,
-  "client-appreciation-gifts": img.corporate,
-  "brand-promo-merchandise": img.promoCanopy,
-  "team-celebration-gifts": img.promoDesk,
 };
 
 export function getProductImage(productId: string, categoryId: CatalogCategoryId): string {

@@ -530,6 +530,33 @@ body {
   animation-play-state: paused;
 }
 
+/* Admin panel */
+.admin-shell-bg {
+  background:
+    radial-gradient(circle at top right, rgba(19, 136, 8, 0.06), transparent 28%),
+    radial-gradient(circle at bottom left, rgba(255, 106, 0, 0.05), transparent 24%),
+    #f3f6f3;
+}
+
+.admin-sidebar {
+  background: linear-gradient(180deg, #0b2f0b 0%, #0f3d0f 45%, #0a2a0a 100%);
+}
+
+.admin-nav-active {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
+  box-shadow: inset 3px 0 0 var(--brand-lime);
+}
+
+.admin-stat-card {
+  background: linear-gradient(180deg, #ffffff 0%, #fbfdfb 100%);
+}
+
+.admin-card {
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  background: #ffffff;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.04);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

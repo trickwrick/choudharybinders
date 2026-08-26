@@ -113,7 +113,7 @@ export default function AdminProductsPage() {
           </Link>
         </div>
       ) : (
-        <div className="overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm">
+        <div className="admin-card overflow-hidden rounded-3xl">
           <div className="overflow-x-auto">
             <table className="min-w-full text-sm">
               <thead className="bg-light-bg text-left text-xs uppercase tracking-wide text-text/55">

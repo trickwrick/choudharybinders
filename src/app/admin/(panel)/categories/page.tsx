@@ -100,7 +100,7 @@ export default function AdminCategoriesPage() {
           {categories.map((category) => (
             <article
               key={String(category._id)}
-              className="overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm"
+              className="admin-card overflow-hidden rounded-3xl"
             >
               <div className="relative h-44 bg-light-bg">
                 {category.image ? (

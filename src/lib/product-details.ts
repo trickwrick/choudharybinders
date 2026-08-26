@@ -156,13 +156,6 @@ const defaultSpecsByCategory: Record<CategoryId, ProductSpecification[]> = {
     { label: "Finish", value: "Glossy / Matte" },
     { label: "Size", value: "Customized" },
   ],
-  "corporate-gifting": [
-    { label: "Product Type", value: "Corporate & Promotional Gifts" },
-    { label: "Customization", value: "Logo, Name & Design Printing" },
-    { label: "Packaging", value: "Gift Box / Bulk Packing" },
-    { label: "MOQ", value: "As per product" },
-    { label: "Delivery", value: "Pan India (on request)" },
-  ],
 };
 
 function defaultDescription(title: string, categoryTitle: string): string {
