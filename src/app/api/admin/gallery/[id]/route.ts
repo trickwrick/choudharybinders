@@ -11,14 +11,14 @@ export const runtime = "nodejs";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const denied = await adminGuard();
   if (denied) return denied;
 
   try {
     dns.setServers(["8.8.8.8", "8.8.4.4"]);
-    const id = params.id;
+    const { id } = await params;
     const image = await getGalleryImageById(id);
     
     if (!image) {
@@ -35,14 +35,14 @@ export async function GET(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const denied = await adminGuard();
   if (denied) return denied;
 
   try {
     dns.setServers(["8.8.8.8", "8.8.4.4"]);
-    const id = params.id;
+    const { id } = await params;
     const body = await request.json();
     
     await updateGalleryImage(id, {
@@ -60,14 +60,14 @@ export async function PUT(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const denied = await adminGuard();
   if (denied) return denied;
 
   try {
     dns.setServers(["8.8.8.8", "8.8.4.4"]);
-    const id = params.id;
+    const { id } = await params;
     await deleteGalleryImage(id);
     return NextResponse.json({ ok: true });
   } catch {

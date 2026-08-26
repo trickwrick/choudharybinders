@@ -7,9 +7,10 @@ export const dynamic = "force-dynamic";
 export default async function EditGalleryImagePage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const image = await getGalleryImageById(params.id);
+  const { id } = await params;
+  const image = await getGalleryImageById(id);
 
   if (!image) {
     notFound();

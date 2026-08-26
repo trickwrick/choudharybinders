@@ -2,12 +2,13 @@ import GalleryForm from "@/components/admin/GalleryForm";
 
 export const dynamic = "force-dynamic";
 
-export default function NewGalleryImagePage({
+export default async function NewGalleryImagePage({
   searchParams,
 }: {
-  searchParams: { order?: string };
+  searchParams: Promise<{ order?: string }>;
 }) {
-  const defaultOrder = searchParams.order ? Number(searchParams.order) : 0;
+  const { order } = await searchParams;
+  const defaultOrder = order ? Number(order) : 0;
 
   return (
     <div className="space-y-6">
