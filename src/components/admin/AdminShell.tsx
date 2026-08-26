@@ -149,7 +149,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
 
   return (
     <div className="admin-shell-bg min-h-screen">
-      <aside className="admin-sidebar fixed inset-y-0 left-0 z-40 hidden w-[17.5rem] flex-col border-r border-white/10 text-white lg:flex">
+      <aside className="admin-sidebar fixed inset-y-0 left-0 z-40 hidden w-70 flex-col border-r border-white/10 text-white lg:flex">
         {sidebar}
       </aside>
 
@@ -161,7 +161,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             className="absolute inset-0 bg-black/45"
             onClick={() => setMobileOpen(false)}
           />
-          <aside className="admin-sidebar absolute inset-y-0 left-0 flex w-[17.5rem] flex-col shadow-2xl">
+          <aside className="admin-sidebar absolute inset-y-0 left-0 flex w-70 flex-col shadow-2xl">
             <button
               type="button"
               aria-label="Close menu"
@@ -175,7 +175,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         </div>
       ) : null}
 
-      <div className="lg:pl-[17.5rem]">
+      <div className="lg:pl-70">
         <header className="sticky top-0 z-30 border-b border-border/60 bg-white/92 backdrop-blur-md">
           <div className="flex items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
             <div className="flex min-w-0 items-center gap-3">

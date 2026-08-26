@@ -94,14 +94,14 @@ function CarouselRow({
         type="button"
         onClick={() => scroll(-1)}
         aria-label="Scroll gallery left"
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[var(--flag-kesari-dark)] transition-colors hover:bg-[var(--flag-kesari-dark)]/10 sm:h-10 sm:w-10"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-(--flag-kesari-dark) transition-colors hover:bg-(--flag-kesari-dark)/10 sm:h-10 sm:w-10"
       >
         <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={2.5} />
       </button>
 
       <div
         ref={trackRef}
-        className="flex flex-1 snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-1 [-ms-overflow-style:none] [scrollbar-width:none] sm:gap-4 [&::-webkit-scrollbar]:hidden"
+        className="flex flex-1 snap-x snap-mandatory gap-3 overflow-x-auto scroll-smooth pb-1 scrollbar-none sm:gap-4"
       >
         {loopItems.map((item, index) => {
           const globalIndex = index % items.length; // Actually we want to select by index from original items. But since we use loopItems, we can just pass the modulo. Or better, find the index in original array, but items is the array passed here. It's safe to just use items.findIndex.
@@ -114,8 +114,8 @@ function CarouselRow({
               onClick={() => onSelect(realGlobalIndex)}
               className={`group relative shrink-0 snap-start overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-400 hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
                 isLarge
-                  ? "h-[11rem] w-[17.5rem] sm:h-[14rem] sm:w-[22rem] lg:h-[15rem] lg:w-[24rem]"
-                  : "h-[5.5rem] w-[8.5rem] sm:h-[6.5rem] sm:w-[10rem] lg:h-[7rem] lg:w-[11rem]"
+                  ? "h-44 w-70 sm:h-56 sm:w-88 lg:h-60 lg:w-96"
+                  : "h-22 w-34 sm:h-26 sm:w-40 lg:h-28 lg:w-44"
               }`}
             >
               <Image
@@ -143,7 +143,7 @@ function CarouselRow({
         type="button"
         onClick={() => scroll(1)}
         aria-label="Scroll gallery right"
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[var(--flag-kesari-dark)] transition-colors hover:bg-[var(--flag-kesari-dark)]/10 sm:h-10 sm:w-10"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-(--flag-kesari-dark) transition-colors hover:bg-(--flag-kesari-dark)/10 sm:h-10 sm:w-10"
       >
         <ChevronRight className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={2.5} />
       </button>
@@ -244,7 +244,7 @@ export default function GallerySection({ images = [] }: { images?: GalleryItem[]
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 sm:p-8"
+            className="fixed inset-0 z-100 flex items-center justify-center bg-black/90 p-4 sm:p-8"
             onClick={closeLightbox}
             role="dialog"
             aria-modal="true"
@@ -292,7 +292,7 @@ export default function GallerySection({ images = [] }: { images?: GalleryItem[]
               className="relative w-full max-w-5xl overflow-hidden rounded-2xl bg-black shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative aspect-[4/3] w-full sm:aspect-[16/10]">
+              <div className="relative aspect-4/3 w-full sm:aspect-16/10">
                 <Image
                   src={activeItem.src}
                   alt={activeItem.label}

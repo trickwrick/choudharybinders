@@ -55,7 +55,7 @@ export default function AdminGalleryPage() {
               key={String(image._id)}
               className="overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm"
             >
-              <div className="relative aspect-[4/3] w-full bg-light-bg">
+              <div className="relative aspect-4/3 w-full bg-light-bg">
                 {image.src ? (
                   <Image src={image.src} alt={image.label} fill className="object-cover" />
                 ) : null}

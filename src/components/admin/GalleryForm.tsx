@@ -112,7 +112,7 @@ export default function GalleryForm({
               Image <span className="text-red-500">*</span>
             </label>
             {formData.src ? (
-              <div className="relative aspect-[4/3] w-full max-w-sm overflow-hidden rounded-xl border border-border/70 bg-light-bg sm:aspect-[16/10]">
+              <div className="relative aspect-4/3 w-full max-w-sm overflow-hidden rounded-xl border border-border/70 bg-light-bg sm:aspect-16/10">
                 <Image
                   src={formData.src}
                   alt="Preview"
@@ -128,7 +128,7 @@ export default function GalleryForm({
                 </button>
               </div>
             ) : (
-              <div className="relative flex aspect-[4/3] w-full max-w-sm cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/5 sm:aspect-[16/10]">
+              <div className="relative flex aspect-4/3 w-full max-w-sm cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/5 sm:aspect-16/10">
                 <input
                   type="file"
                   accept="image/*"
@@ -167,7 +167,7 @@ export default function GalleryForm({
               }
               required
               placeholder="e.g. Flex Printing"
-              className="w-full rounded-xl border border-border bg-white px-4 py-2.5 text-sm outline-none transition-colors focus:border-primary"
+              className="w-full rounded-xl border border-border bg-white px-4 py-2.5 text-sm outline-none transition-colors"
             />
           </div>
 
@@ -182,7 +182,7 @@ export default function GalleryForm({
                 onChange={(e) =>
                   setFormData({ ...formData, order: Number(e.target.value) })
                 }
-                className="w-full rounded-xl border border-border bg-white px-4 py-2.5 text-sm outline-none transition-colors focus:border-primary"
+                className="w-full rounded-xl border border-border bg-white px-4 py-2.5 text-sm outline-none transition-colors"
               />
             </div>
             <div>
@@ -198,7 +198,7 @@ export default function GalleryForm({
                   }
                   className="peer sr-only"
                 />
-                <div className="h-6 w-11 rounded-full bg-border transition-colors peer-checked:bg-brand-lime peer-focus:ring-2 peer-focus:ring-brand-lime/30">
+                <div className="h-6 w-11 rounded-full bg-border transition-colors peer-focus:ring-2 peer-focus:ring-brand-lime/30">
                   <div
                     className={`absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition-transform ${
                       formData.active ? "translate-x-5" : ""

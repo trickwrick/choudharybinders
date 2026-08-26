@@ -71,7 +71,7 @@ export default function GalleryPageContent({ images = [] }: { images?: GalleryIt
               viewport={{ once: true, margin: "-40px" }}
               transition={{ duration: 0.35, delay: (index % 8) * 0.04 }}
               onClick={() => setLightboxIndex(index)}
-              className="group relative aspect-[4/3] overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+              className="group relative aspect-4/3 overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
             >
               <Image
                 src={item.src}
@@ -80,7 +80,7 @@ export default function GalleryPageContent({ images = [] }: { images?: GalleryIt
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-3 py-3 text-left">
+              <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 to-transparent px-3 py-3 text-left">
                 <p className="truncate text-xs font-semibold text-white sm:text-sm">
                   {item.label}
                 </p>
@@ -97,7 +97,7 @@ export default function GalleryPageContent({ images = [] }: { images?: GalleryIt
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 sm:p-8"
+            className="fixed inset-0 z-100 flex items-center justify-center bg-black/90 p-4 sm:p-8"
             onClick={closeLightbox}
             role="dialog"
             aria-modal="true"
@@ -145,7 +145,7 @@ export default function GalleryPageContent({ images = [] }: { images?: GalleryIt
               className="relative w-full max-w-5xl overflow-hidden rounded-2xl bg-black shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative aspect-[4/3] w-full sm:aspect-[16/10]">
+              <div className="relative aspect-4/3 w-full sm:aspect-16/10">
                 <Image
                   src={activeItem.src}
                   alt={activeItem.label}

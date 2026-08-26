@@ -19,7 +19,7 @@ export default async function GalleryPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-[7.25rem]">
+      <main className="pt-29">
         <GalleryPageContent images={images} />
       </main>
       <Footer />
