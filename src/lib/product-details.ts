@@ -86,6 +86,7 @@ const detailOverrides: Record<string, DetailOverride> = {
 };
 
 const defaultSpecsByCategory: Record<CategoryId, ProductSpecification[]> = {
+  printing: [],
   offset: [
     { label: "Print Type", value: "Offset Printing" },
     { label: "Paper Quality", value: "Premium Art / Matte Paper" },
