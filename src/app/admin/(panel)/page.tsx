@@ -78,7 +78,7 @@ export default function AdminDashboardPage() {
     <div className="space-y-6">
       <section className="admin-card overflow-hidden rounded-3xl">
         <div className="brand-tricolor-bar h-1.5 w-full" />
-        <div className="bg-gradient-to-r from-[#0f3d0f] via-[#138808] to-[#0f3d0f] px-6 py-7 text-white sm:px-8">
+        <div className="bg-linear-to-r from-[#0f3d0f] via-[#138808] to-[#0f3d0f] px-6 py-7 text-white sm:px-8">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-lime">
             Welcome back
           </p>
@@ -118,7 +118,7 @@ export default function AdminDashboardPage() {
         })}
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-4">
         <div className="admin-card rounded-3xl p-6">
           <h3 className="text-lg font-bold text-text">Quick Actions</h3>
           <p className="mt-1 text-sm text-text/55">
@@ -136,24 +136,6 @@ export default function AdminDashboardPage() {
               </Link>
             ))}
           </div>
-        </div>
-
-        <div className="admin-card rounded-3xl border-primary/15 bg-section-mint p-6">
-          <h3 className="text-lg font-bold text-text">Tips</h3>
-          <p className="mt-1 text-sm text-text/55">
-            A few helpful notes while updating content.
-          </p>
-          <ul className="mt-5 space-y-3 text-sm leading-relaxed text-text/70">
-            <li className="rounded-xl bg-white/70 px-4 py-3">
-              Image paths should start with `/` — e.g. `/hero/slide-1.jpg`
-            </li>
-            <li className="rounded-xl bg-white/70 px-4 py-3">
-              Product slug is used in the URL — use lowercase with hyphens
-            </li>
-            <li className="rounded-xl bg-white/70 px-4 py-3">
-              Contact form and card orders appear automatically in Inquiries
-            </li>
-          </ul>
         </div>
       </div>
     </div>
