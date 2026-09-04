@@ -35,7 +35,7 @@ function RelatedProductCard({
   const whatsappMessage = `Hello, I would like the best price for ${product.title} from Choudhary Binders & Printers.`;
 
   return (
-    <article className="flex min-w-[220px] max-w-[240px] shrink-0 flex-col overflow-hidden rounded-xl border border-border/70 bg-white shadow-sm">
+    <article className="flex min-w-55 max-w-60 shrink-0 flex-col overflow-hidden rounded-xl border border-border/70 bg-white shadow-sm">
       <Link
         href={`/category/${categorySlug}/${product.id}`}
         className="relative aspect-square overflow-hidden bg-light-bg"
@@ -176,7 +176,7 @@ export default function ProductDetailPage({
 
         <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)_300px] xl:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_320px]">
           <div className="self-start rounded-xl border border-border/70 bg-white p-3 shadow-sm sm:p-4 lg:sticky lg:top-28">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-light-bg">
+            <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-light-bg">
               <Image
                 src={product.images[activeImage] ?? product.image}
                 alt={product.title}
@@ -186,7 +186,7 @@ export default function ProductDetailPage({
                 priority
               />
             </div>
-            <div className="mt-3 flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="mt-3 flex gap-2 overflow-x-auto pb-1 scrollbar-none">
               {product.images.map((image, index) => (
                 <button
                   key={`${image}-${index}`}
@@ -238,13 +238,13 @@ export default function ProductDetailPage({
                   onChange={(event) =>
                     setQuantity(Math.max(1, Number(event.target.value) || 1))
                   }
-                  className="h-10 w-20 rounded-lg border border-border px-3 text-sm outline-none focus:border-primary"
+                  className="h-10 w-20 rounded-lg border border-border px-3 text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary"
                   aria-label="Quantity"
                 />
                 <select
                   value={unit}
                   onChange={(event) => setUnit(event.target.value)}
-                  className="h-10 rounded-lg border border-border px-3 text-sm outline-none focus:border-primary"
+                  className="h-10 rounded-lg border border-border px-3 text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary"
                   aria-label="Unit"
                 >
                   {unitOptions.map((option) => (
@@ -256,7 +256,7 @@ export default function ProductDetailPage({
                 <Button
                   type="button"
                   size="sm"
-                  className="min-w-[120px]"
+                  className="min-w-30"
                   onClick={() => setQuoteOpen(true)}
                 >
                   Get Quote
