@@ -108,7 +108,7 @@ function ProductCard({
       href={href}
       className="group flex flex-col overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-xl"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-light-bg">
+      <div className="relative aspect-4/3 overflow-hidden bg-light-bg">
         <Image
           src={product.image}
           alt={product.title}
@@ -116,7 +116,7 @@ function ProductCard({
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <span className="absolute bottom-3 left-3 inline-flex items-center gap-1 rounded-full bg-white/95 px-3 py-1 text-xs font-semibold text-primary opacity-0 shadow-sm transition-all duration-300 group-hover:opacity-100">
           View Details
           <ArrowRight className="h-3.5 w-3.5" />
@@ -285,7 +285,7 @@ export default function CategoryProductsPage({
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/65 to-black/45" />
+          <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/65 to-black/45" />
         </div>
 
         <Container className="relative py-10 sm:py-12 lg:py-14">
