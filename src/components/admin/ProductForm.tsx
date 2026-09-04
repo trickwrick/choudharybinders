@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 import ProductImagesField from "@/components/admin/ProductImagesField";
 import { categories, type CategoryId } from "@/lib/categories";
 import type { ProductDoc } from "@/lib/types/cms";
@@ -238,11 +238,98 @@ export default function ProductForm({
               </label>
             </div>
 
+            {/* Specifications Editor */}
+            <div className="block">
+              <div className="mb-2 flex items-center justify-between">
+                <span className="text-sm font-semibold text-text">Specifications</span>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setProduct({
+                      ...product,
+                      specifications: [
+                        ...(product.specifications ?? []),
+                        { label: "", value: "" },
+                      ],
+                    })
+                  }
+                  className="inline-flex items-center gap-1 rounded-lg bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary hover:bg-primary/20 transition-colors"
+                >
+                  <Plus className="h-3.5 w-3.5" />
+                  Add Row
+                </button>
+              </div>
+              {(product.specifications ?? []).length === 0 ? (
+                <p className="rounded-xl border border-dashed border-border px-4 py-5 text-center text-xs text-text/45">
+                  No specifications yet. Click "Add Row" to add one.
+                </p>
+              ) : (
+                <div className="overflow-hidden rounded-xl border border-border">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="bg-light-bg">
+                        <th className="px-3 py-2 text-left text-xs font-semibold text-text/60 w-[38%]">Label</th>
+                        <th className="px-3 py-2 text-left text-xs font-semibold text-text/60">Value</th>
+                        <th className="px-3 py-2 w-10" />
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {(product.specifications ?? []).map((spec, index) => (
+                        <tr key={index} className={index % 2 === 0 ? "bg-white" : "bg-[#f8fafc]"}>
+                          <td className="px-3 py-2">
+                            <input
+                              type="text"
+                              value={spec.label}
+                              placeholder="e.g. Print Type"
+                              onChange={(e) => {
+                                const updated = [...(product.specifications ?? [])];
+                                updated[index] = { ...updated[index], label: e.target.value };
+                                setProduct({ ...product, specifications: updated });
+                              }}
+                              className="w-full rounded-lg border border-border px-2 py-1.5 text-xs outline-none focus:ring-1 focus:ring-primary"
+                            />
+                          </td>
+                          <td className="px-3 py-2">
+                            <input
+                              type="text"
+                              value={spec.value}
+                              placeholder="e.g. Offset Printing"
+                              onChange={(e) => {
+                                const updated = [...(product.specifications ?? [])];
+                                updated[index] = { ...updated[index], value: e.target.value };
+                                setProduct({ ...product, specifications: updated });
+                              }}
+                              className="w-full rounded-lg border border-border px-2 py-1.5 text-xs outline-none focus:ring-1 focus:ring-primary"
+                            />
+                          </td>
+                          <td className="px-3 py-2 text-center">
+                            <button
+                              type="button"
+                              aria-label="Remove row"
+                              onClick={() => {
+                                const updated = (product.specifications ?? []).filter((_, i) => i !== index);
+                                setProduct({ ...product, specifications: updated });
+                              }}
+                              className="rounded-lg p-1.5 text-red-400 hover:bg-red-50 hover:text-red-600 transition-colors"
+                            >
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+
+            {/* Description */}
             <label className="block">
               <span className="mb-1 block text-sm font-semibold text-text">Description</span>
               <textarea
                 rows={5}
                 value={product.description ?? ""}
+                placeholder="Product description, features, or any extra details..."
                 onChange={(event) =>
                   setProduct({ ...product, description: event.target.value })
                 }
