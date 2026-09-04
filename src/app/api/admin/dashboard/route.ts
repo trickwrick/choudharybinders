@@ -1,7 +1,6 @@
 import dns from "node:dns";
 import { NextResponse } from "next/server";
 import { adminGuard } from "@/lib/api-utils";
-import { seedDatabaseIfEmpty } from "@/lib/db/seed";
 import { countInquiries } from "@/lib/db/inquiries";
 import { listAllCategories } from "@/lib/db/categories";
 import { listAllHeroSlides } from "@/lib/db/hero-slides";
@@ -15,7 +14,6 @@ export async function GET() {
 
   try {
     dns.setServers(["8.8.8.8", "8.8.4.4"]);
-    await seedDatabaseIfEmpty();
 
     const [slides, categories, products, newInquiries, totalInquiries] = await Promise.all([
       listAllHeroSlides(),

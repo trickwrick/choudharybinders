@@ -13,7 +13,6 @@ import {
 } from "@/lib/categories";
 import { getCategoryForPublic, getActiveCategoriesForPublic } from "@/lib/db/categories";
 import { getProductsForCategory } from "@/lib/db/products";
-import { seedDatabaseIfEmpty } from "@/lib/db/seed";
 
 export const dynamic = "force-dynamic";
 
@@ -49,7 +48,6 @@ export default async function CategoryProductsRoute({ params }: PageProps) {
     redirect(`/category/${resolvedSlug}`);
   }
 
-  await seedDatabaseIfEmpty();
   const category = await getCategoryForPublic(resolvedSlug);
 
   if (!category) {

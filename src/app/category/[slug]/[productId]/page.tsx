@@ -15,7 +15,6 @@ import {
   getProductDetailForPage,
   getProductsForCategory,
 } from "@/lib/db/products";
-import { seedDatabaseIfEmpty } from "@/lib/db/seed";
 import { getProductVariantGroup } from "@/lib/product-variants";
 
 export const dynamic = "force-dynamic";
@@ -71,7 +70,6 @@ export default async function ProductDetailRoute({ params }: PageProps) {
     redirect(`/category/${resolvedSlug}/${productId}`);
   }
 
-  await seedDatabaseIfEmpty();
   const category = await getCategoryForPublic(resolvedSlug);
 
   if (!category) {

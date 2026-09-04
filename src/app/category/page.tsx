@@ -5,7 +5,6 @@ import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import { getActiveCategoriesForPublic } from "@/lib/db/categories";
 import { getProductsByCategoryMap } from "@/lib/db/products";
-import { seedDatabaseIfEmpty } from "@/lib/db/seed";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +15,6 @@ export const metadata: Metadata = {
 };
 
 export default async function CategoryPage() {
-  await seedDatabaseIfEmpty();
   const categories = await getActiveCategoriesForPublic();
   const productsByCategory = await getProductsByCategoryMap(
     categories.map((category) => category.id),
