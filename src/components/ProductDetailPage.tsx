@@ -104,6 +104,14 @@ export default function ProductDetailPage({
   const [unit, setUnit] = useState(product.unit ?? "Sq.ft");
   const [quoteOpen, setQuoteOpen] = useState(false);
 
+  // Categories with a fixed unit — no dropdown needed
+  const FIXED_UNIT_CATEGORIES: Record<string, string> = {
+    offset: "PCS",
+    digital: "PCS",
+    flex: "Sq.ft",
+  };
+  const fixedUnit = FIXED_UNIT_CATEGORIES[product.categoryId ?? ""];
+
   const unitOptions = useMemo(() => {
     const options = new Set([product.unit ?? "Sq.ft", "Sq.ft", "Ft", "Piece", "Set"]);
     return Array.from(options);
@@ -241,18 +249,24 @@ export default function ProductDetailPage({
                   className="h-10 w-20 rounded-lg border border-border px-3 text-sm outline-none focus:ring-1 focus:ring-primary"
                   aria-label="Quantity"
                 />
-                <select
-                  value={unit}
-                  onChange={(event) => setUnit(event.target.value)}
-                  className="h-10 rounded-lg border border-border px-3 text-sm outline-none focus:ring-1 focus:ring-primary"
-                  aria-label="Unit"
-                >
-                  {unitOptions.map((option) => (
-                    <option key={option} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+                {fixedUnit ? (
+                  <span className="flex h-10 items-center rounded-lg border border-border bg-gray-50 px-3 text-sm font-semibold text-text">
+                    {fixedUnit}
+                  </span>
+                ) : (
+                  <select
+                    value={unit}
+                    onChange={(event) => setUnit(event.target.value)}
+                    className="h-10 rounded-lg border border-border px-3 text-sm outline-none focus:ring-1 focus:ring-primary"
+                    aria-label="Unit"
+                  >
+                    {unitOptions.map((option) => (
+                      <option key={option} value={option}>
+                        {option}
+                      </option>
+                    ))}
+                  </select>
+                )}
                 <Button
                   type="button"
                   size="sm"
