@@ -238,13 +238,13 @@ export default function ProductDetailPage({
                   onChange={(event) =>
                     setQuantity(Math.max(1, Number(event.target.value) || 1))
                   }
-                  className="h-10 w-20 rounded-lg border border-border px-3 text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                  className="h-10 w-20 rounded-lg border border-border px-3 text-sm outline-none focus:ring-1 focus:ring-primary"
                   aria-label="Quantity"
                 />
                 <select
                   value={unit}
                   onChange={(event) => setUnit(event.target.value)}
-                  className="h-10 rounded-lg border border-border px-3 text-sm outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                  className="h-10 rounded-lg border border-border px-3 text-sm outline-none focus:ring-1 focus:ring-primary"
                   aria-label="Unit"
                 >
                   {unitOptions.map((option) => (
