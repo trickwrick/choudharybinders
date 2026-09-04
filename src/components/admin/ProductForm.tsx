@@ -140,7 +140,7 @@ export default function ProductForm({
                     unit: newUnit,
                   });
                 }}
-                className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
               >
                 {categories.map((category) => (
                   <option key={category.id} value={category.id}>
@@ -165,7 +165,7 @@ export default function ProductForm({
                     })
                   }
                   placeholder="e.g. flex-banner"
-                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
                 />
               </label>
               <label className="block">
@@ -176,7 +176,7 @@ export default function ProductForm({
                   onChange={(event) =>
                     setProduct({ ...product, title: event.target.value })
                   }
-                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
                 />
               </label>
               <label className="block">
@@ -187,7 +187,7 @@ export default function ProductForm({
                   onChange={(event) =>
                     setProduct({ ...product, minQty: event.target.value })
                   }
-                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
                 />
               </label>
               <label className="block">
@@ -198,7 +198,7 @@ export default function ProductForm({
                   onChange={(event) =>
                     setProduct({ ...product, order: Number(event.target.value) })
                   }
-                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
                 />
               </label>
               <label className="block">
@@ -214,7 +214,7 @@ export default function ProductForm({
                       price: event.target.value ? Number(event.target.value) : undefined,
                     })
                   }
-                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
                 />
               </label>
               <label className="block">
@@ -226,7 +226,7 @@ export default function ProductForm({
                   onChange={(event) =>
                     setProduct({ ...product, unit: event.target.value })
                   }
-                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
                 >
                   <option value="">None</option>
                   <option value="PCS">PCS</option>
@@ -246,7 +246,7 @@ export default function ProductForm({
                 onChange={(event) =>
                   setProduct({ ...product, description: event.target.value })
                 }
-                className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
               />
             </label>
           </div>
