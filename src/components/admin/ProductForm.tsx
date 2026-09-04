@@ -128,12 +128,18 @@ export default function ProductForm({
               <span className="mb-1 block text-sm font-semibold text-text">Category</span>
               <select
                 value={product.categoryId}
-                onChange={(event) =>
+                onChange={(event) => {
+                  const newCategory = event.target.value as CategoryId;
+                  let newUnit = product.unit;
+                  if (newCategory === "offset" || newCategory === "digital") newUnit = "PCS";
+                  if (newCategory === "flex") newUnit = "Sq.ft";
+                  
                   setProduct({
                     ...product,
-                    categoryId: event.target.value as CategoryId,
-                  })
-                }
+                    categoryId: newCategory,
+                    unit: newUnit,
+                  });
+                }}
                 className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
               >
                 {categories.map((category) => (
@@ -215,14 +221,20 @@ export default function ProductForm({
                 <span className="mb-1 block text-sm font-semibold text-text">
                   Unit (e.g. Sq.ft)
                 </span>
-                <input
-                  type="text"
+                <select
                   value={product.unit ?? ""}
                   onChange={(event) =>
                     setProduct({ ...product, unit: event.target.value })
                   }
                   className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
-                />
+                >
+                  <option value="">None</option>
+                  <option value="PCS">PCS</option>
+                  <option value="Sq.ft">Sq.ft</option>
+                  <option value="Ft">Ft</option>
+                  <option value="Piece">Piece</option>
+                  <option value="Set">Set</option>
+                </select>
               </label>
             </div>
 
