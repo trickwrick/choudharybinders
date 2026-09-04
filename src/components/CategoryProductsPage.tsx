@@ -386,7 +386,7 @@ export default function CategoryProductsPage({
                       onChange={(event) =>
                         setSortBy(event.target.value as SortOption)
                       }
-                      className="rounded-lg border border-border bg-white px-3 py-2 text-sm text-text outline-none transition-colors focus:border-primary"
+                      className="rounded-lg border border-border bg-white px-3 py-2 text-sm text-text outline-none transition-colors focus:ring-1 focus:ring-primary focus:border-transparent"
                     >
                       {sortOptions.map((option) => (
                         <option key={option.id} value={option.id}>
