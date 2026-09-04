@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
-import { getProductsCollection } from "@/lib/db/mongodb";
+import { getDatabase } from "@/lib/mongodb";
+import { COLLECTIONS } from "@/lib/db/collections";
 
 export async function GET() {
   try {
-    const collection = await getProductsCollection();
+    const db = await getDatabase();
+    const collection = db.collection(COLLECTIONS.products);
     
     const offsetUpdate = await collection.updateMany(
       { categoryId: "offset" },
