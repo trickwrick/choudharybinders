@@ -50,6 +50,7 @@ export async function PUT(
       label: body.label,
       order: body.order !== undefined ? Number(body.order) : undefined,
       active: body.active,
+      row: body.row,
     });
     
     return NextResponse.json({ ok: true });

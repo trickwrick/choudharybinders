@@ -21,7 +21,7 @@ export async function listAllGalleryImages(): Promise<GalleryImageDoc[]> {
     .toArray();
 }
 
-export async function getActiveGalleryImagesForPublic(): Promise<{ src: string; label: string }[]> {
+export async function getActiveGalleryImagesForPublic(): Promise<{ src: string; label: string; row?: "top" | "bottom" }[]> {
   const collection = await getGalleryCollection();
   const docs = await collection
     .find({ active: true })
@@ -31,6 +31,7 @@ export async function getActiveGalleryImagesForPublic(): Promise<{ src: string; 
   return docs.map((doc) => ({
     src: doc.src,
     label: doc.label,
+    row: doc.row,
   }));
 }
 
@@ -53,6 +54,7 @@ export async function seedGalleryImagesIfEmpty() {
       label: img.label,
       order: index,
       active: true,
+      row: (index < 5 ? "bottom" : "top") as "top" | "bottom",
       createdAt: new Date(),
       updatedAt: new Date(),
     }));

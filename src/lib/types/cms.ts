@@ -104,6 +104,7 @@ export type GalleryImageDoc = {
   label: string;
   order: number;
   active: boolean;
+  row?: "top" | "bottom";
   createdAt?: Date;
   updatedAt?: Date;
 };

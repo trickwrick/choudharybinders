@@ -66,9 +66,14 @@ export default function AdminGalleryPage() {
                 ) : null}
               </div>
               <div className="p-4">
-                <p className="text-xs font-semibold uppercase tracking-wide text-primary">
-                  Order {image.order}
-                </p>
+                <div className="flex flex-wrap items-center gap-2">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-primary">
+                    Order {image.order}
+                  </p>
+                  <span className="rounded bg-light-bg px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-text/60">
+                    {image.row === "bottom" ? "Bottom Row" : "Top Row"}
+                  </span>
+                </div>
                 <h3 className="mt-1 truncate text-base font-bold text-text">{image.label}</h3>
                 <div className="mt-4 flex gap-2">
                   <Link

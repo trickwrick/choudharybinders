@@ -39,6 +39,7 @@ export async function POST(request: Request) {
       label: body.label ?? "Gallery image",
       order: Number(body.order ?? 0),
       active: body.active !== false,
+      row: body.row === "bottom" ? "bottom" : "top",
     });
     return NextResponse.json({ image });
   } catch {

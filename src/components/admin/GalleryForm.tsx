@@ -24,6 +24,7 @@ export default function GalleryForm({
     label: initialImage?.label ?? "",
     order: initialImage?.order ?? defaultOrder,
     active: initialImage?.active ?? true,
+    row: initialImage?.row ?? "top",
   });
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -186,6 +187,21 @@ export default function GalleryForm({
               />
             </div>
             <div>
+              <label className="mb-2 block text-sm font-semibold text-text">
+                Row (Gallery Section)
+              </label>
+              <select
+                value={formData.row}
+                onChange={(e) =>
+                  setFormData({ ...formData, row: e.target.value as "top" | "bottom" })
+                }
+                className="w-full rounded-xl border border-border bg-white px-4 py-2.5 text-sm outline-none transition-colors"
+              >
+                <option value="top">Top Gallery (Small Slider)</option>
+                <option value="bottom">Bottom Gallery (Large Slider)</option>
+              </select>
+            </div>
+            <div className="sm:col-span-2">
               <label className="mb-2 block text-sm font-semibold text-text">
                 Status
               </label>

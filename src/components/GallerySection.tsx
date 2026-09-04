@@ -9,7 +9,7 @@ import Reveal from "./motion/Reveal";
 import SectionDivider from "./motion/SectionDivider";
 import Container from "./Container";
 
-type GalleryItem = { src: string; label: string };
+type GalleryItem = { src: string; label: string; row?: "top" | "bottom" };
 
 function CarouselRow({
   items,
@@ -188,8 +188,12 @@ export default function GallerySection({ images = [] }: { images?: GalleryItem[]
   const activeItem =
     lightboxIndex !== null ? images[lightboxIndex] : null;
 
-  const topRowItems = [...images];
-  const bottomRowItems = images.slice(0, 5);
+  const topRowItems = images.filter(img => img.row !== "bottom");
+  let bottomRowItems = images.filter(img => img.row === "bottom");
+  
+  if (bottomRowItems.length === 0) {
+    bottomRowItems = images.slice(0, 5);
+  }
 
   return (
     <>
