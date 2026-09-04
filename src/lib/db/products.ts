@@ -18,6 +18,7 @@ async function getCollection(): Promise<Collection<ProductDoc>> {
 function toCategoryProduct(doc: ProductDoc): CategoryProduct {
   return {
     id: doc.id,
+    categoryId: doc.categoryId as CategoryId,
     title: doc.title,
     image: doc.image,
     minQty: doc.minQty,

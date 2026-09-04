@@ -33,7 +33,7 @@ function ProductCard({
 
   return (
     <Link
-      href={`/category/${categoryId}/${product.id}`}
+      href={`/category/${product.categoryId ?? categoryId}/${product.id}`}
       className="group flex flex-col overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm transition-[transform,box-shadow,border-color] duration-200 hover:-translate-y-0.5 hover:border-primary/25 hover:shadow-md"
     >
       <div className="relative aspect-4/3 overflow-hidden bg-neutral-100">

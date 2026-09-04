@@ -45,7 +45,7 @@ function ProductCard({
   viewMode: ViewMode;
   categorySlug: string;
 }) {
-  const href = `/category/${categorySlug}/${product.id}`;
+  const href = `/category/${product.categoryId ?? categorySlug}/${product.id}`;
   const hasPrice = product.price != null;
   const priceLabel = hasPrice
     ? formatProductPrice(product.price!, product.unit)

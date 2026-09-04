@@ -3,6 +3,7 @@ import { getProductImage } from "@/lib/catalog-images";
 
 export type CategoryProduct = {
   id: string;
+  categoryId: CategoryId;
   title: string;
   image: string;
   minQty: string;
@@ -25,6 +26,7 @@ function item(
   const id = slugify(title);
   return {
     id,
+    categoryId,
     title,
     image: getProductImage(id, categoryId),
     minQty,
