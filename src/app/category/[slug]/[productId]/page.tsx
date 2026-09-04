@@ -101,7 +101,7 @@ export default async function ProductDetailRoute({ params }: PageProps) {
     return (
       <>
         <Navbar />
-        <main className="pt-[7.25rem]">
+        <main className="pt-29">
           <ProductVariantsPage
             category={categorySummary}
             categorySlug={slug}
@@ -132,7 +132,7 @@ export default async function ProductDetailRoute({ params }: PageProps) {
   return (
     <>
       <Navbar />
-      <main className="pt-[7.25rem]">
+      <main className="pt-29">
         <ProductDetailPage
           category={categorySummary}
           categorySlug={slug}

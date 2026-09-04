@@ -23,7 +23,7 @@ export default async function CategoryPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-[7.25rem]">
+      <main className="pt-29">
         <CategoryPageContent
           categories={categories}
           productsByCategory={productsByCategory}
