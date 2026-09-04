@@ -225,7 +225,7 @@ export default function ProductDetailPage({
                 </button>
               </div>
 
-              <p className="mt-3 text-2xl font-bold text-text">{priceLabel}</p>
+              <p className="mt-1 text-2xl font-bold text-text">{priceLabel}</p>
               <p className="mt-1 text-sm text-text/60">
                 Min. Qty: {product.minQty}
               </p>
