@@ -122,6 +122,7 @@ export async function getProductDetailForPage(
   if (fromDb) {
     return {
       id: fromDb.id,
+      categoryId: fromDb.categoryId as CategoryId,
       title: fromDb.title,
       image: fromDb.image,
       minQty: fromDb.minQty,
