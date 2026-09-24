@@ -1,5 +1,5 @@
 "use client";
-
+import React from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import type { CategorySummary } from "@/lib/categories";
@@ -62,11 +62,11 @@ function VariantSectionBlock({
 
       <div className={
         isInline 
-          ? "flex flex-wrap gap-3 sm:gap-4"
-          : "grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 sm:gap-x-4 sm:gap-y-6"
+          ? "flex gap-3 sm:gap-4 w-full"
+          : "grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 lg:grid-cols-4 sm:gap-x-4 sm:gap-y-6"
       }>
         {section.variants.map((variant) => (
-          <div key={variant.id} className={isInline ? "w-[46%] sm:w-[155px]" : ""}>
+          <div key={variant.id} className={isInline ? "flex-1 min-w-0" : ""}>
             <VariantCard
               variant={variant}
               categorySlug={categorySlug}
@@ -146,17 +146,22 @@ export default function ProductVariantsPage({
             const isInline = ["gsm-500", "gsm-400", "gsm-350", "pvc", "metal"].includes(section.id);
 
             return (
-              <div 
-                key={section.id} 
-                className={isInline ? "" : "w-full"}
-              >
-                <VariantSectionBlock
-                  section={section}
-                  categorySlug={categorySlug}
-                  productId={variantGroup.productId}
-                  isInline={isInline}
-                />
-              </div>
+              <React.Fragment key={section.id}>
+                {section.id === "gsm-400" && (
+                  <div className="basis-full h-0 m-0 p-0" aria-hidden="true" />
+                )}
+                <div 
+                  className={isInline ? "min-w-[40%] sm:min-w-0" : "w-full"}
+                  style={isInline ? { flex: section.variants.length } : undefined}
+                >
+                  <VariantSectionBlock
+                    section={section}
+                    categorySlug={categorySlug}
+                    productId={variantGroup.productId}
+                    isInline={isInline}
+                  />
+                </div>
+              </React.Fragment>
             );
           })}
         </div>
