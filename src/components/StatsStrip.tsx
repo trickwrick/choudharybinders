@@ -17,31 +17,31 @@ const stats: {
   icon: LucideIcon;
   accent: string;
 }[] = [
-  {
-    value: "69+",
-    label: "Years of Experience",
-    icon: CalendarDays,
-    accent: "from-accent/15 to-accent/5",
-  },
-  {
-    value: "1000+",
-    label: "Projects Completed",
-    icon: FolderKanban,
-    accent: "from-primary/15 to-primary/5",
-  },
-  {
-    value: "500+",
-    label: "Happy Clients",
-    icon: HeartHandshake,
-    accent: "from-brand-lime/20 to-brand-lime/5",
-  },
-  {
-    value: String(categories.length),
-    label: "Print Categories",
-    icon: LayoutGrid,
-    accent: "from-accent/15 to-primary/5",
-  },
-];
+    {
+      value: "69+",
+      label: "Years of Experience",
+      icon: CalendarDays,
+      accent: "from-accent/15 to-accent/5",
+    },
+    {
+      value: "10000+",
+      label: "Projects Completed",
+      icon: FolderKanban,
+      accent: "from-primary/15 to-primary/5",
+    },
+    {
+      value: "5000+",
+      label: "Happy Clients",
+      icon: HeartHandshake,
+      accent: "from-brand-lime/20 to-brand-lime/5",
+    },
+    {
+      value: "235+",
+      label: "Print Categories",
+      icon: LayoutGrid,
+      accent: "from-accent/15 to-primary/5",
+    },
+  ];
 
 const container = {
   hidden: {},
@@ -67,40 +67,40 @@ export default function StatsStrip() {
       className="border-b border-border/70 bg-white py-10 sm:py-12"
     >
       <div className="px-4 sm:px-6 lg:px-8">
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        variants={container}
-        className="mx-auto grid max-w-6xl grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4"
-      >
-        {stats.map((stat) => (
-          <motion.div
-            key={stat.label}
-            variants={item}
-            whileHover={{ y: -6, transition: { duration: 0.28, ease: "easeOut" } }}
-            className="group relative overflow-hidden rounded-2xl border border-border/70 bg-light-bg/40 p-4 shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-5"
-          >
-            <div className="brand-tricolor-bar absolute inset-x-0 top-0 h-[3px] scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
-
-            <div
-              className={`mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${stat.accent} text-primary transition-transform duration-300 group-hover:scale-110`}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={container}
+          className="mx-auto grid max-w-6xl grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4"
+        >
+          {stats.map((stat) => (
+            <motion.div
+              key={stat.label}
+              variants={item}
+              whileHover={{ y: -6, transition: { duration: 0.28, ease: "easeOut" } }}
+              className="group relative overflow-hidden rounded-2xl border border-border/70 bg-light-bg/40 p-4 shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-5"
             >
-              <stat.icon className="h-5 w-5" strokeWidth={2.2} />
-            </div>
+              <div className="brand-tricolor-bar absolute inset-x-0 top-0 h-[3px] scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
 
-            <p className="text-2xl font-extrabold tracking-tight text-primary sm:text-[1.75rem]">
-              <CountUp value={stat.value} duration={1.8} />
-            </p>
+              <div
+                className={`mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${stat.accent} text-primary transition-transform duration-300 group-hover:scale-110`}
+              >
+                <stat.icon className="h-5 w-5" strokeWidth={2.2} />
+              </div>
 
-            <p className="mt-1.5 text-[11px] font-bold uppercase leading-snug tracking-[0.12em] text-text/45 sm:text-xs">
-              {stat.label}
-            </p>
+              <p className="text-2xl font-extrabold tracking-tight text-primary sm:text-[1.75rem]">
+                <CountUp value={stat.value} duration={1.8} />
+              </p>
 
-            <div className="pointer-events-none absolute -bottom-6 -right-6 h-20 w-20 rounded-full bg-primary/5 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
-          </motion.div>
-        ))}
-      </motion.div>
+              <p className="mt-1.5 text-[11px] font-bold uppercase leading-snug tracking-[0.12em] text-text/45 sm:text-xs">
+                {stat.label}
+              </p>
+
+              <div className="pointer-events-none absolute -bottom-6 -right-6 h-20 w-20 rounded-full bg-primary/5 opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100" />
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );
