@@ -20,7 +20,7 @@ export const businessInfo = {
     "https://wa.me/917821013457?text=Hello%2C%20I%20would%20like%20to%20inquire%20about%20printing%20%26%20binding%20services%20from%20Choudhary%20Binders%20%26%20Printers.",
   email: contactDetails.emails[0],
   emails: contactDetails.emails,
-  secondaryEmail: contactDetails.emails[1],
+  secondaryEmail: (contactDetails.emails as readonly string[])[1],
   address: contactDetails.address,
   phones: contactDetails.phones,
   landline: contactDetails.landline,
