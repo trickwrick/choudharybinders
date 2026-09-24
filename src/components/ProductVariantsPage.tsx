@@ -40,17 +40,22 @@ function VariantCard({
 
       <div className="mt-2 space-y-0.5 px-0.5 text-center sm:text-left">
         <p className="text-[11px] font-bold text-[#1d4ed8] sm:text-xs">{variant.name}</p>
-        <p className="text-[10px] text-text/70 sm:text-[11px]">
-          Product Code: <span className="font-semibold">{variant.code}</span>
-        </p>
-        {variant.options ? (
-          <p className="text-[10px] font-medium leading-snug text-accent sm:text-[11px]">
-            {variant.options}
-          </p>
+        
+        {productId !== "business-card" ? (
+          <>
+            <p className="text-[10px] text-text/70 sm:text-[11px]">
+              Product Code: <span className="font-semibold">{variant.code}</span>
+            </p>
+            {variant.options ? (
+              <p className="text-[10px] font-medium leading-snug text-accent sm:text-[11px]">
+                {variant.options}
+              </p>
+            ) : null}
+            <p className="text-[10px] font-medium text-text/65 sm:text-[11px]">
+              {variant.productionTime}
+            </p>
+          </>
         ) : null}
-        <p className="text-[10px] font-medium text-text/65 sm:text-[11px]">
-          {variant.productionTime}
-        </p>
       </div>
     </Link>
   );
@@ -60,10 +65,12 @@ function VariantSectionBlock({
   section,
   categorySlug,
   productId,
+  isInline = false,
 }: {
   section: ProductVariantSection;
   categorySlug: string;
   productId: string;
+  isInline?: boolean;
 }) {
   return (
     <section className="space-y-4">
@@ -71,7 +78,11 @@ function VariantSectionBlock({
         {section.title}
       </h2>
 
-      <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 sm:gap-x-4 sm:gap-y-6">
+      <div className={
+        isInline 
+          ? "grid grid-cols-[repeat(auto-fill,minmax(140px,1fr))] gap-x-3 gap-y-5 sm:gap-x-4 sm:gap-y-6"
+          : "grid grid-cols-2 gap-x-3 gap-y-5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 sm:gap-x-4 sm:gap-y-6"
+      }>
         {section.variants.map((variant) => (
           <VariantCard
             key={variant.id}
@@ -147,15 +158,32 @@ export default function ProductVariantsPage({
 
         <div className="section-heading-tricolor mx-auto mt-2 h-1 w-14 rounded-full opacity-80 sm:mx-0" />
 
-        <div className="mx-auto mt-8 max-w-6xl space-y-10 sm:space-y-12">
-          {variantGroup.sections.map((section) => (
-            <VariantSectionBlock
-              key={section.id}
-              section={section}
-              categorySlug={categorySlug}
-              productId={variantGroup.productId}
-            />
-          ))}
+        <div className="mx-auto mt-8 max-w-6xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8 items-start">
+          {variantGroup.sections.map((section) => {
+            let colSpanClass = "w-full md:col-span-2 lg:col-span-5"; // default full width
+            
+            if (section.id === "gsm-500") {
+              colSpanClass = "w-full md:col-span-1 lg:col-span-2";
+            } else if (section.id === "gsm-400") {
+              colSpanClass = "w-full md:col-span-1 lg:col-span-1";
+            } else if (section.id === "gsm-350") {
+              colSpanClass = "w-full md:col-span-2 lg:col-span-2";
+            }
+
+            return (
+              <div 
+                key={section.id} 
+                className={colSpanClass}
+              >
+                <VariantSectionBlock
+                  section={section}
+                  categorySlug={categorySlug}
+                  productId={variantGroup.productId}
+                  isInline={colSpanClass !== "w-full md:col-span-2 lg:col-span-5"}
+                />
+              </div>
+            );
+          })}
         </div>
 
         <div className="mx-auto mt-10 flex max-w-6xl flex-col gap-3 sm:flex-row sm:justify-center">

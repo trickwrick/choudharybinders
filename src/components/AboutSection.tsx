@@ -14,7 +14,7 @@ const ABOUT_VIDEO = contentImages.aboutUsVideo;
 function AboutVideo() {
   return (
     <div className="group relative w-full overflow-hidden rounded-2xl border border-border/80 bg-black shadow-sm">
-      <div className="relative h-[220px] w-full sm:h-[260px] md:h-[300px] lg:h-[600px]">
+      <div className="relative h-55 w-full sm:h-65 md:h-75 lg:h-150">
         <video
           src={ABOUT_VIDEO}
           autoPlay
@@ -29,7 +29,7 @@ function AboutVideo() {
       </div>
       <div className="absolute right-3 top-3 flex items-center gap-1.5 rounded-full bg-brand-lime px-3 py-1.5 shadow-md">
         <Sparkles className="h-3.5 w-3.5 text-text" />
-        <span className="text-xs font-bold text-text">Since 1980</span>
+        <span className="text-xs font-bold text-text">Since 1957</span>
       </div>
     </div>
   );
@@ -147,7 +147,7 @@ function FullAbout() {
       <section id="about" className="relative bg-white py-12 sm:py-16 lg:py-20">
         <div className="print-grain pointer-events-none absolute inset-0 opacity-20" />
         <Container className="relative">
-          <SectionHeading spaced className="!mb-4 sm:!mb-5">
+          <SectionHeading spaced className="mb-4! sm:mb-5!">
             About Us
           </SectionHeading>
           <motion.p

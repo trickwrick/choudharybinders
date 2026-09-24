@@ -17,7 +17,7 @@ const sizeMap = {
 
 export default function Logo({ size = "md", className = "", onDark = false }: LogoProps) {
   const height = onDark ? sizeMap[size] : Math.round(sizeMap[size] * 0.78);
-  const src = onDark ? "/logo-brand.png" : "/logo-nav-light.png";
+  const src = onDark ? "/logo-white.png" : "/logo-black.png";
   const maxWidthClass = onDark
     ? "max-w-[min(100%,300px)] sm:max-w-[360px]"
     : "max-w-[min(100%,220px)] sm:max-w-[280px]";

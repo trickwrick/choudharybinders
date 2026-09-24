@@ -34,7 +34,7 @@ export default function TopBar({ overlay = false }: { overlay?: boolean }) {
               overlay ? "topbar-overlay-item" : "topbar-tricolor-item"
             }`}
           >
-            Since 1980
+            Since 1957
           </span>
           <span className={overlay ? "topbar-overlay-item font-medium" : "topbar-tricolor-item font-medium"}>
             <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={2.25} />

@@ -77,7 +77,7 @@ export const contactDetails = {
     { display: "+91-98298-99361", tel: "tel:+919829899361" },
   ],
   landline: { display: "0141-4107270", tel: "tel:01414107270" },
-  emails: ["choudharybinders@gmail.com", "choudharyadvertisers@gmail.com"],
+  emails: ["choudharybinders@gmail.com"],
   address:
     "B-59, Unnati Tower, Central Spine, Vidhyadhar Nagar, Jaipur (Raj.) — 302039",
 } as const;

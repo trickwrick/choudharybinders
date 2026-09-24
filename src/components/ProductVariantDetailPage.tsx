@@ -4,11 +4,7 @@ import Link from "next/link";
 import { useState, type ReactNode } from "react";
 import {
   ChevronRight,
-  CloudUpload,
   Layers3,
-  Lock,
-  LockOpen,
-  Mail,
   Printer,
 } from "lucide-react";
 import type { CategorySummary } from "@/lib/categories";
@@ -320,72 +316,6 @@ export default function ProductVariantDetailPage({
                       ))}
                     </select>
                   </div>
-                </FormSection>
-
-                <FormSection title="Privacy Packing">
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    <RadioOption
-                      name="privacy"
-                      value="required"
-                      checked={privacyPacking === "required"}
-                      onChange={(value) =>
-                        setPrivacyPacking(value as "required" | "not-required")
-                      }
-                      label="Required"
-                      icon={<Lock className="h-5 w-5" />}
-                    />
-                    <RadioOption
-                      name="privacy"
-                      value="not-required"
-                      checked={privacyPacking === "not-required"}
-                      onChange={(value) =>
-                        setPrivacyPacking(value as "required" | "not-required")
-                      }
-                      label="Not Required"
-                      icon={<LockOpen className="h-5 w-5" />}
-                    />
-                  </div>
-                </FormSection>
-
-                {freeDeliveryEligible ? (
-                  <p className="py-3 text-center text-xs font-bold uppercase tracking-wide text-text sm:text-sm">
-                    Congratulations! Order&apos;s eligible for free delivery
-                  </p>
-                ) : null}
-
-                <FormSection title="Select File Option">
-                  <div className="grid gap-2 sm:grid-cols-2">
-                    <RadioOption
-                      name="fileOption"
-                      value="attach-online"
-                      checked={fileOption === "attach-online"}
-                      onChange={(value) =>
-                        setFileOption(value as "attach-online" | "send-email")
-                      }
-                      label="Attach File Online"
-                      icon={<CloudUpload className="h-5 w-5" />}
-                    />
-                    <RadioOption
-                      name="fileOption"
-                      value="send-email"
-                      checked={fileOption === "send-email"}
-                      onChange={(value) =>
-                        setFileOption(value as "attach-online" | "send-email")
-                      }
-                      label="Send via Email"
-                      icon={<Mail className="h-5 w-5" />}
-                    />
-                  </div>
-                  {fileOption === "attach-online" ? (
-                    <input
-                      type="file"
-                      accept=".pdf,.jpg,.jpeg,.png,.ai,.psd,.cdr"
-                      onChange={(event) =>
-                        setAttachedFileName(event.target.files?.[0]?.name ?? "")
-                      }
-                      className="w-full rounded-xl border border-dashed border-border px-3 py-2 text-sm text-text/70 file:mr-3 file:rounded-lg file:border-0 file:bg-[#2563eb]/10 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-[#2563eb]"
-                    />
-                  ) : null}
                 </FormSection>
 
                 <div className="py-4">

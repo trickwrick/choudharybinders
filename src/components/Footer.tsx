@@ -89,7 +89,7 @@ export default function Footer() {
               {companyContent.about}
             </p>
             <p className="mt-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-lime">
-              Since 1980 · {companyContent.tagline}
+              Since 1957 · {companyContent.tagline}
             </p>
             <div className="mt-5 flex gap-2.5">
               {socialLinks.map((item) => (
