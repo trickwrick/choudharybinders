@@ -392,7 +392,7 @@ export default function ContactSection({ inModal = false }: { inModal?: boolean 
 
             {/* Sidebar Section */}
             <div className="lg:col-span-1">
-              <div className="rounded-lg bg-gray-50 p-6 sm:p-8 h-full">
+              <div className="sticky top-28 rounded-lg bg-gray-50 p-6 sm:p-8 h-fit">
                 <h3 className="text-xl font-bold text-text mb-6">Contact Info</h3>
                 
                 <h4 className="font-semibold text-text mb-4">Choudhary Binders & Printers</h4>

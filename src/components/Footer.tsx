@@ -78,7 +78,7 @@ export default function Footer() {
   };
 
   return (
-    <footer id="contact" className="relative bg-[#138808] text-white">
+    <footer id="contact" className="relative bg-[#155A9E] text-white">
       <div className="brand-tricolor-bar h-1 w-full" />
 
       <Container className="py-12 lg:py-14">
@@ -211,7 +211,7 @@ export default function Footer() {
         </div>
       </Container>
 
-      <div className="border-t border-white/15 bg-[#0f6b06]">
+      <div className="border-t border-white/15 bg-[#0d3b66]">
         <Container className="flex flex-col items-center justify-between gap-4 py-4 sm:flex-row">
           <div className="text-center text-xs text-white/75 sm:text-left sm:text-sm">
             <p>

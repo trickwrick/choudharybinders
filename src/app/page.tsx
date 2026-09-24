@@ -7,7 +7,6 @@ import Footer from "@/components/Footer";
 import GallerySection from "@/components/GallerySection";
 import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
-import ContactSectionWrapper from "@/components/ContactSectionWrapper";
 import FloatingActions from "@/components/FloatingActions";
 import ProcessSection from "@/components/ProcessSection";
 import SolutionsSection from "@/components/SolutionsSection";
@@ -17,6 +16,8 @@ import { getActiveCategoriesForPublic } from "@/lib/db/categories";
 import { getHeroSlidesFromDb } from "@/lib/db/hero-slides";
 import { getActiveGalleryImagesForPublic } from "@/lib/db/gallery";
 
+
+import ContactSectionWrapper from "@/components/ContactSectionWrapper";
 
 export const dynamic = "force-dynamic";
 

@@ -222,12 +222,7 @@ export default function ProductVariantDetailPage({
                   {variant.label}
                 </p>
               </div>
-              <div className="space-y-2 p-4 text-sm">
-                <p className="font-bold text-[#1d4ed8]">{variant.name}</p>
-                <p className="text-text/70">Product Code: {variant.code}</p>
-                <p className="text-text/70">{section.title}</p>
-                <p className="text-text/60">{variant.productionTime}</p>
-              </div>
+
             </div>
           </aside>
 
