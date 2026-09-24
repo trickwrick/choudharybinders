@@ -18,7 +18,7 @@ const stats: {
   accent: string;
 }[] = [
   {
-    value: "45+",
+    value: "69+",
     label: "Years of Experience",
     icon: CalendarDays,
     accent: "from-accent/15 to-accent/5",
