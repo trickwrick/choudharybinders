@@ -1,5 +1,6 @@
 import dns from "node:dns";
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { adminGuard } from "@/lib/api-utils";
 import {
   createCategory,
@@ -8,7 +9,6 @@ import {
   getCategoryDocBySlug,
   listAllCategories,
   seedCategoriesIfEmpty,
-  syncCategoriesFromStatic,
   updateCategory,
 } from "@/lib/db/categories";
 
@@ -42,7 +42,6 @@ export async function GET(request: Request) {
     }
 
     await seedCategoriesIfEmpty();
-    await syncCategoriesFromStatic();
     const categories = (await listAllCategories()).filter(
       (category) => category.active !== false,
     );
@@ -86,6 +85,7 @@ export async function POST(request: Request) {
       active: body.active !== false,
     });
 
+    revalidatePath("/", "layout");
     return NextResponse.json({ category });
   } catch {
     return NextResponse.json({ error: "Failed to create category" }, { status: 500 });
@@ -113,6 +113,7 @@ export async function PUT(request: Request) {
       active: body.active,
     });
 
+    revalidatePath("/", "layout");
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ error: "Failed to update category" }, { status: 500 });
@@ -131,6 +132,7 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "Missing category id" }, { status: 400 });
     }
     await deleteCategory(id);
+    revalidatePath("/", "layout");
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ error: "Failed to delete category" }, { status: 500 });

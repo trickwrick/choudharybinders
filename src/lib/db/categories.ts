@@ -18,17 +18,15 @@ export type { PublicCategory };
 const deprecatedCategoryIds = new Set(Object.keys(CATEGORY_SLUG_ALIASES));
 
 function mergeWithStaticCatalog(category: PublicCategory): PublicCategory {
+  // We no longer overwrite the database values with the static catalog.
+  // The database is the source of truth for all editable fields.
   const staticCategory = getCategoryById(category.id);
   if (!staticCategory) return category;
 
   return {
     ...category,
-    title: staticCategory.title,
-    description: staticCategory.description,
-    image: staticCategory.image,
-    tag: staticCategory.tag,
-    iconKey: resolveCategoryIconKey(staticCategory.icon),
-    subcategories: staticCategory.subcategories,
+    // Only fallback to static if the db array is missing
+    subcategories: category.subcategories ?? staticCategory.subcategories,
   };
 }
 
