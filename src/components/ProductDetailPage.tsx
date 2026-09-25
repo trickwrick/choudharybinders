@@ -56,12 +56,10 @@ function RelatedProductCard({
           {product.title}
         </Link>
         <p className="mt-1 text-xs text-text/55">{businessInfo.name}</p>
-        {product.price != null ? (
+        {product.price != null && (
           <p className="mt-2 text-sm font-bold text-primary">
             {formatProductPrice(product.price, product.unit)}
           </p>
-        ) : (
-          <p className="mt-2 text-xs text-text/60">Min. Qty: {product.minQty}</p>
         )}
         <div className="mt-3 flex flex-col gap-2">
           <a
@@ -141,9 +139,9 @@ export default function ProductDetailPage({
   const priceLabel =
     product.price != null
       ? formatProductPrice(product.price, product.unit)
-      : "Price on request";
+      : "";
 
-  const whatsappMessage = `Hello, I would like the best price for ${product.title} (Min. Qty: ${product.minQty}) from Choudhary Binders & Printers.`;
+  const whatsappMessage = `Hello, I would like the best price for ${product.title} from Choudhary Binders & Printers.`;
 
   return (
     <>
@@ -234,9 +232,7 @@ export default function ProductDetailPage({
               </div>
 
               <p className="mt-1 text-2xl font-bold text-text">{priceLabel}</p>
-              <p className="mt-1 text-sm text-text/60">
-                Min. Qty: {product.minQty}
-              </p>
+
 
               <div className="mt-4 flex flex-wrap items-center gap-2">
                 <input

@@ -42,7 +42,7 @@ export async function generateMetadata({
   if (variantGroup) {
     return {
       title: `${variantGroup.title} | ${category.title} | Choudhary Binders & Printers`,
-      description: `${variantGroup.title} — choose from ${variantGroup.variants.length} finishing options. Min. qty ${variantGroup.minQty}.`,
+      description: `${variantGroup.title} — choose from ${variantGroup.variants.length} finishing options.`,
     };
   }
 

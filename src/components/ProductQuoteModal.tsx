@@ -40,9 +40,7 @@ export default function ProductQuoteModal({
     const qtyText =
       product.quantity != null
         ? ` Quantity: ${product.quantity}${product.unit ? ` ${product.unit}` : ""}.`
-        : product.minQty
-          ? ` Min. Qty: ${product.minQty}.`
-          : "";
+        : "";
 
     setMessage(
       `I am interested in ${product.productTitle}.${qtyText} Please share the best price and delivery timeline.`,
@@ -119,7 +117,7 @@ export default function ProductQuoteModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-[60] bg-text/40 backdrop-blur-sm"
+            className="fixed inset-0 z-60 bg-text/40 backdrop-blur-sm"
             onClick={onClose}
           />
 
@@ -131,7 +129,7 @@ export default function ProductQuoteModal({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={{ type: "spring", damping: 28, stiffness: 320 }}
-            className="fixed inset-x-3 top-1/2 z-[61] mx-auto w-full max-w-md -translate-y-1/2 overflow-hidden rounded-2xl border border-border bg-white shadow-2xl sm:inset-x-6"
+            className="fixed inset-x-3 top-1/2 z-61 mx-auto w-full max-w-md -translate-y-1/2 overflow-hidden rounded-2xl border border-border bg-white shadow-2xl sm:inset-x-6"
           >
             <div className="brand-tricolor-bar h-1" />
 
@@ -179,10 +177,6 @@ export default function ProductQuoteModal({
                       Qty: {product.quantity}
                       {product.unit ? ` ${product.unit}` : ""}
                     </p>
-                  ) : product.minQty ? (
-                    <p className="text-xs text-text/60">
-                      Min. Qty: {product.minQty}
-                    </p>
                   ) : null}
                 </div>
               </div>
@@ -213,7 +207,7 @@ export default function ProductQuoteModal({
                     value={name}
                     onChange={(event) => setName(event.target.value)}
                     placeholder="Your Name *"
-                    className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-primary"
+                    className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-primary"
                   />
 
                   <div className="grid grid-cols-2 gap-2">
@@ -223,7 +217,7 @@ export default function ProductQuoteModal({
                       value={phone}
                       onChange={(event) => setPhone(event.target.value)}
                       placeholder="Phone No. *"
-                      className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-primary"
+                      className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-primary"
                     />
                     <input
                       type="email"
@@ -231,7 +225,7 @@ export default function ProductQuoteModal({
                       value={email}
                       onChange={(event) => setEmail(event.target.value)}
                       placeholder="Email ID *"
-                      className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-primary"
+                      className="w-full rounded-lg border border-border px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-primary"
                     />
                   </div>
 
@@ -241,7 +235,7 @@ export default function ProductQuoteModal({
                     value={message}
                     onChange={(event) => setMessage(event.target.value)}
                     placeholder="Message *"
-                    className="w-full resize-none rounded-lg border border-border px-3 py-2 text-sm outline-none focus:border-primary"
+                    className="w-full resize-none rounded-lg border border-border px-3 py-2 text-sm outline-none focus:ring-1 focus:ring-primary"
                   />
 
                   {error ? (

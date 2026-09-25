@@ -80,19 +80,13 @@ function ProductCard({
             <h3 className="text-base font-bold text-text transition-colors group-hover:text-primary sm:text-lg">
               {product.title}
             </h3>
-            {!hasPrice ? (
-              <span className="rounded-full bg-accent/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-accent">
-                Get Quote
-              </span>
-            ) : null}
+
           </div>
-          <p className="mt-1.5 text-sm text-text/55">Min. Qty: {product.minQty}</p>
+
           <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
             {priceLabel ? (
               <p className="text-lg font-bold text-primary">{priceLabel}</p>
-            ) : (
-              <p className="text-sm font-medium text-text/50">Contact for pricing</p>
-            )}
+            ) : null}
             <span className="inline-flex items-center gap-1 text-sm font-semibold text-primary opacity-0 transition-opacity group-hover:opacity-100">
               View Details
               <ArrowRight className="h-4 w-4" />
@@ -129,24 +123,18 @@ function ProductCard({
         >
           <Heart className="h-4 w-4" />
         </button>
-        {!hasPrice ? (
-          <span className="absolute left-3 top-3 rounded-full bg-accent px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white shadow-sm">
-            Get Quote
-          </span>
-        ) : null}
+
       </div>
 
       <div className="flex flex-1 flex-col p-4 sm:p-5">
         <h3 className="line-clamp-2 text-base font-bold leading-snug text-text transition-colors group-hover:text-primary">
           {product.title}
         </h3>
-        <p className="mt-2 text-sm text-text/55">Min. Qty: {product.minQty}</p>
+
         <div className="mt-auto pt-3">
           {priceLabel ? (
             <p className="text-lg font-bold text-primary">{priceLabel}</p>
-          ) : (
-            <p className="text-sm font-semibold text-text/45">Price on request</p>
-          )}
+          ) : null}
         </div>
       </div>
     </Link>

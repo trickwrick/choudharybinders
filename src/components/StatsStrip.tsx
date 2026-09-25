@@ -81,10 +81,10 @@ export default function StatsStrip() {
               whileHover={{ y: -6, transition: { duration: 0.28, ease: "easeOut" } }}
               className="group relative overflow-hidden rounded-2xl border border-border/70 bg-light-bg/40 p-4 shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-5"
             >
-              <div className="brand-tricolor-bar absolute inset-x-0 top-0 h-[3px] scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
+              <div className="brand-tricolor-bar absolute inset-x-0 top-0 h-0.75 scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
 
               <div
-                className={`mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br ${stat.accent} text-primary transition-transform duration-300 group-hover:scale-110`}
+                className={`mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-br ${stat.accent} text-primary transition-transform duration-300 group-hover:scale-110`}
               >
                 <stat.icon className="h-5 w-5" strokeWidth={2.2} />
               </div>

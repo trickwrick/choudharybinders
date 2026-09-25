@@ -24,7 +24,7 @@ export const businessInfo = {
   address: contactDetails.address,
   phones: contactDetails.phones,
   landline: contactDetails.landline,
-  logo: "/logo-brand.png",
+  logo: "/cbp-icon.jpg",
 } as const;
 
 export function buildWhatsAppHref(message?: string) {

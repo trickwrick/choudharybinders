@@ -56,9 +56,7 @@ function ProductCard({
         <h3 className="line-clamp-2 text-sm font-bold leading-snug text-text transition-colors group-hover:text-primary sm:text-base">
           {product.title}
         </h3>
-        <p className="mt-1.5 text-xs text-text/55 sm:text-sm">
-          Min. Qty: {product.minQty}
-        </p>
+
       </div>
     </Link>
   );
