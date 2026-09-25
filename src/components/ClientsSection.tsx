@@ -1,13 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { trustedClientLogos } from "@/lib/trusted-client-logos";
 import Container from "./Container";
 import Reveal from "./motion/Reveal";
 
-const marqueeItems = [...trustedClientLogos, ...trustedClientLogos];
+type ClientLogo = { src: string; name: string };
 
-export default function ClientsSection() {
+export default function ClientsSection({ clients = [] }: { clients?: ClientLogo[] }) {
+  if (!clients || clients.length === 0) return null;
+
+  const marqueeItems = [...clients, ...clients];
+
   return (
     <section
       aria-label="Our clients"
@@ -19,7 +22,7 @@ export default function ClientsSection() {
             Trusted Across <span className="text-primary">Industries</span>
           </h2>
           <p className="mx-auto mt-2 max-w-xl text-center text-sm text-text/55">
-            Proud printing partner for {trustedClientLogos.length}+ brands across
+            Proud printing partner for {clients.length}+ brands across
             healthcare, education, hospitality &amp; more
           </p>
         </Reveal>

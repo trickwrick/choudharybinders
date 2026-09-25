@@ -22,6 +22,7 @@ import { useMemo, useState } from "react";
 const navItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/slider", label: "Hero Slider", icon: ImageIcon },
+  { href: "/admin/clients", label: "Clients", icon: Shield },
   { href: "/admin/categories", label: "Categories", icon: LayoutGrid },
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/gallery", label: "Gallery", icon: ImageIcon },
@@ -32,6 +33,7 @@ const navItems = [
 const pageTitles: Record<string, string> = {
   "/admin": "Dashboard",
   "/admin/slider": "Hero Slider",
+  "/admin/clients": "Trusted Clients",
   "/admin/categories": "Categories",
   "/admin/products": "Products",
   "/admin/gallery": "Gallery",
@@ -44,6 +46,7 @@ function resolvePageTitle(pathname: string) {
 
   if (pathname.startsWith("/admin/products")) return "Products";
   if (pathname.startsWith("/admin/categories")) return "Categories";
+  if (pathname.startsWith("/admin/clients")) return "Trusted Clients";
   if (pathname.startsWith("/admin/gallery")) return "Gallery";
   if (pathname.startsWith("/admin/slider")) return "Hero Slider";
   if (pathname.startsWith("/admin/inquiries")) return "Inquiries";

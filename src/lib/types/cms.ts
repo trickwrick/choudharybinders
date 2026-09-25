@@ -108,3 +108,13 @@ export type GalleryImageDoc = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type ClientLogoDoc = {
+  _id?: ObjectId | string;
+  src: string;
+  name: string;
+  order: number;
+  active: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+};

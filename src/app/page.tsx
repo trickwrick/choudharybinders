@@ -15,17 +15,18 @@ import WhyChooseUsSection from "@/components/WhyChooseUsSection";
 import { getActiveCategoriesForPublic } from "@/lib/db/categories";
 import { getHeroSlidesFromDb } from "@/lib/db/hero-slides";
 import { getActiveGalleryImagesForPublic } from "@/lib/db/gallery";
-
+import { getActiveClientsForPublic } from "@/lib/db/clients";
 
 import ContactSectionWrapper from "@/components/ContactSectionWrapper";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [slides, categories, galleryImages] = await Promise.all([
+  const [slides, categories, galleryImages, clients] = await Promise.all([
     getHeroSlidesFromDb(),
     getActiveCategoriesForPublic(),
     getActiveGalleryImagesForPublic(),
+    getActiveClientsForPublic(),
   ]);
 
   return (
@@ -33,7 +34,7 @@ export default async function Home() {
       <Navbar />
       <main>
         <Hero slides={slides} />
-        <ClientsSection />
+        <ClientsSection clients={clients} />
         <ProductsSection categories={categories} />
         <SolutionsSection />
         <WhyChooseUsSection />

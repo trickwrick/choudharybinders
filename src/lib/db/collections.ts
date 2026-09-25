@@ -3,6 +3,7 @@ export const COLLECTIONS = {
   products: "products",
   categories: "categories",
   gallery: "gallery",
+  clients: "clients",
   inquiries: "inquiries",
   media: "media",
   adminSettings: "admin_settings",
