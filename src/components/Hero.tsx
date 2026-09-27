@@ -60,8 +60,9 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
   return (
     <>
       <section id="home" className="relative">
-        <div className="relative min-h-[100svh] overflow-hidden">
-          {/* Auto zoom + crossfade background — Print Express style */}
+        <div className="relative flex flex-col bg-slate-900 md:block md:min-h-[100svh] md:overflow-hidden md:bg-transparent">
+          {/* Image Container */}
+          <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden sm:aspect-video md:absolute md:inset-0 md:h-full md:aspect-auto">
           <AnimatePresence mode="sync" initial={false}>
             <motion.div
               key={current}
@@ -93,11 +94,12 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
               </div>
             </motion.div>
           </AnimatePresence>
+          </div>
 
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/35 via-black/40 to-black/75" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/10 md:from-black/35 md:via-black/40 md:to-black/75" />
 
           {/* Center headline — content sits below transparent navbar */}
-          <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-5xl flex-col items-center justify-center px-4 pb-44 pt-[8rem] text-center sm:px-6 lg:pb-48">
+          <div className="relative z-10 mx-auto hidden w-full flex-1 flex-col items-center justify-center px-4 py-8 text-center sm:px-6 md:flex md:min-h-[100svh] md:max-w-5xl md:pb-48 md:pt-[8rem]">
             <AnimatePresence mode="wait">
               <motion.div
                 key={current}
@@ -120,7 +122,7 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
           </div>
 
           {/* Feature bullets */}
-          <div className="absolute inset-x-0 bottom-0 z-10 px-4 pb-8 sm:px-6 sm:pb-10 lg:px-8">
+          <div className="relative z-10 hidden w-full px-4 pb-12 pt-2 sm:px-6 md:absolute md:inset-x-0 md:bottom-0 md:block md:pb-8 md:pt-0 lg:px-8">
             <ul className="mx-auto grid max-w-6xl grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-3.5">
               {heroFeatures.map((feature) => (
                 <li
@@ -135,7 +137,7 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
               ))}
             </ul>
 
-            <div className="mx-auto mt-6 flex max-w-6xl items-center justify-center">
+            <div className="mx-auto mt-6 hidden max-w-6xl items-center justify-center md:flex">
               <div className="flex items-center gap-2">
                 {heroSlides.map((item, index) => (
                   <button
@@ -155,6 +157,28 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
                   </button>
                 ))}
               </div>
+            </div>
+          </div>
+
+          <div className="absolute inset-x-0 bottom-4 z-20 flex items-center justify-center md:hidden">
+            <div className="flex items-center gap-2">
+              {heroSlides.map((item, index) => (
+                <button
+                  key={`dot-mobile-${item.src}`}
+                  type="button"
+                  aria-label={`Go to slide ${index + 1}`}
+                  onClick={() => goTo(index)}
+                  className="relative h-1 overflow-hidden rounded-full bg-white/40 transition-all shadow-sm shadow-black/20"
+                  style={{ width: index === current ? 40 : 10 }}
+                >
+                  {index === current ? (
+                    <span
+                      className="absolute inset-y-0 left-0 rounded-full bg-accent transition-[width] duration-100 linear"
+                      style={{ width: `${progress}%` }}
+                    />
+                  ) : null}
+                </button>
+              ))}
             </div>
           </div>
 

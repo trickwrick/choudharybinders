@@ -1,10 +1,10 @@
 import { Suspense } from "react";
 import ContactSection from "@/components/ContactSection";
 
-export default function ContactSectionWrapper() {
+export default function ContactSectionWrapper({ hideHeader = false }: { hideHeader?: boolean }) {
   return (
     <Suspense fallback={null}>
-      <ContactSection />
+      <ContactSection hideHeader={hideHeader} />
     </Suspense>
   );
 }

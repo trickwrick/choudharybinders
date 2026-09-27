@@ -1,8 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
-import { X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { businessInfo } from "@/lib/site-business";
 
 function WhatsAppIcon({ className = "h-7 w-7" }: { className?: string }) {
@@ -19,60 +17,9 @@ function WhatsAppIcon({ className = "h-7 w-7" }: { className?: string }) {
 }
 
 export default function FloatingActions() {
-  const [open, setOpen] = useState(false);
-  const [dismissed, setDismissed] = useState(false);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => {
-      if (!dismissed) setOpen(true);
-    }, 2500);
-    return () => window.clearTimeout(timer);
-  }, [dismissed]);
-
   return (
     <div className="fixed bottom-5 right-4 z-50 flex flex-col items-end gap-3 sm:bottom-7 sm:right-6">
-      <AnimatePresence>
-        {open && !dismissed ? (
-          <motion.div
-            initial={{ opacity: 0, y: 16, scale: 0.92 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 12, scale: 0.95 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-[min(100vw-2rem,17.5rem)] overflow-hidden rounded-2xl border border-[#25D366]/20 bg-white shadow-2xl shadow-black/15"
-          >
-            <button
-              type="button"
-              onClick={() => {
-                setOpen(false);
-                setDismissed(true);
-              }}
-              aria-label="Close WhatsApp chat"
-              className="absolute right-2.5 top-2.5 flex h-7 w-7 items-center justify-center rounded-full text-text/40 transition-colors hover:bg-black/5 hover:text-text/70"
-            >
-              <X className="h-4 w-4" />
-            </button>
 
-            <div className="bg-[#25D366] px-4 py-3">
-              <p className="pr-6 text-sm font-semibold text-white">Hi there! 👋</p>
-            </div>
-
-            <div className="px-4 py-4">
-              <p className="text-sm leading-relaxed text-text/75">
-                Chat with us on WhatsApp for quick quotes &amp; printing enquiries.
-              </p>
-              <a
-                href={businessInfo.whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-[#25D366] px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-[#25D366]/35 transition-all hover:bg-[#20bd5a] hover:shadow-lg"
-              >
-                <WhatsAppIcon className="h-5 w-5" />
-                Start Chat
-              </a>
-            </div>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
 
       <motion.a
         href={businessInfo.whatsappHref}
@@ -84,7 +31,6 @@ export default function FloatingActions() {
         transition={{ delay: 0.8, type: "spring", stiffness: 260, damping: 18 }}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.94 }}
-        onClick={() => setOpen(false)}
         className="whatsapp-blink group relative flex h-[3.75rem] w-[3.75rem] items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/40"
       >
         <WhatsAppIcon className="relative h-8 w-8" />

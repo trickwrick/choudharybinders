@@ -274,7 +274,7 @@ function PageContactForm({
   );
 }
 
-export default function ContactSection({ inModal = false }: { inModal?: boolean }) {
+export default function ContactSection({ inModal = false, hideHeader = false }: { inModal?: boolean; hideHeader?: boolean }) {
   const searchParams = useSearchParams();
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -370,15 +370,19 @@ export default function ContactSection({ inModal = false }: { inModal?: boolean 
           <div className="grid gap-12 lg:grid-cols-3">
             {/* Form Section */}
             <div className="lg:col-span-2">
-              <p className="text-sm font-semibold tracking-wide text-primary mb-2">
-                Contact Us
-              </p>
-              <h2 className="text-3xl font-bold text-text sm:text-4xl mb-4">
-                Get In Touch With Us
-              </h2>
-              <p className="text-sm text-text/70 sm:text-base mb-8 max-w-2xl">
-                If you have any questions or enquiries please feel free to contact us alternatively you can complete our online enquiry form located below and we will get back to you as soon as possible.
-              </p>
+              {!hideHeader && (
+                <>
+                  <p className="text-sm font-semibold tracking-wide text-primary mb-2">
+                    Contact Us
+                  </p>
+                  <h2 className="text-3xl font-bold text-text sm:text-4xl mb-4">
+                    Get In Touch With Us
+                  </h2>
+                  <p className="text-sm text-text/70 sm:text-base mb-8 max-w-2xl">
+                    If you have any questions or enquiries please feel free to contact us alternatively you can complete our online enquiry form located below and we will get back to you as soon as possible.
+                  </p>
+                </>
+              )}
 
               <PageContactForm
                 handleSubmit={handleSubmit}

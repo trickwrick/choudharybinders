@@ -229,7 +229,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25 }}
-              className="fixed inset-0 z-40 bg-text/25 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 z-[60] bg-text/25 backdrop-blur-sm lg:hidden"
               onClick={() => setIsMobileOpen(false)}
             />
             <motion.div
@@ -237,7 +237,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 right-0 z-40 flex w-full max-w-[320px] flex-col border-l border-border bg-white shadow-2xl lg:hidden"
+              className="fixed inset-y-0 right-0 z-[60] flex w-full max-w-[320px] flex-col border-l border-border bg-white shadow-2xl lg:hidden"
             >
               <div className="brand-tricolor-bar absolute inset-y-0 left-0 w-1" />
 

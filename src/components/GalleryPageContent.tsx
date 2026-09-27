@@ -48,18 +48,7 @@ export default function GalleryPageContent({ images = [] }: { images?: GalleryIt
   return (
     <section className="bg-[#f8f9fb] py-10 sm:py-14 lg:py-16">
       <Container>
-        <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-10">
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">
-            Our Work
-          </p>
-          <h1 className="mt-2 text-3xl font-bold text-[#0a2463] sm:text-4xl">
-            Gallery
-          </h1>
-          <p className="mt-3 text-sm leading-relaxed text-text/55 sm:text-base">
-            All our printing, branding, signage &amp; outdoor advertising work
-            across Jaipur
-          </p>
-        </div>
+
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
           {images.map((item, index) => (

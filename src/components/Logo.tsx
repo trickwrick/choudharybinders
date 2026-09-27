@@ -35,12 +35,17 @@ export default function Logo({ size = "md", className = "", onDark = false }: Lo
         alt="Choudhary Binders & Printers"
         width={420}
         height={120}
-        className={`w-auto ${maxWidthClass} object-contain object-left transition-opacity duration-300 ${
+        className={`w-auto ${maxWidthClass} h-[var(--logo-height-mobile)] md:h-[var(--logo-height-desktop)] object-contain object-left transition-opacity duration-300 ${
           onDark
             ? "drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] group-hover:brightness-110"
             : "group-hover:opacity-90"
         }`}
-        style={{ height }}
+        style={
+          {
+            "--logo-height-mobile": `${Math.round(height * 0.55)}px`,
+            "--logo-height-desktop": `${height}px`,
+          } as React.CSSProperties
+        }
         priority
       />
     </motion.a>

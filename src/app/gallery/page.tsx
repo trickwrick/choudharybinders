@@ -3,6 +3,7 @@ import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import GalleryPageContent from "@/components/GalleryPageContent";
 import Navbar from "@/components/Navbar";
+import PageHeader from "@/components/PageHeader";
 import { getActiveGalleryImagesForPublic } from "@/lib/db/gallery";
 
 export const dynamic = "force-dynamic";
@@ -20,6 +21,7 @@ export default async function GalleryPage() {
     <>
       <Navbar />
       <main className="pt-29">
+        <PageHeader title="Our Gallery" tag="PORTFOLIO" />
         <GalleryPageContent images={images} />
       </main>
       <Footer />

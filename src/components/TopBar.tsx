@@ -22,7 +22,7 @@ export default function TopBar({ overlay = false }: { overlay?: boolean }) {
             <span className="hidden sm:inline">+91-7821013457</span>
             <span className="sm:hidden">Call Us</span>
           </a>
-          <span className={`hidden md:flex ${overlay ? "topbar-overlay-item" : "topbar-tricolor-item"}`}>
+          <span className={`hidden lg:flex whitespace-nowrap ${overlay ? "topbar-overlay-item" : "topbar-tricolor-item"}`}>
             <MapPin className="h-3.5 w-3.5" strokeWidth={2.25} />
             Vidhyadhar Nagar, Jaipur
           </span>
@@ -30,16 +30,11 @@ export default function TopBar({ overlay = false }: { overlay?: boolean }) {
 
         <div className="flex items-center gap-2 sm:gap-3">
           <span
-            className={`hidden text-[10px] font-bold uppercase tracking-wider sm:inline-flex sm:text-xs ${
+            className={`hidden text-[10px] font-bold uppercase tracking-wider md:inline-flex sm:text-xs whitespace-nowrap ${
               overlay ? "topbar-overlay-item" : "topbar-tricolor-item"
             }`}
           >
             Since 1957
-          </span>
-          <span className={overlay ? "topbar-overlay-item font-medium" : "topbar-tricolor-item font-medium"}>
-            <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4" strokeWidth={2.25} />
-            <span className="hidden sm:inline">24/7 Available</span>
-            <span className="sm:hidden">24/7</span>
           </span>
         </div>
       </Container>

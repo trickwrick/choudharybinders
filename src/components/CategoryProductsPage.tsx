@@ -264,17 +264,7 @@ export default function CategoryProductsPage({
   return (
     <section className="bg-section-mint pb-10 pt-0 sm:pb-12">
       <div className="relative overflow-hidden border-b border-border/60 bg-white">
-        <div className="absolute inset-0">
-          <Image
-            src={category.image}
-            alt={category.title}
-            fill
-            sizes="100vw"
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/65 to-black/45" />
-        </div>
+        <div className="absolute inset-0 bg-linear-to-r from-slate-900 via-slate-800 to-slate-900" />
 
         <Container className="relative py-10 sm:py-12 lg:py-14">
           <nav aria-label="Breadcrumb" className="mb-5 text-xs text-white/70 sm:text-sm">

@@ -147,18 +147,7 @@ function FullAbout() {
       <section id="about" className="relative bg-white py-12 sm:py-16 lg:py-20">
         <div className="print-grain pointer-events-none absolute inset-0 opacity-20" />
         <Container className="relative">
-          <SectionHeading spaced className="mb-4! sm:mb-5!">
-            About Us
-          </SectionHeading>
-          <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="mx-auto mb-10 max-w-2xl text-center text-sm text-text/60 sm:mb-12 sm:text-base"
-          >
-            {companyContent.brandLine}
-          </motion.p>
+
 
           <div className="grid items-start gap-8 md:grid-cols-2 md:gap-10 lg:gap-14">
             <motion.div

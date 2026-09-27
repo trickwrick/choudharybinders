@@ -4,6 +4,7 @@ import ClientsSection from "@/components/ClientsSection";
 import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import PageHeader from "@/components/PageHeader";
 import ProcessSection from "@/components/ProcessSection";
 import SolutionsSection from "@/components/SolutionsSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
@@ -18,7 +19,8 @@ export default function AboutPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-[7.25rem]">
+      <main className="pt-29">
+        <PageHeader title="About Us" tag="OUR STORY" />
         <AboutSection contactHref="/contact" />
         <SolutionsSection />
         <WhyChooseUsSection />
