@@ -11,7 +11,6 @@ import type { CategoryProduct } from "@/lib/category-products";
 import type { PublicCategory } from "@/lib/types/public-catalog";
 import Button from "./Button";
 import Container from "./Container";
-import SectionHeading from "./SectionHeading";
 
 type CategoryFilter = "all" | string;
 
@@ -160,8 +159,6 @@ export default function CategoryPageContent({
   return (
     <section className="bg-section-warm py-12 sm:py-16 lg:py-20">
       <Container>
-        <SectionHeading spaced>Category</SectionHeading>
-
         <div className="mb-8 rounded-2xl border border-border/60 bg-white px-3 py-3 shadow-sm sm:mb-10 sm:px-4">
           <p className="mb-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-text/45">
             Filter by Category

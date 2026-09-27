@@ -13,7 +13,11 @@ export default function PageHeader({
 }) {
   return (
     <div className="relative overflow-hidden border-b border-border/60 bg-white">
-      <div className="absolute inset-0 bg-linear-to-r from-slate-900 via-slate-800 to-slate-900" />
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-5 mix-blend-overlay"
+        style={{ backgroundImage: "url('/center-banner.jpg')" }}
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#155A9E_0%,rgba(21,90,158,0.8)_20%,rgba(21,90,158,0.7)_40%,rgba(21,90,158,0.5)_60%,rgba(21,90,158,0.3)_80%,rgba(21,90,158,0.1)_95%,transparent_100%)]" />
 
       <Container className="relative py-10 sm:py-12 lg:py-14">
         <nav aria-label="Breadcrumb" className="mb-5 text-xs text-white/70 sm:text-sm">

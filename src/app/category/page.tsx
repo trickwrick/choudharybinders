@@ -3,6 +3,7 @@ import CategoryPageContent from "@/components/CategoryPageContent";
 import FloatingActions from "@/components/FloatingActions";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import PageHeader from "@/components/PageHeader";
 import { getActiveCategoriesForPublic } from "@/lib/db/categories";
 import { getProductsByCategoryMap } from "@/lib/db/products";
 
@@ -24,6 +25,7 @@ export default async function CategoryPage() {
     <>
       <Navbar />
       <main className="pt-29">
+        <PageHeader title="All Products" tag="CATALOG" />
         <CategoryPageContent
           categories={categories}
           productsByCategory={productsByCategory}
