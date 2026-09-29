@@ -72,28 +72,28 @@ export default function StatsStrip() {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={container}
-          className="mx-auto grid max-w-6xl grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4"
+          className="mx-auto grid max-w-7xl 2xl:max-w-[95vw] grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 2xl:gap-8"
         >
           {stats.map((stat) => (
             <motion.div
               key={stat.label}
               variants={item}
               whileHover={{ y: -6, transition: { duration: 0.28, ease: "easeOut" } }}
-              className="group relative overflow-hidden rounded-2xl border border-border/70 bg-light-bg/40 p-4 shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-5"
+              className="group relative overflow-hidden rounded-2xl border border-border/70 bg-light-bg/40 p-4 shadow-sm transition-shadow duration-300 hover:shadow-md sm:p-5 2xl:p-10"
             >
               <div className="brand-tricolor-bar absolute inset-x-0 top-0 h-0.75 scale-x-0 transition-transform duration-500 group-hover:scale-x-100" />
 
               <div
-                className={`mb-3 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-br ${stat.accent} text-primary transition-transform duration-300 group-hover:scale-110`}
+                className={`mb-3 inline-flex h-11 w-11 2xl:h-[4vw] 2xl:w-[4vw] 2xl:max-h-24 2xl:max-w-24 items-center justify-center rounded-xl bg-linear-to-br ${stat.accent} text-primary transition-transform duration-300 group-hover:scale-110`}
               >
-                <stat.icon className="h-5 w-5" strokeWidth={2.2} />
+                <stat.icon className="h-5 w-5 2xl:h-[2vw] 2xl:w-[2vw] 2xl:max-h-12 2xl:max-w-12" strokeWidth={2.2} />
               </div>
 
-              <p className="text-2xl font-extrabold tracking-tight text-primary sm:text-[1.75rem]">
+              <p className="text-2xl font-extrabold tracking-tight text-primary sm:text-[1.75rem] 2xl:text-[3vw]">
                 <CountUp value={stat.value} duration={1.8} />
               </p>
 
-              <p className="mt-1.5 text-[11px] font-bold uppercase leading-snug tracking-[0.12em] text-text/45 sm:text-xs">
+              <p className="mt-1.5 text-[11px] font-bold uppercase leading-snug tracking-[0.12em] text-text/45 sm:text-xs 2xl:text-[1vw]">
                 {stat.label}
               </p>
 

@@ -29,10 +29,10 @@ function VariantCard({
     >
       <div className="relative overflow-hidden rounded-xl border border-border/50 shadow-sm transition-shadow group-hover:shadow-md">
         <div
-          className={`variant-card-surface ${tone} relative flex aspect-[1.75/1] items-center justify-center px-2.5 py-3`}
+          className={`variant-card-surface ${tone} relative flex aspect-1.75/1 items-center justify-center px-2.5 py-3`}
         >
-          <div className="absolute inset-[5px] rounded-md border border-white/50" />
-          <p className="relative z-[1] px-1 text-center text-[10px] font-bold uppercase leading-tight tracking-wide sm:text-[11px]">
+          <div className="absolute inset-1.25 rounded-md border border-white/50" />
+          <p className="relative z-1 px-1 text-center text-[10px] font-bold uppercase leading-tight tracking-wide sm:text-[11px]">
             {variant.label}
           </p>
         </div>
@@ -167,7 +167,7 @@ export default function ProductVariantsPage({
         </div>
 
         <div className="mx-auto mt-10 flex max-w-6xl flex-col gap-3 sm:flex-row sm:justify-center">
-          <WhatsAppButton message={whatsappMessage} size="lg" className="sm:min-w-[200px]" />
+          <WhatsAppButton message={whatsappMessage} size="lg" className="sm:min-w-50" />
         </div>
       </Container>
     </section>

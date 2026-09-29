@@ -60,9 +60,9 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
   return (
     <>
       <section id="home" className="relative">
-        <div className="relative flex flex-col bg-slate-900 md:block md:min-h-[100svh] md:overflow-hidden md:bg-transparent">
+        <div className="relative flex flex-col bg-slate-900 md:block md:min-h-svh md:overflow-hidden md:bg-transparent">
           {/* Image Container */}
-          <div className="relative aspect-[4/3] w-full shrink-0 overflow-hidden sm:aspect-video md:absolute md:inset-0 md:h-full md:aspect-auto">
+          <div className="relative aspect-4/3 w-full shrink-0 overflow-hidden sm:aspect-video md:absolute md:inset-0 md:h-full md:aspect-auto">
           <AnimatePresence mode="sync" initial={false}>
             <motion.div
               key={current}
@@ -96,10 +96,10 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
           </AnimatePresence>
           </div>
 
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/10 md:from-black/35 md:via-black/40 md:to-black/75" />
+          <div className="pointer-events-none absolute inset-0 bg-linear-to-b from-black/20 via-transparent to-black/10 md:from-black/35 md:via-black/40 md:to-black/75" />
 
           {/* Center headline — content sits below transparent navbar */}
-          <div className="relative z-10 mx-auto hidden w-full flex-1 flex-col items-center justify-center px-4 py-8 text-center sm:px-6 md:flex md:min-h-[100svh] md:max-w-5xl md:pb-48 md:pt-[8rem]">
+          <div className="relative z-10 mx-auto hidden w-full flex-1 flex-col items-center justify-center px-4 py-8 text-center sm:px-6 md:flex md:min-h-svh md:max-w-5xl 2xl:max-w-[80vw] md:pb-48 md:pt-32">
             <AnimatePresence mode="wait">
               <motion.div
                 key={current}
@@ -107,14 +107,14 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                className="max-w-4xl"
+                className="max-w-4xl 2xl:max-w-[70vw]"
               >
-                <h1 className="text-3xl font-extrabold leading-[1.15] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem]">
+                <h1 className="text-3xl font-extrabold leading-[1.15] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem] 2xl:text-[4.5vw]">
                   Your Trusted Printing
                   <br />
                   &amp; Branding Partner
                 </h1>
-                <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/75 sm:text-base">
+                <p className="mx-auto mt-4 max-w-2xl 2xl:max-w-[50vw] text-sm leading-relaxed text-white/75 sm:text-base 2xl:text-[1.2vw] 2xl:mt-[1.5vw]">
                   {slide.subtitle}
                 </p>
               </motion.div>
@@ -123,22 +123,22 @@ export default function Hero({ slides }: { slides?: HeroSlide[] }) {
 
           {/* Feature bullets */}
           <div className="relative z-10 hidden w-full px-4 pb-12 pt-2 sm:px-6 md:absolute md:inset-x-0 md:bottom-0 md:block md:pb-8 md:pt-0 lg:px-8">
-            <ul className="mx-auto grid max-w-6xl grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-3.5">
+            <ul className="mx-auto grid max-w-7xl 2xl:max-w-[95vw] grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-3.5 2xl:gap-x-[4vw] 2xl:gap-y-[1.5vw]">
               {heroFeatures.map((feature) => (
                 <li
                   key={feature}
-                  className="flex items-center gap-2.5 text-left text-sm font-medium text-white/90 sm:text-[15px]"
+                  className="flex items-center gap-2.5 2xl:gap-[1vw] text-left text-sm font-medium text-white/90 sm:text-[15px] 2xl:text-[1.2vw]"
                 >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent">
-                    <Check className="h-3 w-3 stroke-[3] text-white" />
+                  <span className="flex h-5 w-5 2xl:h-[1.5vw] 2xl:w-[1.5vw] shrink-0 items-center justify-center rounded-full bg-accent">
+                    <Check className="h-3 w-3 2xl:h-[1vw] 2xl:w-[1vw] stroke-3 text-white" />
                   </span>
                   {feature}
                 </li>
               ))}
             </ul>
 
-            <div className="mx-auto mt-6 hidden max-w-6xl items-center justify-center md:flex">
-              <div className="flex items-center gap-2">
+            <div className="mx-auto mt-6 hidden max-w-7xl 2xl:max-w-[95vw] 2xl:mt-[2.5vw] items-center justify-center md:flex">
+              <div className="flex items-center gap-2 2xl:gap-[0.5vw]">
                 {heroSlides.map((item, index) => (
                   <button
                     key={`dot-${item.src}`}

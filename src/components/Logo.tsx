@@ -35,7 +35,7 @@ export default function Logo({ size = "md", className = "", onDark = false }: Lo
         alt="Choudhary Binders & Printers"
         width={420}
         height={120}
-        className={`w-auto ${maxWidthClass} h-[var(--logo-height-mobile)] md:h-[var(--logo-height-desktop)] object-contain object-left transition-opacity duration-300 ${
+        className={`w-auto ${maxWidthClass} h-(--logo-height-mobile) md:h-(--logo-height-desktop) object-contain object-left transition-opacity duration-300 ${
           onDark
             ? "drop-shadow-[0_2px_12px_rgba(0,0,0,0.45)] group-hover:brightness-110"
             : "group-hover:opacity-90"

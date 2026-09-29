@@ -33,7 +33,7 @@ function FormSection({
   children: ReactNode;
 }) {
   return (
-    <section className="border-b border-border/70 py-4 last:border-b-0">
+    <section className="py-4">
       <h2 className="text-sm font-bold uppercase tracking-wide text-text">{title}</h2>
       <div className="mt-3 space-y-3">{children}</div>
     </section>
@@ -215,10 +215,10 @@ export default function ProductVariantDetailPage({
           <aside className="space-y-4">
             <div className="overflow-hidden rounded-2xl border border-border/70 bg-white shadow-sm">
               <div
-                className={`variant-detail-banner ${section.tone} flex min-h-[100px] items-center justify-center px-4 py-6`}
+                className={`variant-detail-banner ${section.tone} flex min-h-25 items-center justify-center px-4 py-6`}
               >
-                <div className="absolute inset-[8px] rounded-lg border border-white/45" />
-                <p className="relative z-[1] text-center text-sm font-bold uppercase leading-tight tracking-wide">
+                <div className="absolute inset-2 rounded-lg border border-white/45" />
+                <p className="relative z-1 text-center text-sm font-bold uppercase leading-tight tracking-wide">
                   {variant.label}
                 </p>
               </div>
@@ -250,7 +250,7 @@ export default function ProductVariantDetailPage({
                       value={name}
                       onChange={(event) => setName(event.target.value)}
                       placeholder="Your Name *"
-                      className="h-11 rounded-xl border border-border px-3 text-sm outline-none focus:border-[#2563eb]"
+                      className="h-11 rounded-xl border border-border px-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#2563eb]"
                       required
                     />
                     <input
@@ -258,7 +258,7 @@ export default function ProductVariantDetailPage({
                       value={phone}
                       onChange={(event) => setPhone(event.target.value)}
                       placeholder="Phone Number *"
-                      className="h-11 rounded-xl border border-border px-3 text-sm outline-none focus:border-[#2563eb]"
+                      className="h-11 rounded-xl border border-border px-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#2563eb]"
                       required
                     />
                   </div>
@@ -267,7 +267,7 @@ export default function ProductVariantDetailPage({
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="Email Address *"
-                    className="h-11 w-full rounded-xl border border-border px-3 text-sm outline-none focus:border-[#2563eb]"
+                    className="h-11 w-full rounded-xl border border-border px-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#2563eb]"
                     required
                   />
                 </FormSection>
@@ -289,7 +289,7 @@ export default function ProductVariantDetailPage({
                           ),
                         )
                       }
-                      className="ml-auto h-10 w-24 rounded-lg border border-border px-3 text-sm outline-none focus:border-[#2563eb]"
+                      className="ml-auto h-10 w-24 rounded-lg border border-border px-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#2563eb]"
                     />
                   </div>
                   <p className="text-xs text-[#2563eb]">
@@ -302,7 +302,7 @@ export default function ProductVariantDetailPage({
                     <select
                       value={printing}
                       onChange={(event) => setPrinting(event.target.value)}
-                      className="ml-auto h-10 rounded-lg border border-border px-3 text-sm outline-none focus:border-[#2563eb]"
+                      className="ml-auto h-10 rounded-lg border border-border px-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#2563eb]"
                     >
                       {PRINTING_OPTIONS.map((option) => (
                         <option key={option} value={option}>
@@ -322,7 +322,7 @@ export default function ProductVariantDetailPage({
                     onChange={(event) => setSpecialRemark(event.target.value)}
                     rows={3}
                     placeholder="Remarks for order processing team..."
-                    className="mt-2 w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-[#2563eb]"
+                    className="mt-2 w-full rounded-xl border border-border px-3 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-[#2563eb]"
                   />
                 </div>
 

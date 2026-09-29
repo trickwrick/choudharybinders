@@ -46,7 +46,7 @@ function ModalContactForm({
             type="text"
             required
             placeholder="Your name"
-            className="w-full rounded-lg border border-border px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-lg border border-border px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
         <div>
@@ -59,7 +59,7 @@ function ModalContactForm({
             type="email"
             required
             placeholder="your@email.com"
-            className="w-full rounded-lg border border-border px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-lg border border-border px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
       </div>
@@ -74,7 +74,7 @@ function ModalContactForm({
           type="tel"
           required
           placeholder="+91 98290 13457"
-          className="w-full rounded-lg border border-border px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          className="w-full rounded-lg border border-border px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
         />
       </div>
 
@@ -90,7 +90,7 @@ function ModalContactForm({
           value={message}
           onChange={(event) => setMessage(event.target.value)}
           placeholder="What do you need printed?"
-          className="w-full resize-none rounded-lg border border-border px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          className="w-full resize-none rounded-lg border border-border px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
         />
       </div>
 
@@ -139,7 +139,7 @@ function PageContactForm({
             name="companyName"
             type="text"
             required
-            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
         <div>
@@ -150,7 +150,7 @@ function PageContactForm({
             name="name"
             type="text"
             required
-            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
       </div>
@@ -164,7 +164,7 @@ function PageContactForm({
             name="email"
             type="email"
             required
-            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
         <div>
@@ -175,7 +175,7 @@ function PageContactForm({
             name="phone"
             type="tel"
             required
-            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
       </div>
@@ -189,7 +189,7 @@ function PageContactForm({
             name="whatsapp"
             type="tel"
             required
-            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
         <div>
@@ -199,7 +199,7 @@ function PageContactForm({
           <select
             name="contactType"
             required
-            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm bg-white focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary appearance-none"
+            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm bg-white focus:outline-none focus:ring-1 focus:ring-primary appearance-none"
           >
             <option value="">Select Type</option>
             <option value="General Enquiry">General Enquiry</option>
@@ -218,7 +218,7 @@ function PageContactForm({
             name="city"
             type="text"
             required
-            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
         <div>
@@ -229,7 +229,7 @@ function PageContactForm({
             name="state"
             type="text"
             required
-            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
         <div>
@@ -240,7 +240,7 @@ function PageContactForm({
             name="country"
             type="text"
             required
-            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+            className="w-full rounded-md border border-border/80 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
       </div>
@@ -255,7 +255,7 @@ function PageContactForm({
           rows={4}
           value={message}
           onChange={(event) => setMessage(event.target.value)}
-          className="w-full resize-none rounded-md border border-border/80 px-4 py-2.5 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+          className="w-full resize-none rounded-md border border-border/80 px-4 py-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
         />
       </div>
 
