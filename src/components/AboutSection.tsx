@@ -189,8 +189,8 @@ function FullAbout() {
                 viewport={{ once: true }}
                 className="mt-8 sm:mt-10"
               >
-                <Button href="tel:+917821013457" variant="outline" size="lg">
-                  Call +91-7821013457
+                <Button href="tel:+919116013457" variant="outline" size="lg">
+                  Call +91-9116013457
                 </Button>
               </motion.div>
             </motion.div>

@@ -15,11 +15,11 @@ export default function TopBar({ overlay = false }: { overlay?: boolean }) {
       <Container className="relative flex h-9 items-center justify-between gap-4 text-xs sm:text-sm">
         <div className="flex items-center gap-2 sm:gap-3">
           <a
-            href="tel:+917821013457"
+            href="tel:+919116013457"
             className={`shrink-0 transition-colors ${overlay ? "topbar-overlay-item" : "topbar-tricolor-item"}`}
           >
             <Phone className="h-3 w-3" strokeWidth={2.5} />
-            <span className="hidden sm:inline">+91-7821013457</span>
+            <span className="hidden sm:inline">+91-9116013457</span>
             <span className="sm:hidden">Call Us</span>
           </a>
           <span className={`hidden lg:flex whitespace-nowrap ${overlay ? "topbar-overlay-item" : "topbar-tricolor-item"}`}>

@@ -59,7 +59,7 @@ export default function RootLayout({
               description:
                 "Professional printing, flex, LED sign boards, outdoor branding and advertising services in Jaipur since 1980.",
               url: "https://choudharybinders.com",
-              telephone: "+91-7821013457",
+              telephone: "+91-9116013457",
               email: "choudharybinders@gmail.com",
               foundingDate: "1980",
               address: {

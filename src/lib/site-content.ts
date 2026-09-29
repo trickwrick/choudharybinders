@@ -72,7 +72,6 @@ export const coreValues = [
 export const contactDetails = {
   phones: [
     { display: "+91-98290-13457", tel: "tel:+919829013457" },
-    { display: "+91-78210-13457", tel: "tel:+917821013457" },
     { display: "+91-91160-13457", tel: "tel:+919116013457" },
     { display: "+91-98298-99361", tel: "tel:+919829899361" },
   ],

@@ -11,13 +11,13 @@ export const businessInfo = {
   responseTime: "31 mins",
   enquiries: "123k",
   phone: contactDetails.phones[1].display,
-  phoneDisplay: "07821013457",
+  phoneDisplay: "09116013457",
   phoneTel: contactDetails.phones[1].tel,
-  whatsapp: "https://wa.me/917821013457",
+  whatsapp: "https://wa.me/919116013457",
   whatsappMessage:
     "Hello, I would like to inquire about printing & binding services from Choudhary Binders & Printers.",
   whatsappHref:
-    "https://wa.me/917821013457?text=Hello%2C%20I%20would%20like%20to%20inquire%20about%20printing%20%26%20binding%20services%20from%20Choudhary%20Binders%20%26%20Printers.",
+    "https://wa.me/919116013457?text=Hello%2C%20I%20would%20like%20to%20inquire%20about%20printing%20%26%20binding%20services%20from%20Choudhary%20Binders%20%26%20Printers.",
   email: contactDetails.emails[0],
   emails: contactDetails.emails,
   secondaryEmail: (contactDetails.emails as readonly string[])[1],
