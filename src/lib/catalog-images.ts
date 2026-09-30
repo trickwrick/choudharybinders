@@ -10,6 +10,7 @@ export const categoryCoverImages = {
   unipole: "/categories/unipole-advertising-v2.jpg",
   "outdoor-advertisement": "/categories/outdoor-branding.jpg",
   "led-sign-board": "/categories/led-sign-board-v3.jpg",
+  "uv-printing": "/categories/digital-printing-v2.jpg",
 } as const;
 
 export type CatalogCategoryId = keyof typeof categoryCoverImages;

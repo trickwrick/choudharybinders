@@ -157,6 +157,13 @@ const defaultSpecsByCategory: Record<CategoryId, ProductSpecification[]> = {
     { label: "Finish", value: "Glossy / Matte" },
     { label: "Size", value: "Customized" },
   ],
+  "uv-printing": [
+    { label: "Material", value: "Sunboard / Acrylic / MDF / Glass" },
+    { label: "Print Quality", value: "High Resolution UV Print" },
+    { label: "Usage", value: "Indoor & Outdoor" },
+    { label: "Durability", value: "Fade Resistant & Instant Dry" },
+    { label: "Size", value: "Customized" },
+  ],
 };
 
 function defaultDescription(title: string, categoryTitle: string): string {

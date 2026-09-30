@@ -69,6 +69,12 @@ export const categoryProducts: Record<CategoryId, CategoryProduct[]> = {
     item("digital", "Stickers & Labels", "500 Pieces"),
     item("digital", "Menu Cards", "100 Pieces"),
   ],
+  "uv-printing": [
+    item("uv-printing", "UV Printed Sunboard", "10 Square Feet"),
+    item("uv-printing", "UV Printed Acrylic", "10 Square Feet"),
+    item("uv-printing", "UV Printed MDF", "Custom Order"),
+    item("uv-printing", "UV Flatbed Printing", "Custom Order"),
+  ],
   signage: [
     item("signage", "Acrylic Led Signage", "10 Square Feet"),
     item("signage", "Neon Sign Board", "10 Square Feet"),

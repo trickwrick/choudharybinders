@@ -7,6 +7,7 @@ export type CategoryId =
   | "offset"
   | "flex"
   | "digital"
+  | "uv-printing"
   | "signage"
   | "binding"
   | "customized-gifts"
@@ -41,8 +42,8 @@ export const categories: Category[] = [
     icon: Sparkles,
     image: categoryCoverImages.offset, // reuse offset image
     description:
-      "Offset, Flex, Eco Solvent, and Digital Printing services for all your needs.",
-    subcategories: ["offset", "flex", "digital"],
+      "Offset, Flex, Eco Solvent, Digital, and UV Printing services for all your needs.",
+    subcategories: ["offset", "flex", "digital", "uv-printing"],
   },
   {
     id: "offset",
@@ -70,6 +71,15 @@ export const categories: Category[] = [
     image: categoryCoverImages.digital,
     description:
       "Perfect for quick turnaround and short-run printing needs.",
+  },
+  {
+    id: "uv-printing",
+    title: "UV Printing",
+    tag: "UV Print",
+    icon: Sparkles,
+    image: categoryCoverImages["uv-printing"],
+    description:
+      "High-quality UV printing for vibrant, durable, and instant-dry results on various materials.",
   },
   {
     id: "signage",
