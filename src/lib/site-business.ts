@@ -15,9 +15,9 @@ export const businessInfo = {
   phoneTel: contactDetails.phones[1].tel,
   whatsapp: "https://wa.me/919116013457",
   whatsappMessage:
-    "Hello, I would like to inquire about printing & binding services from Choudhary Binders & Printers.",
+    "i would like to enquire about advertising, branding and printing services from choudhary binders and printers",
   whatsappHref:
-    "https://wa.me/919116013457?text=Hello%2C%20I%20would%20like%20to%20inquire%20about%20printing%20%26%20binding%20services%20from%20Choudhary%20Binders%20%26%20Printers.",
+    "https://wa.me/919116013457?text=i%20would%20like%20to%20enquire%20about%20advertising%2C%20branding%20and%20printing%20services%20from%20choudhary%20binders%20and%20printers",
   email: contactDetails.emails[0],
   emails: contactDetails.emails,
   secondaryEmail: (contactDetails.emails as readonly string[])[1],

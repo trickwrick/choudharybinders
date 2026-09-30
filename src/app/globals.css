@@ -89,16 +89,7 @@ body {
 }
 
 .topbar-tricolor-bg {
-  background: linear-gradient(
-    to right, 
-    #155A9E 0%, 
-    rgba(21,90,158, 0.8) 20%, 
-    rgba(21,90,158, 0.7) 40%, 
-    rgba(21,90,158, 0.5) 60%, 
-    rgba(21,90,158, 0.3) 80%, 
-    rgba(21,90,158, 0.1) 95%, 
-    transparent 100%
-  );
+  background: var(--primary);
   color: #ffffff;
 }
 

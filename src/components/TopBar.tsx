@@ -31,7 +31,7 @@ export default function TopBar({ overlay = false }: { overlay?: boolean }) {
         <div className="flex items-center gap-2 sm:gap-3">
           <span
             className={`hidden text-[10px] font-bold uppercase tracking-wider md:inline-flex sm:text-xs whitespace-nowrap ${
-              overlay ? "topbar-overlay-item" : "topbar-tricolor-item text-slate-800!"
+              overlay ? "topbar-overlay-item" : "topbar-tricolor-item text-white"
             }`}
           >
             Since 1957
