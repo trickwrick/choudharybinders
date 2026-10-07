@@ -48,7 +48,7 @@ export default function RootLayout({
       lang="en"
       className={`${poppins.variable} ${spaceMono.variable} h-full scroll-smooth`}
     >
-      <body className="min-h-full bg-background font-sans text-text antialiased">
+      <body className="min-h-full overflow-x-hidden bg-background font-sans text-text antialiased">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
