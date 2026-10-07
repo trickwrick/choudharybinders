@@ -46,7 +46,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${poppins.variable} ${spaceMono.variable} h-full scroll-smooth`}
+      className={`${poppins.variable} ${spaceMono.variable} h-full scroll-smooth overflow-x-hidden`}
     >
       <body className="min-h-full overflow-x-hidden bg-background font-sans text-text antialiased">
         <script
@@ -76,7 +76,9 @@ export default function RootLayout({
             }),
           }}
         />
-        {children}
+        <div className="flex min-h-screen w-full flex-col overflow-x-hidden">
+          {children}
+        </div>
       </body>
     </html>
   );
