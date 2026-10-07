@@ -131,7 +131,7 @@ export default function ProductQuoteModal({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}
             transition={{ type: "spring", damping: 28, stiffness: 320 }}
-            className="fixed inset-x-3 top-1/2 z-61 mx-auto w-full max-w-md -translate-y-1/2 overflow-hidden rounded-2xl border border-border bg-white shadow-2xl sm:inset-x-6"
+            className="fixed inset-x-0 top-1/2 z-61 mx-auto w-[calc(100%-24px)] max-w-md -translate-y-1/2 overflow-hidden rounded-2xl border border-border bg-white shadow-2xl"
           >
             <div className="brand-tricolor-bar h-1" />
 
