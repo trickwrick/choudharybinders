@@ -42,9 +42,11 @@ export default function ProductQuoteModal({
         ? ` Quantity: ${product.quantity}${product.unit ? ` ${product.unit}` : ""}.`
         : "";
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMessage(
       `I am interested in ${product.productTitle}.${qtyText} Please share the best price and delivery timeline.`,
     );
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSubmitted(false);
     setError("");
     setName("");

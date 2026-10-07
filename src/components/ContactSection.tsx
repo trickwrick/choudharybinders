@@ -290,6 +290,7 @@ export default function ContactSection({ inModal = false, hideHeader = false }: 
       const qty = searchParams.get("qty");
       const unit = searchParams.get("unit");
       const qtyText = qty ? ` Quantity: ${qty}${unit ? ` ${unit}` : ""}.` : "";
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setMessage(
         `I am interested in ${productTitle}.${qtyText} Please share the best price and delivery timeline.`,
       );

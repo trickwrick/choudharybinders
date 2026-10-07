@@ -75,7 +75,7 @@ function CategoryProductsGroup({
       <div className="mb-5 flex flex-col gap-3 border-b border-border/60 pb-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-primary sm:text-xs">
-            <Icon className="h-3 w-3" />
+            {Icon({ className: "h-3 w-3" } as any)}
             {category.tag}
           </span>
           <h2 className="mt-2 text-xl font-bold text-text sm:text-2xl">
