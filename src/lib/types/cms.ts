@@ -118,3 +118,16 @@ export type ClientLogoDoc = {
   createdAt?: Date;
   updatedAt?: Date;
 };
+
+export type TestimonialDoc = {
+  _id?: ObjectId | string;
+  name: string;
+  role: string;
+  organization: string;
+  text: string;
+  image: string;
+  order: number;
+  active: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
+};

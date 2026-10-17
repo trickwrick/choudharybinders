@@ -107,7 +107,7 @@ export default function CategoryForm({
                     setCategory({ ...category, id: event.target.value })
                   }
                   placeholder="e.g. offset-printing"
-                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                  className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
                 />
                 <span className="mt-1 block text-xs text-text/50">
                   Leave blank to auto-generate from title. Used in `/category/[slug]`.
@@ -139,7 +139,7 @@ export default function CategoryForm({
                     onChange={(event) =>
                       setCategory({ ...category, [key]: event.target.value })
                     }
-                    className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                    className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
                   />
                 ) : (
                   <input
@@ -148,7 +148,7 @@ export default function CategoryForm({
                     onChange={(event) =>
                       setCategory({ ...category, [key]: event.target.value })
                     }
-                    className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                    className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
                   />
                 )}
               </label>
@@ -161,7 +161,7 @@ export default function CategoryForm({
                 onChange={(event) =>
                   setCategory({ ...category, icon: event.target.value })
                 }
-                className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
               >
                 {CATEGORY_ICON_OPTIONS.map((option) => (
                   <option key={option.value} value={option.value}>
@@ -179,7 +179,7 @@ export default function CategoryForm({
                 onChange={(event) =>
                   setCategory({ ...category, order: Number(event.target.value) })
                 }
-                className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:border-primary"
+                className="w-full rounded-xl border border-border px-3 py-2.5 text-sm outline-none focus:ring-1 focus:ring-primary"
               />
             </label>
 

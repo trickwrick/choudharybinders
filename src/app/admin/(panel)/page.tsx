@@ -71,6 +71,7 @@ export default function AdminDashboardPage() {
     { label: "Update homepage slider", href: "/admin/slider" },
     { label: "Manage categories", href: "/admin/categories" },
     { label: "Add a new product", href: "/admin/products/new" },
+    { label: "Manage Hall of Fame (Testimonials)", href: "/admin/testimonials" },
     { label: "View quote inquiries", href: "/admin/inquiries" },
   ];
 

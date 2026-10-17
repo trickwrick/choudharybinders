@@ -64,16 +64,11 @@ export default function GalleryPageContent({ images = [] }: { images?: GalleryIt
             >
               <Image
                 src={item.src}
-                alt={item.label}
+                alt={item.label || "Gallery image"}
                 fill
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 to-transparent px-3 py-3 text-left">
-                <p className="truncate text-xs font-semibold text-white sm:text-sm">
-                  {item.label}
-                </p>
-              </div>
             </motion.button>
           ))}
         </div>

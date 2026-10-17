@@ -5,8 +5,18 @@ import { motion } from "framer-motion";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { fadeUp } from "@/lib/animations";
 import Container from "./Container";
+import type { TestimonialDoc } from "@/lib/types/cms";
 
-const testimonials = [
+export type TestimonialItem = {
+  _id?: string | any;
+  name: string;
+  role: string;
+  organization: string;
+  text: string;
+  image: string;
+};
+
+const defaultTestimonials: TestimonialItem[] = [
   {
     name: "Stuti Singh",
     role: "Marketing Manager",
@@ -40,7 +50,7 @@ function mod(n: number, m: number) {
 }
 
 interface TestimonialCardProps {
-  testimonial: (typeof testimonials)[number];
+  testimonial: TestimonialItem;
   variant: "active" | "side";
 }
 
@@ -55,15 +65,15 @@ function TestimonialCard({ testimonial, variant }: TestimonialCardProps) {
     >
       <div
         className={`relative shrink-0 overflow-hidden bg-[#153258] ${
-          isActive ? "w-[7.5rem] sm:w-[9.5rem]" : "w-[5.5rem] sm:w-[6.5rem]"
+          isActive ? "w-30 sm:w-38" : "w-22 sm:w-26"
         }`}
       >
         <div className="absolute inset-y-0 right-0 w-8 translate-x-1/2 rounded-full bg-[#153258]" />
         <div
           className={`relative flex items-center justify-center ${
             isActive
-              ? "min-h-[220px] p-4 sm:min-h-[250px] sm:p-5"
-              : "min-h-[180px] p-3 sm:min-h-[200px]"
+              ? "min-h-55 p-4 sm:min-h-62.5 sm:p-5"
+              : "min-h-45 p-3 sm:min-h-50"
           }`}
         >
           <div
@@ -131,11 +141,13 @@ function TestimonialCard({ testimonial, variant }: TestimonialCardProps) {
 }
 
 function TestimonialTrack({
+  testimonials,
   current,
   onSelect,
   isAnimating,
   setIsAnimating,
 }: {
+  testimonials: TestimonialItem[];
   current: number;
   onSelect: (index: number) => void;
   isAnimating: boolean;
@@ -178,7 +190,7 @@ function TestimonialTrack({
   return (
     <div
       ref={containerRef}
-      className="min-h-[270px] w-full overflow-hidden"
+      className="min-h-67.5 w-full overflow-hidden"
     >
       {slideWidth > 0 && (
         <motion.div
@@ -193,7 +205,7 @@ function TestimonialTrack({
 
             return (
               <motion.button
-                key={testimonial.name}
+                key={testimonial._id || testimonial.name}
                 type="button"
                 disabled={isAnimating}
                 onClick={() => !isActive && onSelect(index)}
@@ -226,10 +238,15 @@ function TestimonialTrack({
   );
 }
 
-export default function TestimonialsSection() {
+export default function TestimonialsSection({
+  testimonials = defaultTestimonials,
+}: {
+  testimonials?: TestimonialItem[];
+}) {
+  const activeList = testimonials.length > 0 ? testimonials : defaultTestimonials;
   const [current, setCurrent] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const len = testimonials.length;
+  const len = activeList.length;
 
   const goTo = useCallback(
     (index: number) => {
@@ -271,6 +288,7 @@ export default function TestimonialsSection() {
 
         <div className="relative mt-10 sm:mt-12">
           <TestimonialTrack
+            testimonials={activeList}
             current={current}
             onSelect={goTo}
             isAnimating={isAnimating}
@@ -278,7 +296,7 @@ export default function TestimonialsSection() {
           />
 
           <div className="mx-auto mt-6 flex max-w-xs items-center gap-2">
-            {testimonials.map((_, index) => (
+            {activeList.map((_, index) => (
               <button
                 key={index}
                 type="button"

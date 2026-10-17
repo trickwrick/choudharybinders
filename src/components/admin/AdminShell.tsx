@@ -26,6 +26,7 @@ const navItems = [
   { href: "/admin/categories", label: "Categories", icon: LayoutGrid },
   { href: "/admin/products", label: "Products", icon: Package },
   { href: "/admin/gallery", label: "Gallery", icon: ImageIcon },
+  { href: "/admin/testimonials", label: "Testimonials", icon: Shield },
   { href: "/admin/inquiries", label: "Inquiries", icon: Mail },
   { href: "/admin/settings", label: "Settings", icon: Settings },
 ];
@@ -37,6 +38,7 @@ const pageTitles: Record<string, string> = {
   "/admin/categories": "Categories",
   "/admin/products": "Products",
   "/admin/gallery": "Gallery",
+  "/admin/testimonials": "Testimonials",
   "/admin/inquiries": "Inquiries",
   "/admin/settings": "Settings",
 };
@@ -48,6 +50,7 @@ function resolvePageTitle(pathname: string) {
   if (pathname.startsWith("/admin/categories")) return "Categories";
   if (pathname.startsWith("/admin/clients")) return "Trusted Clients";
   if (pathname.startsWith("/admin/gallery")) return "Gallery";
+  if (pathname.startsWith("/admin/testimonials")) return "Testimonials";
   if (pathname.startsWith("/admin/slider")) return "Hero Slider";
   if (pathname.startsWith("/admin/inquiries")) return "Inquiries";
   if (pathname.startsWith("/admin/settings")) return "Settings";

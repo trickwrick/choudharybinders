@@ -42,7 +42,7 @@ export default function Logo({ size = "md", className = "", onDark = false }: Lo
         }`}
         style={
           {
-            "--logo-height-mobile": `${Math.round(height * 0.55)}px`,
+            "--logo-height-mobile": `${Math.round(height * (onDark ? 0.55 : 0.75))}px`,
             "--logo-height-desktop": `${height}px`,
           } as React.CSSProperties
         }

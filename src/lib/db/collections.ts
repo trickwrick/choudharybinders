@@ -7,4 +7,5 @@ export const COLLECTIONS = {
   inquiries: "inquiries",
   media: "media",
   adminSettings: "admin_settings",
+  testimonials: "testimonials",
 } as const;

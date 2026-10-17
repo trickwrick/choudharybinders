@@ -16,17 +16,19 @@ import { getActiveCategoriesForPublic } from "@/lib/db/categories";
 import { getHeroSlidesFromDb } from "@/lib/db/hero-slides";
 import { getActiveGalleryImagesForPublic } from "@/lib/db/gallery";
 import { getActiveClientsForPublic } from "@/lib/db/clients";
+import { getActiveTestimonialsForPublic } from "@/lib/db/testimonials";
 
 import ContactSectionWrapper from "@/components/ContactSectionWrapper";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [slides, categories, galleryImages, clients] = await Promise.all([
+  const [slides, categories, galleryImages, clients, testimonials] = await Promise.all([
     getHeroSlidesFromDb(),
     getActiveCategoriesForPublic(),
     getActiveGalleryImagesForPublic(),
     getActiveClientsForPublic(),
+    getActiveTestimonialsForPublic(),
   ]);
 
   return (
@@ -42,7 +44,12 @@ export default async function Home() {
         <ProcessSection />
         <AboutSection compact />
         <GallerySection images={galleryImages} />
-        <TestimonialsSection />
+        <TestimonialsSection
+          testimonials={testimonials.map((t) => ({
+            ...t,
+            _id: String(t._id ?? ""),
+          }))}
+        />
         <FAQSection />
         <ContactSectionWrapper />
       </main>
