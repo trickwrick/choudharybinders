@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUp, Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
 import { categories } from "@/lib/categories";
 import { companyContent } from "@/lib/site-content";
@@ -220,26 +220,28 @@ export default function Footer() {
               All Rights Reserved.
             </p>
             <p className="mt-1">
-              <a href="#" className="hover:underline">
+              <a href="#" className="hover:underline hover:text-white">
                 Privacy Policy
               </a>
               <span className="mx-2 text-white/40">|</span>
-              <a href="#" className="hover:underline">
+              <a href="#" className="hover:underline hover:text-white">
                 Terms &amp; Conditions
               </a>
             </p>
           </div>
-          <motion.button
-            type="button"
-            onClick={scrollToTop}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/20"
-            aria-label="Back to top"
-          >
-            <ArrowUp className="h-4 w-4" />
-            Back to Top
-          </motion.button>
+          <div className="text-center text-xs text-white/70 sm:text-right sm:text-sm">
+            <p>
+              Developed &amp; Managed by{" "}
+              <a
+                href="https://trickwrick.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-white underline decoration-white/40 underline-offset-2 transition-colors hover:text-white hover:decoration-white"
+              >
+                Trickwrick
+              </a>
+            </p>
+          </div>
         </Container>
       </div>
     </footer>

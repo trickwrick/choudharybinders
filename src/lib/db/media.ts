@@ -28,7 +28,7 @@ export async function saveMediaFile(
   });
 }
 
-export async function openMediaDownload(id: string) {
+export async function getMediaBuffer(id: string) {
   const { ObjectId } = await import("mongodb");
   const bucket = await getBucket();
   const objectId = new ObjectId(id);
@@ -43,8 +43,20 @@ export async function openMediaDownload(id: string) {
       ? metadataContentType
       : "application/octet-stream";
 
-  return {
-    stream: bucket.openDownloadStream(objectId),
-    contentType,
-  };
+  return new Promise<{ buffer: Buffer; contentType: string }>((resolve, reject) => {
+    const chunks: Buffer[] = [];
+    const stream = bucket.openDownloadStream(objectId);
+    stream.on("data", (chunk) => chunks.push(Buffer.from(chunk)));
+    stream.on("error", reject);
+    stream.on("end", () => {
+      resolve({
+        buffer: Buffer.concat(chunks),
+        contentType,
+      });
+    });
+  });
+}
+
+export async function openMediaDownload(id: string) {
+  return getMediaBuffer(id);
 }

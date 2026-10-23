@@ -8,6 +8,41 @@ import Container from "./Container";
 
 type GalleryItem = { src: string; label: string };
 
+function GalleryGridCard({
+  item,
+  index,
+  onSelect,
+}: {
+  item: GalleryItem;
+  index: number;
+  onSelect: () => void;
+}) {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) return null;
+
+  return (
+    <motion.button
+      type="button"
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.35, delay: (index % 8) * 0.04 }}
+      onClick={onSelect}
+      className="group relative aspect-4/3 overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
+    >
+      <Image
+        src={item.src}
+        alt={item.label || "Gallery image"}
+        fill
+        sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+        className="object-cover transition-transform duration-500 group-hover:scale-105"
+        onError={() => setHasError(true)}
+      />
+    </motion.button>
+  );
+}
+
 export default function GalleryPageContent({ images = [] }: { images?: GalleryItem[] }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
@@ -52,24 +87,12 @@ export default function GalleryPageContent({ images = [] }: { images?: GalleryIt
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
           {images.map((item, index) => (
-            <motion.button
-              key={item.src}
-              type="button"
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.35, delay: (index % 8) * 0.04 }}
-              onClick={() => setLightboxIndex(index)}
-              className="group relative aspect-4/3 overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40"
-            >
-              <Image
-                src={item.src}
-                alt={item.label || "Gallery image"}
-                fill
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            </motion.button>
+            <GalleryGridCard
+              key={`${item.src}-${index}`}
+              item={item}
+              index={index}
+              onSelect={() => setLightboxIndex(index)}
+            />
           ))}
         </div>
       </Container>

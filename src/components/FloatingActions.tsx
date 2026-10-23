@@ -1,6 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUp } from "lucide-react";
 import { businessInfo } from "@/lib/site-business";
 
 function WhatsAppIcon({ className = "h-7 w-7" }: { className?: string }) {
@@ -17,10 +19,98 @@ function WhatsAppIcon({ className = "h-7 w-7" }: { className?: string }) {
 }
 
 export default function FloatingActions() {
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const scrollHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+
+      if (scrollHeight > 0) {
+        const progress = Math.min(Math.max(scrollTop / scrollHeight, 0), 1);
+        setScrollProgress(progress);
+      }
+
+      setIsVisible(scrollTop > 200);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  // Circular progress calculations (viewBox 0 0 48 48, r = 21)
+  const radius = 21;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - scrollProgress * circumference;
+
   return (
-    <div className="fixed bottom-5 right-4 z-50 flex flex-col items-end gap-3 sm:bottom-7 sm:right-6">
+    <div className="fixed bottom-5 right-4 z-50 flex flex-col items-center gap-3 sm:bottom-7 sm:right-6">
+      {/* Back to top button with circular scroll progress ring */}
+      <AnimatePresence>
+        {isVisible && (
+          <motion.button
+            type="button"
+            onClick={scrollToTop}
+            aria-label="Back to top"
+            initial={{ opacity: 0, scale: 0.5, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.5, y: 12 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.92 }}
+            className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-white text-slate-800 shadow-xl ring-1 ring-slate-900/10 transition-colors hover:bg-slate-50 hover:text-primary dark:bg-slate-900 dark:text-slate-100 dark:ring-white/10 dark:hover:bg-slate-800"
+          >
+            {/* Circular Progress SVG */}
+            <svg
+              className="pointer-events-none absolute inset-0 -rotate-90 transform"
+              width="48"
+              height="48"
+              viewBox="0 0 48 48"
+            >
+              {/* Background circle track */}
+              <circle
+                cx="24"
+                cy="24"
+                r={radius}
+                className="stroke-slate-200 dark:stroke-slate-700"
+                strokeWidth="2.5"
+                fill="none"
+              />
+              {/* Progress active stroke */}
+              <circle
+                cx="24"
+                cy="24"
+                r={radius}
+                className="stroke-primary"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                fill="none"
+                style={{
+                  strokeDasharray: circumference,
+                  strokeDashoffset,
+                  transition: "stroke-dashoffset 80ms ease-out",
+                }}
+              />
+            </svg>
 
+            {/* Arrow icon */}
+            <ArrowUp className="relative h-5 w-5 transition-transform duration-200 group-hover:-translate-y-0.5" />
+          </motion.button>
+        )}
+      </AnimatePresence>
 
+      {/* WhatsApp Floating Button */}
       <motion.a
         href={businessInfo.whatsappHref}
         target="_blank"
@@ -28,10 +118,10 @@ export default function FloatingActions() {
         aria-label="Chat on WhatsApp"
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.8, type: "spring", stiffness: 260, damping: 18 }}
+        transition={{ delay: 0.5, type: "spring", stiffness: 260, damping: 18 }}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.94 }}
-        className="whatsapp-blink group relative flex h-[3.75rem] w-[3.75rem] items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/40"
+        className="whatsapp-blink group relative flex h-15 w-15 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/40"
       >
         <WhatsAppIcon className="relative h-8 w-8" />
       </motion.a>

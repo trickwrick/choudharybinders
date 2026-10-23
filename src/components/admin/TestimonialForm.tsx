@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { ImageIcon, Loader2, X } from "lucide-react";
+import { ImageIcon, Loader2, Pencil, X } from "lucide-react";
 import type { TestimonialDoc } from "@/lib/types/cms";
 
 export default function TestimonialForm({
@@ -120,20 +120,47 @@ export default function TestimonialForm({
               Client Photo
             </label>
             {formData.image ? (
-              <div className="relative aspect-square w-28 overflow-hidden rounded-full border-2 border-border/70 bg-white flex items-center justify-center">
-                <Image
-                  src={formData.image}
-                  alt="Preview"
-                  fill
-                  className="object-cover"
-                />
-                <button
-                  type="button"
-                  onClick={() => setFormData({ ...formData, image: "" })}
-                  className="absolute right-0 top-0 rounded-full bg-black/60 p-1 text-white backdrop-blur-md transition-colors hover:bg-black/80"
-                >
-                  <X className="h-4 w-4" />
-                </button>
+              <div className="flex items-center gap-4">
+                <div className="group relative aspect-square h-28 w-28 overflow-hidden rounded-full border-2 border-primary/30 bg-white shadow-md">
+                  <Image
+                    src={formData.image}
+                    alt="Preview"
+                    fill
+                    className="object-cover"
+                  />
+                  {uploading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white backdrop-blur-xs">
+                      <Loader2 className="h-6 w-6 animate-spin text-white" />
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  <label
+                    title="Change Photo"
+                    className="inline-flex cursor-pointer items-center gap-1.5 rounded-xl border border-border bg-white px-3 py-2 text-xs font-semibold text-text shadow-xs hover:border-primary/50 hover:bg-primary/5 hover:text-primary transition-colors"
+                  >
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      disabled={uploading}
+                      className="hidden"
+                    />
+                    <Pencil className="h-3.5 w-3.5 text-primary" />
+                    <span>Change Photo</span>
+                  </label>
+
+                  <button
+                    type="button"
+                    onClick={() => setFormData({ ...formData, image: "" })}
+                    disabled={uploading}
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-red-200 bg-white px-3 py-2 text-xs font-semibold text-red-600 shadow-xs hover:bg-red-50 transition-colors"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                    <span>Remove</span>
+                  </button>
+                </div>
               </div>
             ) : (
               <div className="relative flex h-28 w-28 cursor-pointer flex-col items-center justify-center rounded-full border-2 border-dashed border-border hover:border-primary/50 hover:bg-primary/5">

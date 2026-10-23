@@ -17,9 +17,10 @@ export async function GET(_request: Request, context: RouteContext) {
       return NextResponse.json({ error: "Image not found" }, { status: 404 });
     }
 
-    return new NextResponse(Readable.toWeb(media.stream) as ReadableStream, {
+    return new NextResponse(new Uint8Array(media.buffer), {
       headers: {
         "Content-Type": media.contentType,
+        "Content-Length": String(media.buffer.length),
         "Cache-Control": "public, max-age=31536000, immutable",
       },
     });

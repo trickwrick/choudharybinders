@@ -10,6 +10,51 @@ import SectionDivider from "./motion/SectionDivider";
 import Container from "./Container";
 
 type GalleryItem = { src: string; label: string; row?: "top" | "bottom" };
+ 
+function CarouselCard({
+  item,
+  size,
+  onSelect,
+}: {
+  item: GalleryItem;
+  size: "sm" | "lg";
+  onSelect: () => void;
+}) {
+  const [hasError, setHasError] = useState(false);
+  const isLarge = size === "lg";
+
+  if (hasError) return null;
+
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={`group relative shrink-0 snap-start overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-400 hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
+        isLarge
+          ? "h-44 w-70 sm:h-56 sm:w-88 lg:h-60 lg:w-96"
+          : "h-22 w-34 sm:h-26 sm:w-40 lg:h-28 lg:w-44"
+      }`}
+    >
+      <Image
+        src={item.src}
+        alt={item.label}
+        fill
+        sizes={
+          isLarge
+            ? "(max-width: 640px) 280px, 384px"
+            : "(max-width: 640px) 136px, 176px"
+        }
+        className="object-cover transition-transform duration-600 group-hover:scale-110"
+        onError={() => setHasError(true)}
+      />
+      <div className="portfolio-card-overlay absolute inset-0 flex items-end p-3 opacity-0 transition-opacity duration-400 group-hover:opacity-100 sm:p-4">
+        <p className="translate-y-2 text-xs font-semibold text-white transition-transform duration-400 group-hover:translate-y-0 sm:text-sm">
+          {item.label}
+        </p>
+      </div>
+    </button>
+  );
+}
 
 function CarouselRow({
   items,
@@ -108,33 +153,12 @@ function CarouselRow({
           const realGlobalIndex = items.findIndex((img) => img.src === item.src);
 
           return (
-            <button
+            <CarouselCard
               key={`${size}-${item.src}-${index}`}
-              type="button"
-              onClick={() => onSelect(realGlobalIndex)}
-              className={`group relative shrink-0 snap-start overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-400 hover:-translate-y-1.5 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 ${
-                isLarge
-                  ? "h-44 w-70 sm:h-56 sm:w-88 lg:h-60 lg:w-96"
-                  : "h-22 w-34 sm:h-26 sm:w-40 lg:h-28 lg:w-44"
-              }`}
-            >
-              <Image
-                src={item.src}
-                alt={item.label}
-                fill
-                sizes={
-                  isLarge
-                    ? "(max-width: 640px) 280px, 384px"
-                    : "(max-width: 640px) 136px, 176px"
-                }
-                className="object-cover transition-transform duration-600 group-hover:scale-110"
-              />
-              <div className="portfolio-card-overlay absolute inset-0 flex items-end p-3 opacity-0 transition-opacity duration-400 group-hover:opacity-100 sm:p-4">
-                <p className="translate-y-2 text-xs font-semibold text-white transition-transform duration-400 group-hover:translate-y-0 sm:text-sm">
-                  {item.label}
-                </p>
-              </div>
-            </button>
+              item={item}
+              size={size}
+              onSelect={() => onSelect(realGlobalIndex)}
+            />
           );
         })}
       </div>

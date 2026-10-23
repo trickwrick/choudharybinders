@@ -20,18 +20,18 @@ export default function ContactPage() {
 
         <ContactSectionWrapper hideHeader />
         
-        {/* Google Maps Embed */}
-        <div className="w-full h-75 md:h-87.5">
+        {/* Full-width Map with exact Pin & Location details */}
+        <div className="w-full h-100 md:h-120">
           <iframe
             title="Choudhary Binders & Printers Location"
-            src="https://maps.google.com/maps?q=B-59%2C%20Unnati%20Tower%2C%20Central%20Spine%2C%20Vidhyadhar%20Nagar%2C%20Jaipur&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            src="https://maps.google.com/maps?q=Choudhary%20Binders%20%26%20Printers%2C%20B-59%2C%20Unnati%20Tower%2C%20Central%20Spine%2C%20Vidhyadhar%20Nagar%2C%20Jaipur&t=&z=16&ie=UTF8&iwloc=B&output=embed"
             width="100%"
             height="100%"
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            className="w-full h-full grayscale-20 contrast-[1.1] hue-rotate-180 invert-5 sm:grayscale-0 sm:contrast-100 sm:hue-rotate-0 sm:invert-0"
+            className="w-full h-full"
           />
         </div>
       </main>
